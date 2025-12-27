@@ -1,0 +1,41 @@
+"use client";
+import { type ReactNode, createContext, useContext, useRef } from "react";
+import { useStore } from "zustand";
+import { type AuthStore, createAuthStore } from "@/stores/auth-store";
+
+export type AuthStoreApi = ReturnType<typeof createAuthStore>
+
+export const AuthStoreContext = createContext<AuthStoreApi | undefined>(
+    undefined,
+);
+
+export interface AuthStoreProviderProps {
+    children: ReactNode
+}
+
+export const AuthStoreProvider = ({
+    children,
+}: AuthStoreProviderProps) => {
+    const authRef = useRef<AuthStoreApi | null>(null);
+    if (authRef.current === null) {
+        authRef.current = createAuthStore();
+    }
+
+    return (
+        <AuthStoreContext.Provider value={authRef.current}>
+            {children}
+        </AuthStoreContext.Provider>
+    );
+}
+
+export const useAuthStore = <T,>(
+    selector: (auth: AuthStore) => T,
+): T => {
+    const authStoreContext = useContext(AuthStoreContext);
+
+    if (!authStoreContext) {
+        throw new Error('useAuthStore must be used within AuthStoreProvider');
+    }
+
+    return useStore(authStoreContext, selector);
+}
