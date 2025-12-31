@@ -6,6 +6,10 @@ import { fileURLToPath } from 'url'
 
 import config from '@/payload.config'
 import './styles.css'
+import Hero from '@/components/ui/hero/Hero'
+import HeroQuote from '@/components/ui/hero/HeroQuote'
+import PageContents from '@/components/layout/page/PageContents'
+import PageSection from '@/components/layout/page/PageSection'
 
 export default async function HomePage() {
   const headers = await getHeaders()
@@ -15,31 +19,27 @@ export default async function HomePage() {
 
   return (
     <main>
-      <section>
-        <Image
-          src="/home/hero-home.webp"
-          alt="hero-image-adventurers-overlooking-city"
-          width="1440"
-          height="600"
-          loading="eager"
-        ></Image>
-        <div>
-          <h1>
-            <span>Welcome to</span>
-            <br />
-            Greyhawk
-          </h1>
-          <blockquote>
-            <p>
-              “The cruelest irony of life, is that which sustains above all else came closest to
-              fulfilling the goals of The Reaper.
-              <br />
-              <br />
-              The redemption of life, is that when the storms were satiated new growth was born.”
-            </p>
-          </blockquote>
-        </div>
-      </section>
+      <Hero
+        variant="full"
+        title="Greyhawk"
+        lead="Welcome to"
+        image={{ src: '/home/hero-home.webp', alt: 'hero-image-adventurers-overlooking-city' }}
+      >
+        <HeroQuote>
+          <p className="font-subheading text-white text-center max-w-2xl leading-loose">
+            <span className="px-1">&ldquo;</span>
+            Before the Flanaess flooded, a force more oppressive than the secret sects of the South,
+            the Spider Queen of the Abyss, and even the Old Evil ruled — The Giant Kingdoms.
+            <span className="px-1">&rdquo;</span>
+          </p>
+          <p className="text-white text-sm text-end font-sans italic font-light mt-2">
+            The Chronicals of the Giants - Archmage Arullias
+          </p>
+        </HeroQuote>
+      </Hero>
+      <PageContents>
+        <PageSection title="Adventure & Exploration"></PageSection>
+      </PageContents>
     </main>
   )
 }
