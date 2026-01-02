@@ -1,0 +1,13 @@
+.richTextContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.richTextContent p {
+    font-family: var(--font-body-serif);
+    font-weight: 500;
+    line-height: 1.8;
+    font-size: 1.125rem;
+    color: var(--colorMainText);
+}

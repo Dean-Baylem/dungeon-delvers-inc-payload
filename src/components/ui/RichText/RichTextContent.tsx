@@ -1,11 +1,10 @@
-import { RichText } from '@/components/ui/RichText'
-import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
-import './richtext.css'
+import { RichText } from '@/components/ui/RichText';
+import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical';
 
 type Props = {
-  text: SerializedEditorState
-}
+  text: SerializedEditorState;
+};
 
 export default function RichTextContent({ text }: Props) {
-  return <RichText data={text} />
+  return <RichText data={text} />;
 }

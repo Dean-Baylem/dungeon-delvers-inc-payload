@@ -13,11 +13,6 @@ export const Worlds: CollectionConfig = {
       required: true,
     },
     {
-      name: 'slug',
-      type: 'text',
-      required: true,
-    },
-    {
       name: 'allowedUsers',
       type: 'relationship',
       relationTo: 'users',
