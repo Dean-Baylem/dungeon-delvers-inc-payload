@@ -116,34 +116,9 @@ export default async function HomePage() {
         <PageSection title="Adventure & Exploration">
           <BlockGroup
             options={{
-              span: { tab: gridOptions.span.tab[6], pc: gridOptions.span.pc[7] },
+              span: { tab: gridOptions.span.tab[4], pc: gridOptions.span.pc[3] },
+              start: { tab: gridOptions.start.tab[7], pc: gridOptions.start.pc[8] },
               row: { tab: gridOptions.row.tab[1], pc: gridOptions.row.pc[1] },
-              rowSpan: { tab: gridOptions.rowSpan.tab[2], pc: gridOptions.rowSpan.pc[2] },
-            }}
-          >
-            <RichText data={adventureAndExploration} />
-            <BlockNavLinks
-              linkArray={[
-                { link: '/', text: 'Current Campaign', type: 'primary' },
-                { link: '/', text: 'Past Campaigns', type: 'secondary' },
-              ]}
-            />
-            <PageTitle as="h3" size="md" customClasses="mt-8">
-              Ongoing Quests & Highlights
-            </PageTitle>
-            {dummyAdventures.map((adventure, index) => (
-              <BlockSingleAdventure
-                title={adventure.title}
-                description={adventure.description}
-                list={adventure.adventurerList}
-                key={`adventure-${adventure.title}-${index}`}
-              />
-            ))}
-          </BlockGroup>
-          <BlockGroup
-            options={{
-              span: { tab: gridOptions.span.tab[6], pc: gridOptions.span.pc[3] },
-              start: { tab: gridOptions.start.tab[6], pc: gridOptions.start.pc[8] },
             }}
           >
             <InfoBox
@@ -180,11 +155,67 @@ export default async function HomePage() {
           <BlockGroup
             options={{
               span: { tab: gridOptions.span.tab[6], pc: gridOptions.span.pc[3] },
-              start: { tab: gridOptions.start.tab[6], pc: gridOptions.start.pc[8] },
-              row: { tab: gridOptions.row.tab[2], pc: gridOptions.row.pc[2] },
+              start: { tab: gridOptions.start.tab[0], pc: gridOptions.start.pc[8] },
+              row: { tab: gridOptions.row.tab[1], pc: gridOptions.row.pc[2] },
             }}
           >
             <AdventureLogs logs={adventureLogs} gazetter={grandGazetter} />
+          </BlockGroup>
+          <BlockGroup
+            options={{
+              span: { tab: gridOptions.span.tab[11], pc: gridOptions.span.pc[7] },
+              start: { tab: gridOptions.start.tab[0], pc: gridOptions.start.pc[0] },
+              row: { tab: gridOptions.row.tab[2], pc: gridOptions.row.pc[1] },
+              rowSpan: { tab: gridOptions.rowSpan.tab[2], pc: gridOptions.rowSpan.pc[2] },
+            }}
+          >
+            <RichText data={adventureAndExploration} />
+            <BlockNavLinks
+              linkArray={[
+                { link: '/', text: 'Current Campaign', type: 'primary' },
+                { link: '/', text: 'Past Campaigns', type: 'secondary' },
+              ]}
+            />
+            <PageTitle as="h3" size="md" customClasses="mt-8">
+              Ongoing Quests & Highlights
+            </PageTitle>
+            {dummyAdventures.map((adventure, index) => (
+              <BlockSingleAdventure
+                title={adventure.title}
+                description={adventure.description}
+                list={adventure.adventurerList}
+                key={`adventure-${adventure.title}-${index}`}
+              />
+            ))}
+          </BlockGroup>
+        </PageSection>
+        <PageSection title="Lore & Legend">
+          <BlockGroup
+            options={{
+              span: { tab: gridOptions.span.tab[7], pc: gridOptions.span.pc[7] },
+              start: { tab: gridOptions.start.tab[0], pc: gridOptions.start.pc[0] },
+              row: { tab: gridOptions.row.tab[1], pc: gridOptions.row.pc[1] },
+              order: gridOptions.order[1],
+            }}
+          >
+            <RichText data={loreAndLegend} />
+          </BlockGroup>
+          <BlockGroup
+            options={{
+              span: { tab: gridOptions.span.tab[3], pc: gridOptions.span.pc[3] },
+              start: { tab: gridOptions.start.tab[8], pc: gridOptions.start.pc[8] },
+              row: { tab: gridOptions.row.tab[1], pc: gridOptions.row.pc[1] },
+              order: gridOptions.order[0],
+            }}
+          >
+            <Image
+              src="/home/lore-legend.webp"
+              width="277"
+              height="277"
+              alt="lore-and-legend"
+              loading="lazy"
+              className="w-full h-auto object-cover"
+            />
           </BlockGroup>
         </PageSection>
       </PageContents>
