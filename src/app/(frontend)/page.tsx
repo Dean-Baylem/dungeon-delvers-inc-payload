@@ -9,14 +9,11 @@ import PageSection from '@/components/layout/page/PageSection';
 import BlockGroup from '@/components/blocks/group/BlockGroup';
 import { gridOptions } from '@/lib/options/gridOptions';
 import { RichText } from '@/components/ui/RichText';
-import BlockNavLinks from '@/components/blocks/nav/BlockNavLinks';
-import InfoBox from '@/components/blocks/infobox/Infobox';
 import Image from 'next/image';
-import InfoBoxList from '@/components/blocks/infobox/InfoboxList';
-import PageTitle from '@/components/ui/typography/PageTitle';
-import AdventurerList from '@/components/ui/adventure/adventurerList/AdventurerList';
-import BlockSingleAdventure from '@/components/ui/adventure/BlockSingleAdventure';
-import AdventureLogs from '@/components/ui/adventure/adventureLogs/AdventureLogs';
+import LoreList from '@/components/ui/lore/LoreList';
+import AdventureAndExploration from '@/components/layout/home/AdventureAndExploration';
+import LoreAndLegend from '@/components/layout/home/LoreAndLegend';
+import FactionsAndSocieties from '@/components/layout/home/FactionsAndSocieties';
 
 export default async function HomePage() {
   const payloadConfig = await config;
@@ -47,50 +44,10 @@ export default async function HomePage() {
     adventureAndExploration,
     loreAndLegend,
     factionsAndSocieties,
+    alliesRivalsAndVillains,
     deitiesAndCosmology,
     planarHistory,
   } = world.overview;
-
-  const adventurerList = [
-    { iconSrc: '/icons/adventurer1.webp', name: 'Valen' },
-    { iconSrc: '/icons/adventurer2.png', name: 'Raltz' },
-    { iconSrc: '/icons/adventurer3.png', name: 'Spades' },
-    { iconSrc: '/icons/adventurer4.png', name: 'Sivan' },
-    { iconSrc: '/icons/adventurer5.png', name: 'Lem Naelax' },
-  ];
-
-  const dummyAdventures = [
-    {
-      title: 'The Lost Tomb of Horrors',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In fringilla nulla nisi, vitae porttitor sem rutrum a. Donec aliquam condimentum erat non pretium. Aliquam ligula nisi, vestibulum ac convallis ut, laoreet vel ex. Aliquam erat volutpat.',
-      adventurerList: adventurerList,
-    },
-    {
-      title: "Dragon's Lair",
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In fringilla nulla nisi, vitae porttitor sem rutrum a. Donec aliquam condimentum erat non pretium. Aliquam ligula nisi, vestibulum ac convallis ut, laoreet vel ex. Aliquam erat volutpat.',
-      adventurerList: adventurerList,
-    },
-    {
-      title: 'Cursed Forest',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In fringilla nulla nisi, vitae porttitor sem rutrum a. Donec aliquam condimentum erat non pretium. Aliquam ligula nisi, vestibulum ac convallis ut, laoreet vel ex. Aliquam erat volutpat.',
-      adventurerList: adventurerList,
-    },
-  ];
-
-  const adventureLogs = [
-    { link: '/adventures/log1', text: 'The Awakening of the Giant Kings' },
-    { link: '/adventures/log2', text: 'Siege of the Spider Queen' },
-    { link: '/adventures/log3', text: 'The Old Evil Rises' },
-  ];
-
-  const grandGazetter = [
-    { link: '/gazetter/entry1', text: 'The Forgotten City of Zel' },
-    { link: '/gazetter/entry2', text: 'The Whispering Woods' },
-    { link: '/gazetter/entry3', text: 'The Shattered Peaks' },
-  ];
 
   return (
     <main>
@@ -113,111 +70,12 @@ export default async function HomePage() {
         </HeroQuote>
       </Hero>
       <PageContents>
-        <PageSection title="Adventure & Exploration">
-          <BlockGroup
-            options={{
-              span: { tab: gridOptions.span.tab[4], pc: gridOptions.span.pc[3] },
-              start: { tab: gridOptions.start.tab[7], pc: gridOptions.start.pc[8] },
-              row: { tab: gridOptions.row.tab[1], pc: gridOptions.row.pc[1] },
-            }}
-          >
-            <InfoBox
-              groups={[
-                {
-                  title: 'World Map',
-                  content: (
-                    <Image
-                      src="/home/flanaess-map.avif"
-                      width="320"
-                      height="160"
-                      alt="Flanaess World Map"
-                    />
-                  ),
-                },
-                {
-                  title: 'World Information',
-                  content: (
-                    <InfoBoxList
-                      list={[
-                        { title: 'Setting:', text: 'Greyhawk (The Flanaess)' },
-                        { title: 'Current Year:', text: '576 CY' },
-                        {
-                          title: 'Antagonists:',
-                          text: 'The Giant Kingdoms\nThe Old Evil\nThe Spider Queen',
-                        },
-                      ]}
-                    />
-                  ),
-                },
-              ]}
-            ></InfoBox>
-          </BlockGroup>
-          <BlockGroup
-            options={{
-              span: { tab: gridOptions.span.tab[6], pc: gridOptions.span.pc[3] },
-              start: { tab: gridOptions.start.tab[0], pc: gridOptions.start.pc[8] },
-              row: { tab: gridOptions.row.tab[1], pc: gridOptions.row.pc[2] },
-            }}
-          >
-            <AdventureLogs logs={adventureLogs} gazetter={grandGazetter} />
-          </BlockGroup>
-          <BlockGroup
-            options={{
-              span: { tab: gridOptions.span.tab[11], pc: gridOptions.span.pc[7] },
-              start: { tab: gridOptions.start.tab[0], pc: gridOptions.start.pc[0] },
-              row: { tab: gridOptions.row.tab[2], pc: gridOptions.row.pc[1] },
-              rowSpan: { tab: gridOptions.rowSpan.tab[2], pc: gridOptions.rowSpan.pc[2] },
-            }}
-          >
-            <RichText data={adventureAndExploration} />
-            <BlockNavLinks
-              linkArray={[
-                { link: '/', text: 'Current Campaign', type: 'primary' },
-                { link: '/', text: 'Past Campaigns', type: 'secondary' },
-              ]}
-            />
-            <PageTitle as="h3" size="md" customClasses="mt-8">
-              Ongoing Quests & Highlights
-            </PageTitle>
-            {dummyAdventures.map((adventure, index) => (
-              <BlockSingleAdventure
-                title={adventure.title}
-                description={adventure.description}
-                list={adventure.adventurerList}
-                key={`adventure-${adventure.title}-${index}`}
-              />
-            ))}
-          </BlockGroup>
-        </PageSection>
-        <PageSection title="Lore & Legend">
-          <BlockGroup
-            options={{
-              span: { tab: gridOptions.span.tab[7], pc: gridOptions.span.pc[7] },
-              start: { tab: gridOptions.start.tab[0], pc: gridOptions.start.pc[0] },
-              row: { tab: gridOptions.row.tab[1], pc: gridOptions.row.pc[1] },
-              order: gridOptions.order[1],
-            }}
-          >
-            <RichText data={loreAndLegend} />
-          </BlockGroup>
-          <BlockGroup
-            options={{
-              span: { tab: gridOptions.span.tab[3], pc: gridOptions.span.pc[3] },
-              start: { tab: gridOptions.start.tab[8], pc: gridOptions.start.pc[8] },
-              row: { tab: gridOptions.row.tab[1], pc: gridOptions.row.pc[1] },
-              order: gridOptions.order[0],
-            }}
-          >
-            <Image
-              src="/home/lore-legend.webp"
-              width="277"
-              height="277"
-              alt="lore-and-legend"
-              loading="lazy"
-              className="w-full h-auto object-cover"
-            />
-          </BlockGroup>
-        </PageSection>
+        <AdventureAndExploration richText={adventureAndExploration} />
+        <LoreAndLegend richText={loreAndLegend} />
+        <FactionsAndSocieties
+          richText={factionsAndSocieties}
+          npcRichText={alliesRivalsAndVillains}
+        />
       </PageContents>
     </main>
   );

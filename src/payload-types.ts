@@ -217,6 +217,21 @@ export interface World {
       };
       [k: string]: unknown;
     } | null;
+    alliesRivalsAndVillains?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
     deitiesAndCosmology?: {
       root: {
         type: string;
@@ -382,6 +397,7 @@ export interface WorldsSelect<T extends boolean = true> {
         adventureAndExploration?: T;
         loreAndLegend?: T;
         factionsAndSocieties?: T;
+        alliesRivalsAndVillains?: T;
         deitiesAndCosmology?: T;
         planarHistory?: T;
       };

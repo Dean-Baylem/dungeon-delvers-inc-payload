@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig } from 'payload';
 
 export const Worlds: CollectionConfig = {
   slug: 'worlds',
@@ -26,9 +26,10 @@ export const Worlds: CollectionConfig = {
         { name: 'adventureAndExploration', type: 'richText' },
         { name: 'loreAndLegend', type: 'richText' },
         { name: 'factionsAndSocieties', type: 'richText' },
+        { name: 'alliesRivalsAndVillains', type: 'richText' },
         { name: 'deitiesAndCosmology', type: 'richText' },
         { name: 'planarHistory', type: 'richText' },
       ],
     },
   ],
-}
+};

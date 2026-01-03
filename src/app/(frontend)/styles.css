@@ -28,3 +28,9 @@ body {
     color: var(--color-mainText);
     font-family: var(--font-sans);
 }
+
+@media screen and (min-width: 768px) {
+    .textmode-sideways {
+        writing-mode: sideways-lr;
+    }
+}
