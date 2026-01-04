@@ -25,20 +25,23 @@ export default function CardStack({ list }: Props) {
   const handleKeyboardNavi = (event: React.KeyboardEvent<HTMLButtonElement>, index: number) => {
     if (!isDesktop) return;
 
-    event.preventDefault();
     let nextIndex = index;
 
     switch (event.key) {
       case 'ArrowRight':
+        event.preventDefault();
         nextIndex = (index + 1) % list.length;
         break;
       case 'ArrowLeft':
+        event.preventDefault();
         nextIndex = (index - 1 + list.length) % list.length;
         break;
       case 'Home':
+        event.preventDefault();
         nextIndex = 0;
         break;
       case 'End':
+        event.preventDefault();
         nextIndex = list.length - 1;
         break;
       default:
@@ -51,12 +54,15 @@ export default function CardStack({ list }: Props) {
   };
 
   return (
-    <div className="w-fit mx-auto">
-      <ul className="flex flex-col md:flex-row gap-6 md:gap-0" role="tablist">
+    <div className="w-fit mx-auto max-w-full overflow-x-auto underScrollBar p-4">
+      <ul
+        className="flex flex-col md:flex-row gap-6 md:gap-0 md:shadow-[0_2px_4px_2px_rgba(0,0,0,0.25)] md:w-max"
+        role="tablist"
+      >
         {list.map((item, index) => (
           <li
             key={`card--${item.title}-${index}`}
-            className={`border-2 md:border-y-2 md:border-x first:md:border-l-2 last:md:border-r-2 border-heading bg-surface bg-[url(/transparent-bg/crossword.png)] bg-size-cover grid grid-cols-1 md:grid-cols-[4rem_1fr] gap-2 w-vw md:w-full max-w-dvh ${index === cardIndex ? 'md:max-w-100' : 'md:max-w-16'} duration-150 overflow-hidden`}
+            className={`border-2 md:border-y-2 md:border-x first:md:border-l-2 last:md:border-r-2 border-heading bg-surface bg-[url(/transparent-bg/crossword.png)] bg-size-cover grid grid-cols-1 md:grid-cols-[4rem_1fr] gap-2 w-vw md:w-full max-w-dvh ${index === cardIndex ? 'md:max-w-100' : 'md:max-w-16'} duration-150 overflow-hidden shadow-[0_2px_4px_2px_rgba(0,0,0,0.25)] md:shadow-none`}
           >
             <button
               className="grid grid-cols-[2rem_1fr] md:flex md:flex-col gap-4 items-center justify-self-center p-4 pb-1 md:pt-4 md:pb-8 md:px-3 md:cursor-pointer md:hover:bg-[#e6c095] md:focus:bg-[#e6c095] duration-150 outline-none"

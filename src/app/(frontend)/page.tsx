@@ -5,28 +5,59 @@ import './styles.css';
 import Hero from '@/components/ui/hero/Hero';
 import HeroQuote from '@/components/ui/hero/HeroQuote';
 import PageContents from '@/components/layout/page/PageContents';
-import PageSection from '@/components/layout/page/PageSection';
-import BlockGroup from '@/components/blocks/group/BlockGroup';
-import { gridOptions } from '@/lib/options/gridOptions';
-import { RichText } from '@/components/ui/RichText';
-import Image from 'next/image';
-import LoreList from '@/components/ui/lore/LoreList';
 import AdventureAndExploration from '@/components/layout/home/AdventureAndExploration';
 import LoreAndLegend from '@/components/layout/home/LoreAndLegend';
 import FactionsAndSocieties from '@/components/layout/home/FactionsAndSocieties';
+import { NPCListSingle } from '@/types/NPC/npcTypes';
 
-export default async function HomePage() {
+const handlePayloadQuery = async (): Promise<{
+  worldData: any;
+  keyNPCData: Array<NPCListSingle>;
+}> => {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
-  const result = await payload.find({
+  const worldData = await payload.find({
     collection: 'worlds',
     limit: 1,
     depth: 2,
   });
 
-  console.log('Worlds fetch result:', result);
+  const keyNPCs = await payload.find({
+    collection: 'npcs',
+    limit: 10,
+    depth: 2,
+    where: {
+      relatedWorld: worldData.docs[0].id,
+      highlight: true,
+    },
+  });
 
-  if (result.totalDocs === 0) {
+  const keyNPCData = keyNPCs.docs.map((npc) => ({
+    id: npc.id,
+    name: npc.name,
+    portrait: {
+      src: npc?.portrait?.url || '',
+      alt: npc?.portrait?.alt || '',
+    },
+    disposition: npc.disposition,
+    location: npc.home?.name || 'Unknown',
+    faction:
+      Array.isArray(npc?.relatedFaction) && npc?.relatedFaction[0]
+        ? npc?.relatedFaction[0]?.name
+        : '',
+    summary: npc.summary,
+  }));
+
+  return {
+    worldData,
+    keyNPCData,
+  };
+};
+
+export default async function HomePage() {
+  const { worldData, keyNPCData } = await handlePayloadQuery();
+
+  if (worldData.totalDocs === 0) {
     return (
       <main>
         <Hero
@@ -39,7 +70,7 @@ export default async function HomePage() {
     );
   }
 
-  const world = result.docs[0];
+  const world = worldData.docs[0];
   const {
     adventureAndExploration,
     loreAndLegend,
@@ -75,6 +106,7 @@ export default async function HomePage() {
         <FactionsAndSocieties
           richText={factionsAndSocieties}
           npcRichText={alliesRivalsAndVillains}
+          keyNPCData={keyNPCData}
         />
       </PageContents>
     </main>

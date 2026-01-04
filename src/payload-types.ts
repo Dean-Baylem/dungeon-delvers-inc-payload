@@ -70,6 +70,9 @@ export interface Config {
     users: User;
     media: Media;
     worlds: World;
+    locations: Location;
+    factions: Faction;
+    npcs: Npc;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +83,9 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     worlds: WorldsSelect<false> | WorldsSelect<true>;
+    locations: LocationsSelect<false> | LocationsSelect<true>;
+    factions: FactionsSelect<false> | FactionsSelect<true>;
+    npcs: NpcsSelect<false> | NpcsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -268,6 +274,119 @@ export interface World {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations".
+ */
+export interface Location {
+  id: number;
+  name: string;
+  type: 'city' | 'dungeon' | 'fortress' | 'other' | 'ruins' | 'town' | 'village' | 'wilderness';
+  terrain?:
+    | (
+        | 'caverns'
+        | 'coastal'
+        | 'desert'
+        | 'forest'
+        | 'hills'
+        | 'jungle'
+        | 'mountains'
+        | 'plains'
+        | 'ruins'
+        | 'swamp'
+        | 'tundra'
+        | 'underground'
+        | 'urban'
+        | 'wetlands'
+      )
+    | null;
+  resources?:
+    | {
+        singleResource?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  population?: string | null;
+  economy?: string | null;
+  summary: string;
+  relatedWorld?: (number | null) | World;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "factions".
+ */
+export interface Faction {
+  id: number;
+  name: string;
+  symbol?: {
+    symbolImage?: (number | null) | Media;
+    symbolDescription?: string | null;
+  };
+  factiontype?:
+    | (
+        | 'adventuring'
+        | 'artistic'
+        | 'arcane'
+        | 'criminal'
+        | 'knowledge'
+        | 'mercantile'
+        | 'military'
+        | 'nature'
+        | 'occult'
+        | 'political'
+        | 'religious'
+        | 'other'
+      )
+    | null;
+  goals?:
+    | {
+        goal: string;
+        id?: string | null;
+      }[]
+    | null;
+  mantra?: string | null;
+  membershipStructure?:
+    | {
+        title: string;
+        description: string;
+        ranking: number;
+        id?: string | null;
+      }[]
+    | null;
+  summary: string;
+  relatedLocations?: (number | Location)[] | null;
+  relatedWorld?: (number | null) | World;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "npcs".
+ */
+export interface Npc {
+  id: number;
+  name: string;
+  relatedFaction?: (number | Faction)[] | null;
+  hidden?: boolean | null;
+  highlight?: boolean | null;
+  portrait: number | Media;
+  aliases?:
+    | {
+        alias?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  species?: string | null;
+  age?: string | null;
+  disposition: 'ally' | 'neutral' | 'villain';
+  summary: string;
+  home?: (number | null) | Location;
+  relatedWorld?: (number | null) | World;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -301,6 +420,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'worlds';
         value: number | World;
+      } | null)
+    | ({
+        relationTo: 'locations';
+        value: number | Location;
+      } | null)
+    | ({
+        relationTo: 'factions';
+        value: number | Faction;
+      } | null)
+    | ({
+        relationTo: 'npcs';
+        value: number | Npc;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -401,6 +532,86 @@ export interface WorldsSelect<T extends boolean = true> {
         deitiesAndCosmology?: T;
         planarHistory?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations_select".
+ */
+export interface LocationsSelect<T extends boolean = true> {
+  name?: T;
+  type?: T;
+  terrain?: T;
+  resources?:
+    | T
+    | {
+        singleResource?: T;
+        id?: T;
+      };
+  population?: T;
+  economy?: T;
+  summary?: T;
+  relatedWorld?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "factions_select".
+ */
+export interface FactionsSelect<T extends boolean = true> {
+  name?: T;
+  symbol?:
+    | T
+    | {
+        symbolImage?: T;
+        symbolDescription?: T;
+      };
+  factiontype?: T;
+  goals?:
+    | T
+    | {
+        goal?: T;
+        id?: T;
+      };
+  mantra?: T;
+  membershipStructure?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        ranking?: T;
+        id?: T;
+      };
+  summary?: T;
+  relatedLocations?: T;
+  relatedWorld?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "npcs_select".
+ */
+export interface NpcsSelect<T extends boolean = true> {
+  name?: T;
+  relatedFaction?: T;
+  hidden?: T;
+  highlight?: T;
+  portrait?: T;
+  aliases?:
+    | T
+    | {
+        alias?: T;
+        id?: T;
+      };
+  species?: T;
+  age?: T;
+  disposition?: T;
+  summary?: T;
+  home?: T;
+  relatedWorld?: T;
   updatedAt?: T;
   createdAt?: T;
 }

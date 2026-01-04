@@ -6,14 +6,17 @@ import { SerializedEditorState } from 'node_modules/lexical/LexicalEditorState';
 import { RichText } from '@/components/ui/RichText';
 import CardStack from '@/components/ui/cards/CardStack';
 import PageTitle from '@/components/ui/typography/PageTitle';
-import PageText from '@/components/ui/typography/PageText';
+import NPCList from '@/components/ui/npcs/NPCList';
+import { NPCListSingle } from '@/types/NPC/npcTypes';
+import CTALink from '@/components/ui/links/CTALink';
 
 type Props = {
   richText: SerializedEditorState;
   npcRichText: SerializedEditorState;
+  keyNPCData: Array<NPCListSingle>;
 };
 
-export default function FactionsAndSocieties({ richText, npcRichText }: Props) {
+export default function FactionsAndSocieties({ richText, npcRichText, keyNPCData }: Props) {
   type CardType = {
     type: 'faction' | 'location';
     title: string;
@@ -22,6 +25,34 @@ export default function FactionsAndSocieties({ richText, npcRichText }: Props) {
   };
 
   const dummyData: CardType[] = [
+    {
+      type: 'faction',
+      title: 'The Harpers',
+      CTAlink: '/factions/the-harpers',
+      summary:
+        'A semi-secret organization dedicated to promoting good, preserving history, and maintaining balance in the world.',
+    },
+    {
+      type: 'location',
+      title: 'Greyhawk City',
+      CTAlink: '/locations/greyhawk-city',
+      summary:
+        'Society and culture of the bustling city of Greyhawk, a hub of commerce and adventure.',
+    },
+    {
+      type: 'faction',
+      title: 'The Harpers',
+      CTAlink: '/factions/the-harpers',
+      summary:
+        'A semi-secret organization dedicated to promoting good, preserving history, and maintaining balance in the world.',
+    },
+    {
+      type: 'location',
+      title: 'Greyhawk City',
+      CTAlink: '/locations/greyhawk-city',
+      summary:
+        'Society and culture of the bustling city of Greyhawk, a hub of commerce and adventure.',
+    },
     {
       type: 'faction',
       title: 'The Harpers',
@@ -111,6 +142,10 @@ export default function FactionsAndSocieties({ richText, npcRichText }: Props) {
           </PageTitle>
         </div>
         <RichText data={npcRichText} />
+        <div className="flex">
+          <CTALink link="/npcs" text="See All NPCs" type="primary" />
+        </div>
+        <NPCList list={keyNPCData} allowedDispositions={['ally', 'villain', 'neutral']} />
       </BlockGroup>
     </PageSection>
   );

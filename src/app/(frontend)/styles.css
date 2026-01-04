@@ -29,6 +29,28 @@ body {
     font-family: var(--font-sans);
 }
 
+
+    /* width */
+.underScrollBar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+/* Track */
+.underScrollBar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+.underScrollBar::-webkit-scrollbar-thumb {
+  background: #7c1f1f;
+}
+
+/* Handle on hover */
+.underScrollBar::-webkit-scrollbar-thumb:hover {
+  background: #611212;
+}   
+
 @media screen and (min-width: 768px) {
     .textmode-sideways {
         writing-mode: sideways-lr;
