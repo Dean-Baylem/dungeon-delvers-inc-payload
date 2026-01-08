@@ -1,0 +1,17 @@
+export const deityList = [
+  'Beory, Heart of Oerth',
+  'Berei of the Hearth',
+  'Boccob the Uncaring, Archmage of the Gods',
+  'Celestian, the Far Wanderer',
+  'St. Cuthbert of the Cudgel',
+  'Ehlonna of the Forests',
+  'Iuz the Evil',
+  'Lolth, Spider Queen',
+  'Nerull, the Reaper',
+  'Pelor, the Radiant Sun',
+  'Pholtus of the Blinding Light',
+  'Rao, the Mediator',
+  'Tharizdun, the Eater of Worlds',
+  'Vecna, the Whispered One',
+  'Wee Jas, the Witch',
+];

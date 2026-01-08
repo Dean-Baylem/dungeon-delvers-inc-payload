@@ -4,14 +4,10 @@ import { useState } from 'react';
 import { useIsDesktop } from '@/hooks/useIsDesktop';
 import PageText from '../typography/PageText';
 import Link from 'next/link';
+import { FactionLocationCardType } from '@/types/factionsAndLocations/factionsAndLocations';
 
 type Props = {
-  list: Array<{
-    title: string;
-    type: 'faction' | 'location';
-    CTAlink: string;
-    summary: string;
-  }>;
+  list: Array<FactionLocationCardType>;
 };
 export default function CardStack({ list }: Props) {
   const [cardIndex, setCardIndex] = useState(0);
@@ -65,7 +61,7 @@ export default function CardStack({ list }: Props) {
             className={`border-2 md:border-y-2 md:border-x first:md:border-l-2 last:md:border-r-2 border-heading bg-surface bg-[url(/transparent-bg/crossword.png)] bg-size-cover grid grid-cols-1 md:grid-cols-[4rem_1fr] gap-2 w-vw md:w-full max-w-dvh ${index === cardIndex ? 'md:max-w-100' : 'md:max-w-16'} duration-150 overflow-hidden shadow-[0_2px_4px_2px_rgba(0,0,0,0.25)] md:shadow-none`}
           >
             <button
-              className="grid grid-cols-[2rem_1fr] md:flex md:flex-col gap-4 items-center justify-self-center p-4 pb-1 md:pt-4 md:pb-8 md:px-3 md:cursor-pointer md:hover:bg-[#e6c095] md:focus:bg-[#e6c095] duration-150 outline-none"
+              className="grid grid-cols-[2rem_1fr] md:flex md:flex-col gap-4 items-center justify-self-center p-4 pb-1 md:pt-4 md:pb-8 md:px-3 md:cursor-pointer md:hover:bg-[#e6c095] md:focus:bg-[#e6c095] duration-150 outline-none w-full"
               onClick={() => handleCardClick(index)}
               role={isDesktop ? 'tab' : undefined}
               aria-selected={isDesktop ? index === cardIndex : undefined}
@@ -76,14 +72,6 @@ export default function CardStack({ list }: Props) {
                 handleKeyboardNavi(e, index);
               }}
             >
-              <Image
-                src={`/icons/icon-${item.type}.svg`}
-                width="32"
-                height="32"
-                alt={item.type}
-                loading="lazy"
-                className="w-full"
-              />
               <h3 className="font-subheading font-bold text-xl text-end w-fit textmode-sideways">
                 {item.title}
               </h3>

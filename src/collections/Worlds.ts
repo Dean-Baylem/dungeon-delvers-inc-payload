@@ -1,3 +1,4 @@
+import { slugField } from 'payload';
 import type { CollectionConfig } from 'payload';
 
 export const Worlds: CollectionConfig = {
@@ -31,5 +32,6 @@ export const Worlds: CollectionConfig = {
         { name: 'planarHistory', type: 'richText' },
       ],
     },
+    slugField({ useAsSlug: 'name' }),
   ],
 };

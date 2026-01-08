@@ -1,5 +1,6 @@
 export type NPCListSingle = {
   id: number;
+  slug: string;
   name: string;
   portrait: {
     src: string;

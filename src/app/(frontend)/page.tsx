@@ -9,10 +9,15 @@ import AdventureAndExploration from '@/components/layout/home/AdventureAndExplor
 import LoreAndLegend from '@/components/layout/home/LoreAndLegend';
 import FactionsAndSocieties from '@/components/layout/home/FactionsAndSocieties';
 import { NPCListSingle } from '@/types/NPC/npcTypes';
+import FaithsAndOrigins from '@/components/layout/home/FaithsAndOrigins';
+import { FactionLocationCardType } from '@/types/factionsAndLocations/factionsAndLocations';
+import { ReligionCard } from '@/types/religionCard/religionCard';
 
 const handlePayloadQuery = async (): Promise<{
   worldData: any;
   keyNPCData: Array<NPCListSingle>;
+  locationFactions: Array<FactionLocationCardType>;
+  religionData: Array<ReligionCard>;
 }> => {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
@@ -21,6 +26,8 @@ const handlePayloadQuery = async (): Promise<{
     limit: 1,
     depth: 2,
   });
+
+  // Gather NPC Data
 
   const keyNPCs = await payload.find({
     collection: 'npcs',
@@ -34,6 +41,7 @@ const handlePayloadQuery = async (): Promise<{
 
   const keyNPCData = keyNPCs.docs.map((npc) => ({
     id: npc.id,
+    slug: npc.slug,
     name: npc.name,
     portrait: {
       src: npc?.portrait?.url || '',
@@ -48,14 +56,74 @@ const handlePayloadQuery = async (): Promise<{
     summary: npc.summary,
   }));
 
+  const locationData = await payload.find({
+    collection: 'locations',
+    limit: 5,
+    depth: 1,
+    where: {
+      relatedWorld: worldData.docs[0].id,
+    },
+  });
+
+  const factionData = await payload.find({
+    collection: 'factions',
+    limit: 5,
+    depth: 1,
+    where: {
+      relatedWorld: worldData.docs[0].id,
+    },
+  });
+
+  const locationFactions = [
+    ...locationData.docs.map((location) => ({
+      type: 'location',
+      title: location.name,
+      summary: location.summary,
+      CTAlink: `/locations/${location.slug}`,
+      details: { type: location.type, terrain: location.terrain },
+    })),
+    ...factionData.docs.map((faction) => ({
+      type: 'faction',
+      title: faction.name,
+      summary: faction.summary,
+      CTAlink: `/factions/${faction.slug}`,
+      iconSrc: faction.symbol?.symbolImage?.url,
+    })),
+  ];
+
+  const religiousOrder = await payload.find({
+    collection: 'religions',
+    limit: 6,
+    depth: 1,
+    where: {
+      relatedWorld: worldData.docs[0].id,
+    },
+  });
+
+  const religionData = religiousOrder.docs.map((religion) => ({
+    type: religion.type,
+    name: religion.name,
+    slug: religion.slug,
+    summary: religion.summary,
+    deities: religion.deities,
+    icon: religion.icon?.url
+      ? {
+          src: religion.icon?.url || '',
+          alt: religion.icon?.alt || '',
+        }
+      : false,
+  }));
+
   return {
     worldData,
     keyNPCData,
+    locationFactions,
+    religionData,
   };
 };
 
 export default async function HomePage() {
-  const { worldData, keyNPCData } = await handlePayloadQuery();
+  const { worldData, keyNPCData, locationFactions, religionData } = await handlePayloadQuery();
 
   if (worldData.totalDocs === 0) {
     return (
@@ -107,6 +175,12 @@ export default async function HomePage() {
           richText={factionsAndSocieties}
           npcRichText={alliesRivalsAndVillains}
           keyNPCData={keyNPCData}
+          factionsAndLocations={locationFactions}
+        />
+        <FaithsAndOrigins
+          richText={deitiesAndCosmology}
+          originsText={deitiesAndCosmology}
+          Religions={[]}
         />
       </PageContents>
     </main>

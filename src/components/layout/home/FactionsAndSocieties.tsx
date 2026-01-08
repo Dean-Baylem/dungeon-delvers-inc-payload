@@ -9,22 +9,22 @@ import PageTitle from '@/components/ui/typography/PageTitle';
 import NPCList from '@/components/ui/npcs/NPCList';
 import { NPCListSingle } from '@/types/NPC/npcTypes';
 import CTALink from '@/components/ui/links/CTALink';
+import { FactionLocationCardType } from '@/types/factionsAndLocations/factionsAndLocations';
 
 type Props = {
   richText: SerializedEditorState;
   npcRichText: SerializedEditorState;
   keyNPCData: Array<NPCListSingle>;
+  factionsAndLocations: Array<FactionLocationCardType>;
 };
 
-export default function FactionsAndSocieties({ richText, npcRichText, keyNPCData }: Props) {
-  type CardType = {
-    type: 'faction' | 'location';
-    title: string;
-    CTAlink: string;
-    summary: string;
-  };
-
-  const dummyData: CardType[] = [
+export default function FactionsAndSocieties({
+  richText,
+  npcRichText,
+  keyNPCData,
+  factionsAndLocations,
+}: Props) {
+  const dummyData: FactionLocationCardType[] = [
     {
       type: 'faction',
       title: 'The Harpers',
@@ -135,7 +135,7 @@ export default function FactionsAndSocieties({ richText, npcRichText, keyNPCData
           order: gridOptions.order[2],
         }}
       >
-        <CardStack list={dummyData} />
+        <CardStack list={factionsAndLocations} />
         <div className="mt-6">
           <PageTitle as="h3" size="md">
             Allies, Rivals, and Villains

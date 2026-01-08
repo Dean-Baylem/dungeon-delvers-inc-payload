@@ -1,12 +1,25 @@
-import type { CollectionConfig } from 'payload';
+import { slugField, type CollectionConfig } from 'payload';
 
 export const Factions: CollectionConfig = {
   slug: 'factions',
   fields: [
     {
-      name: 'name',
-      type: 'text',
-      required: true,
+      type: 'row',
+      fields: [
+        {
+          name: 'name',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'highlight',
+          type: 'checkbox',
+          defaultValue: false,
+          admin: {
+            width: '20%',
+          },
+        },
+      ],
     },
     {
       type: 'group',
@@ -126,6 +139,7 @@ export const Factions: CollectionConfig = {
       relationTo: 'worlds',
       maxDepth: 0,
     },
+    slugField({ useAsSlug: 'name' }),
   ],
   admin: {
     useAsTitle: 'name',

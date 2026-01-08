@@ -3,15 +3,28 @@ Locations
 Represents individual places within a region
 */
 
-import type { CollectionConfig } from 'payload';
+import { slugField, type CollectionConfig } from 'payload';
 
 export const Locations: CollectionConfig = {
   slug: 'locations',
   fields: [
     {
-      name: 'name',
-      type: 'text',
-      required: true,
+      type: 'row',
+      fields: [
+        {
+          name: 'name',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'highlight',
+          type: 'checkbox',
+          defaultValue: false,
+          admin: {
+            width: '20%',
+          },
+        },
+      ],
     },
     {
       type: 'group',
@@ -107,11 +120,19 @@ export const Locations: CollectionConfig = {
     //   maxDepth: 1,
     // },
     {
+      name: 'parentLocation',
+      type: 'relationship',
+      relationTo: 'locations',
+      maxDepth: 1,
+      hasMany: false,
+    },
+    {
       name: 'relatedWorld',
       type: 'relationship',
       relationTo: 'worlds',
       maxDepth: 0,
     },
+    slugField({ useAsSlug: 'name' }),
   ],
   admin: {
     useAsTitle: 'name',

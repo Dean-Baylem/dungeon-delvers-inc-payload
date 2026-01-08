@@ -73,6 +73,7 @@ export interface Config {
     locations: Location;
     factions: Faction;
     npcs: Npc;
+    religions: Religion;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -86,6 +87,7 @@ export interface Config {
     locations: LocationsSelect<false> | LocationsSelect<true>;
     factions: FactionsSelect<false> | FactionsSelect<true>;
     npcs: NpcsSelect<false> | NpcsSelect<true>;
+    religions: ReligionsSelect<false> | ReligionsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -269,6 +271,11 @@ export interface World {
       [k: string]: unknown;
     } | null;
   };
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -279,6 +286,7 @@ export interface World {
 export interface Location {
   id: number;
   name: string;
+  highlight?: boolean | null;
   type: 'city' | 'dungeon' | 'fortress' | 'other' | 'ruins' | 'town' | 'village' | 'wilderness';
   terrain?:
     | (
@@ -307,7 +315,13 @@ export interface Location {
   population?: string | null;
   economy?: string | null;
   summary: string;
+  parentLocation?: (number | null) | Location;
   relatedWorld?: (number | null) | World;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -318,6 +332,7 @@ export interface Location {
 export interface Faction {
   id: number;
   name: string;
+  highlight?: boolean | null;
   symbol?: {
     symbolImage?: (number | null) | Media;
     symbolDescription?: string | null;
@@ -356,6 +371,11 @@ export interface Faction {
   summary: string;
   relatedLocations?: (number | Location)[] | null;
   relatedWorld?: (number | null) | World;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -382,6 +402,70 @@ export interface Npc {
   summary: string;
   home?: (number | null) | Location;
   relatedWorld?: (number | null) | World;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "religions".
+ */
+export interface Religion {
+  id: number;
+  name: string;
+  highlight?: boolean | null;
+  icon?: (number | null) | Media;
+  type?:
+    | (
+        | 'ancestral_faith'
+        | 'celestial_faith'
+        | 'civic_faith'
+        | 'death_faith'
+        | 'elemental_faith'
+        | 'fiendish_faith'
+        | 'heretical_sect'
+        | 'ideological_order'
+        | 'monastic_order'
+        | 'monotheism'
+        | 'mystery_faith'
+        | 'other'
+        | 'pantheism'
+        | 'primal_faith'
+        | 'prophetic_faith'
+        | 'revivalist_faith'
+        | 'shadow_faith'
+        | 'trickster_faith'
+      )
+    | null;
+  deities?:
+    | (
+        | 'Beory, Heart of Oerth'
+        | 'Berei of the Hearth'
+        | 'Boccob the Uncaring, Archmage of the Gods'
+        | 'Celestian, the Far Wanderer'
+        | 'St. Cuthbert of the Cudgel'
+        | 'Ehlonna of the Forests'
+        | 'Iuz the Evil'
+        | 'Lolth, Spider Queen'
+        | 'Nerull, the Reaper'
+        | 'Pelor, the Radiant Sun'
+        | 'Pholtus of the Blinding Light'
+        | 'Rao, the Mediator'
+        | 'Tharizdun, the Eater of Worlds'
+        | 'Vecna, the Whispered One'
+        | 'Wee Jas, the Witch'
+      )[]
+    | null;
+  summary: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -432,6 +516,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'npcs';
         value: number | Npc;
+      } | null)
+    | ({
+        relationTo: 'religions';
+        value: number | Religion;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -532,6 +620,8 @@ export interface WorldsSelect<T extends boolean = true> {
         deitiesAndCosmology?: T;
         planarHistory?: T;
       };
+  generateSlug?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -541,6 +631,7 @@ export interface WorldsSelect<T extends boolean = true> {
  */
 export interface LocationsSelect<T extends boolean = true> {
   name?: T;
+  highlight?: T;
   type?: T;
   terrain?: T;
   resources?:
@@ -552,7 +643,10 @@ export interface LocationsSelect<T extends boolean = true> {
   population?: T;
   economy?: T;
   summary?: T;
+  parentLocation?: T;
   relatedWorld?: T;
+  generateSlug?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -562,6 +656,7 @@ export interface LocationsSelect<T extends boolean = true> {
  */
 export interface FactionsSelect<T extends boolean = true> {
   name?: T;
+  highlight?: T;
   symbol?:
     | T
     | {
@@ -587,6 +682,8 @@ export interface FactionsSelect<T extends boolean = true> {
   summary?: T;
   relatedLocations?: T;
   relatedWorld?: T;
+  generateSlug?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -612,6 +709,24 @@ export interface NpcsSelect<T extends boolean = true> {
   summary?: T;
   home?: T;
   relatedWorld?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "religions_select".
+ */
+export interface ReligionsSelect<T extends boolean = true> {
+  name?: T;
+  highlight?: T;
+  icon?: T;
+  type?: T;
+  deities?: T;
+  summary?: T;
+  generateSlug?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }

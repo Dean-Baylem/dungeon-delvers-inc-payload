@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload';
+import { slugField, type CollectionConfig } from 'payload';
 
 export const NPCs: CollectionConfig = {
   slug: 'npcs',
@@ -125,5 +125,6 @@ export const NPCs: CollectionConfig = {
       relationTo: 'worlds',
       maxDepth: 0,
     },
+    slugField({ useAsSlug: 'name' }),
   ],
 };
