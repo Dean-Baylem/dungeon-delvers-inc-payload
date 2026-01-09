@@ -11,13 +11,14 @@ import FactionsAndSocieties from '@/components/layout/home/FactionsAndSocieties'
 import { NPCListSingle } from '@/types/NPC/npcTypes';
 import FaithsAndOrigins from '@/components/layout/home/FaithsAndOrigins';
 import { FactionLocationCardType } from '@/types/factionsAndLocations/factionsAndLocations';
-import { ReligionCard } from '@/types/religionCard/religionCard';
+import { ReligionCardType } from '@/types/religionCard/religionCard';
+import Image from 'next/image';
 
 const handlePayloadQuery = async (): Promise<{
   worldData: any;
   keyNPCData: Array<NPCListSingle>;
   locationFactions: Array<FactionLocationCardType>;
-  religionData: Array<ReligionCard>;
+  religionData: Array<ReligionCardType>;
 }> => {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
@@ -74,16 +75,19 @@ const handlePayloadQuery = async (): Promise<{
     },
   });
 
-  const locationFactions = [
+  const locationFactions: FactionLocationCardType[] = [
     ...locationData.docs.map((location) => ({
-      type: 'location',
+      type: 'location' as const,
       title: location.name,
       summary: location.summary,
       CTAlink: `/locations/${location.slug}`,
-      details: { type: location.type, terrain: location.terrain },
+      details: {
+        type: location.type ?? undefined,
+        terrain: location.terrain ?? undefined,
+      },
     })),
     ...factionData.docs.map((faction) => ({
-      type: 'faction',
+      type: 'faction' as const,
       title: faction.name,
       summary: faction.summary,
       CTAlink: `/factions/${faction.slug}`,
@@ -100,19 +104,21 @@ const handlePayloadQuery = async (): Promise<{
     },
   });
 
-  const religionData = religiousOrder.docs.map((religion) => ({
-    type: religion.type,
-    name: religion.name,
-    slug: religion.slug,
-    summary: religion.summary,
-    deities: religion.deities,
-    icon: religion.icon?.url
-      ? {
-          src: religion.icon?.url || '',
-          alt: religion.icon?.alt || '',
-        }
-      : false,
-  }));
+  const religionData: ReligionCardType[] = religiousOrder.docs
+    .filter((religion) => religion.type) // safety guard
+    .map((religion) => ({
+      type: religion.type!,
+      name: religion.name,
+      slug: religion.slug,
+      summary: religion.summary,
+      deities: religion.deities ?? [],
+      icon: religion.icon?.url
+        ? {
+            src: religion.icon.url,
+            alt: religion.icon.alt ?? '',
+          }
+        : undefined,
+    }));
 
   return {
     worldData,
@@ -179,8 +185,8 @@ export default async function HomePage() {
         />
         <FaithsAndOrigins
           richText={deitiesAndCosmology}
-          originsText={deitiesAndCosmology}
-          Religions={[]}
+          originsText={planarHistory}
+          religions={religionData}
         />
       </PageContents>
     </main>

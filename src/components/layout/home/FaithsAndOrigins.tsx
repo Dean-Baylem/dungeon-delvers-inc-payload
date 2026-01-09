@@ -5,24 +5,19 @@ import { gridOptions } from '@/lib/options/gridOptions';
 import { RichText } from '@/components/ui/RichText';
 import Image from 'next/image';
 import PageTitle from '@/components/ui/typography/PageTitle';
+import CTALink from '@/components/ui/links/CTALink';
+import PageText from '@/components/ui/typography/PageText';
+import { truncate } from '@/lib/utility/truncateString';
+import { ReligionCardType } from '@/types/religionCard/religionCard';
+import ReligionCard from '@/components/ui/cards/ReligionCard';
 
 type Props = {
   richText: SerializedEditorState;
   originsText: SerializedEditorState;
-  Religions: Array<{
-    type: string;
-    name: string;
-    slug: string;
-    summary: string;
-    icon?: {
-      src: string;
-      alt: string;
-    };
-    deities?: Array<string>;
-  }>;
+  religions: Array<ReligionCardType>;
 };
 
-export default function FaithsAndOrigins({ richText, originsText, Religions }: Props) {
+export default function FaithsAndOrigins({ richText, originsText, religions }: Props) {
   return (
     <PageSection title="Faiths and Origins">
       <BlockGroup
@@ -63,6 +58,14 @@ export default function FaithsAndOrigins({ richText, originsText, Religions }: P
         <PageTitle as="h3" size="md" customClasses="mt-6">
           Religious Organisations
         </PageTitle>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {religions.map((religion, index) => (
+            <ReligionCard key={`religion-${index}`} religion={religion} />
+          ))}
+        </div>
+        <div className="mt-8">
+          <RichText data={originsText} />
+        </div>
       </BlockGroup>
     </PageSection>
   );

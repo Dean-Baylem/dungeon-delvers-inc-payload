@@ -4,6 +4,28 @@
     gap: 1rem;
 }
 
+.richTextContent h2 {
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--color-heading);
+    font-family: var(--font-heading);
+}
+
+.richTextContent h3 {
+    font-weight: 700;
+    font-size: 1.875rem;
+    color: var(--color-heading);
+    font-family: var(--font-heading);
+}
+
+.richTextContent h4 {
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-heading);
+    font-family: var(--font-body-serif);
+    margin-top: 1rem;
+}
+
 .richTextContent p {
     font-family: var(--font-body-serif);
     font-weight: 500;
