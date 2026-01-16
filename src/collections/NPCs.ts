@@ -87,25 +87,25 @@ export const NPCs: CollectionConfig = {
         },
       ],
     },
-    // {
-    //     type: 'group',
-    //     fields: [
-    //         {
-    //             name: "allies",
-    //             type: "relationship",
-    //             relationTo: "npcs",
-    //             hasMany: true,
-    //             maxDepth: 1
-    //         },
-    //         {
-    //             name: 'adversaries',
-    //             type: 'relationship',
-    //             relationTo: 'npcs',
-    //             hasMany: true,
-    //             maxDepth: 1
-    //         }
-    //     ]
-    // },
+    {
+      type: 'group',
+      fields: [
+        {
+          name: 'allies',
+          type: 'relationship',
+          relationTo: 'npcs',
+          hasMany: true,
+          maxDepth: 1,
+        },
+        {
+          name: 'adversaries',
+          type: 'relationship',
+          relationTo: 'npcs',
+          hasMany: true,
+          maxDepth: 1,
+        },
+      ],
+    },
     {
       name: 'summary',
       type: 'textarea',

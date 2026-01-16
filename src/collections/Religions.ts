@@ -68,6 +68,39 @@ export const Religions: CollectionConfig = {
       ],
     },
     {
+      name: 'relatedWorlds',
+      type: 'relationship',
+      relationTo: 'worlds',
+      hasMany: true,
+      maxDepth: 1,
+    },
+    {
+      type: 'group',
+      label: 'Related NPCs, Factions, & Locations',
+      fields: [
+        {
+          name: 'relatedNPCs',
+          type: 'relationship',
+          relationTo: 'npcs',
+          hasMany: true,
+          maxDepth: 1,
+        },
+        {
+          name: 'relatedFactions',
+          type: 'relationship',
+          relationTo: 'factions',
+          hasMany: true,
+          maxDepth: 1,
+        },
+        {
+          name: 'relatedLocations',
+          type: 'relationship',
+          relationTo: 'locations',
+          hasMany: true,
+        },
+      ],
+    },
+    {
       name: 'summary',
       type: 'textarea',
       required: true,

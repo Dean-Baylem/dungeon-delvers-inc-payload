@@ -21,9 +21,9 @@ export default function ContentCard({
       <h4 className="font-bold font-subheading text-center text-heading">{title}</h4>
       {type && (
         <p className="font-serif font-bold flex items-center gap-2">
-          <span className="w-full h-px bg-mainText"></span>
-          <span className="capitalize text-center">{type.replace('_', ' ')}</span>
-          <span className="w-full h-px bg-mainText"></span>
+          <span className="w-full h-px bg-mainText flex-1"></span>
+          <span className="capitalize text-center flex-2">{type.replaceAll('_', ' ')}</span>
+          <span className="w-full h-px bg-mainText flex-1"></span>
         </p>
       )}
       <PageText customClasses="font-medium pt-1 pb-2">{summary}</PageText>

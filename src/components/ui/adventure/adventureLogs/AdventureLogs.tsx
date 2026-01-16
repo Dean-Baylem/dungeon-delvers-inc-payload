@@ -24,7 +24,7 @@ export default function AdventureLogs({ logs, gazetter }: Props) {
       />
       {gazetter && (
         <AdventureLogGroup
-          title="Grand Gazetter"
+          title="Grand Gazetteer"
           logs={gazetter}
           cta={{ link: `/grand-gazetter`, text: 'See More', type: 'secondary' }}
         />

@@ -105,13 +105,13 @@ export const Locations: CollectionConfig = {
       required: true,
       maxLength: 300,
     },
-    // {
-    //   name: 'keyNPCs',
-    //   type: 'relationship',
-    //   relationTo: 'npcs',
-    //   hasMany: true,
-    //   maxDepth: 1,
-    // },
+    {
+      name: 'relatedNPCs',
+      type: 'relationship',
+      relationTo: 'npcs',
+      hasMany: true,
+      maxDepth: 1,
+    },
     // {
     //   name: 'map',
     //   type: 'relationship',

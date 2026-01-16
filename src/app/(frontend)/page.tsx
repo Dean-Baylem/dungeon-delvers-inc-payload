@@ -13,12 +13,14 @@ import FaithsAndOrigins from '@/components/layout/home/FaithsAndOrigins';
 import { FactionLocationCardType } from '@/types/factionsAndLocations/factionsAndLocations';
 import { ReligionCardType } from '@/types/religionCard/religionCard';
 import Image from 'next/image';
+import { LoreCardType } from '@/types/loreCard/lordcard';
 
 const handlePayloadQuery = async (): Promise<{
   worldData: any;
   keyNPCData: Array<NPCListSingle>;
   locationFactions: Array<FactionLocationCardType>;
   religionData: Array<ReligionCardType>;
+  loreData: Array<LoreCardType>;
 }> => {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
@@ -75,25 +77,13 @@ const handlePayloadQuery = async (): Promise<{
     },
   });
 
-  const locationFactions: FactionLocationCardType[] = [
-    ...locationData.docs.map((location) => ({
-      type: 'location' as const,
-      title: location.name,
-      summary: location.summary,
-      CTAlink: `/locations/${location.slug}`,
-      details: {
-        type: location.type ?? undefined,
-        terrain: location.terrain ?? undefined,
-      },
-    })),
-    ...factionData.docs.map((faction) => ({
-      type: 'faction' as const,
-      title: faction.name,
-      summary: faction.summary,
-      CTAlink: `/factions/${faction.slug}`,
-      iconSrc: faction.symbol?.symbolImage?.url,
-    })),
-  ];
+  const locationFactions: FactionLocationCardType[] = factionData.docs.map((faction) => ({
+    type: 'faction' as const,
+    title: faction.name,
+    summary: faction.summary,
+    CTAlink: `/factions/${faction.slug}`,
+    iconSrc: faction.symbol?.symbolImage?.url,
+  }));
 
   const religiousOrder = await payload.find({
     collection: 'religions',
@@ -120,16 +110,35 @@ const handlePayloadQuery = async (): Promise<{
         : undefined,
     }));
 
+  const loreDataQuery = await payload.find({
+    collection: 'lore',
+    limit: 16,
+    depth: 1,
+    where: {
+      relatedWorld: worldData.docs[0].id,
+      highlight: true,
+    },
+  });
+
+  const loreData: LoreCardType[] = loreDataQuery.docs.map((lore) => ({
+    type: lore.type ?? '',
+    name: lore.name,
+    slug: lore.slug,
+    summary: lore.summary,
+  }));
+
   return {
     worldData,
     keyNPCData,
     locationFactions,
     religionData,
+    loreData,
   };
 };
 
 export default async function HomePage() {
-  const { worldData, keyNPCData, locationFactions, religionData } = await handlePayloadQuery();
+  const { worldData, keyNPCData, locationFactions, religionData, loreData } =
+    await handlePayloadQuery();
 
   if (worldData.totalDocs === 0) {
     return (
@@ -176,7 +185,7 @@ export default async function HomePage() {
       </Hero>
       <PageContents>
         <AdventureAndExploration richText={adventureAndExploration} />
-        <LoreAndLegend richText={loreAndLegend} />
+        <LoreAndLegend richText={loreAndLegend} loreItems={loreData} />
         <FactionsAndSocieties
           richText={factionsAndSocieties}
           npcRichText={alliesRivalsAndVillains}

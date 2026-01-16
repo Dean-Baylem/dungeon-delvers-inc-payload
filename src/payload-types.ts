@@ -74,6 +74,7 @@ export interface Config {
     factions: Faction;
     npcs: Npc;
     religions: Religion;
+    lore: Lore;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,6 +89,7 @@ export interface Config {
     factions: FactionsSelect<false> | FactionsSelect<true>;
     npcs: NpcsSelect<false> | NpcsSelect<true>;
     religions: ReligionsSelect<false> | ReligionsSelect<true>;
+    lore: LoreSelect<false> | LoreSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -315,7 +317,41 @@ export interface Location {
   population?: string | null;
   economy?: string | null;
   summary: string;
+  relatedNPCs?: (number | Npc)[] | null;
   parentLocation?: (number | null) | Location;
+  relatedWorld?: (number | null) | World;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "npcs".
+ */
+export interface Npc {
+  id: number;
+  name: string;
+  relatedFaction?: (number | Faction)[] | null;
+  hidden?: boolean | null;
+  highlight?: boolean | null;
+  portrait: number | Media;
+  aliases?:
+    | {
+        alias?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  species?: string | null;
+  age?: string | null;
+  disposition: 'ally' | 'neutral' | 'villain';
+  allies?: (number | Npc)[] | null;
+  adversaries?: (number | Npc)[] | null;
+  summary: string;
+  home?: (number | null) | Location;
   relatedWorld?: (number | null) | World;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
@@ -365,42 +401,13 @@ export interface Faction {
         title: string;
         description: string;
         ranking: number;
+        relatedNPCs?: (number | null) | Npc;
         id?: string | null;
       }[]
     | null;
   summary: string;
   relatedLocations?: (number | Location)[] | null;
-  relatedWorld?: (number | null) | World;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "npcs".
- */
-export interface Npc {
-  id: number;
-  name: string;
-  relatedFaction?: (number | Faction)[] | null;
-  hidden?: boolean | null;
-  highlight?: boolean | null;
-  portrait: number | Media;
-  aliases?:
-    | {
-        alias?: string | null;
-        id?: string | null;
-      }[]
-    | null;
-  species?: string | null;
-  age?: string | null;
-  disposition: 'ally' | 'neutral' | 'villain';
-  summary: string;
-  home?: (number | null) | Location;
+  leader?: (number | null) | Npc;
   relatedWorld?: (number | null) | World;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
@@ -460,12 +467,78 @@ export interface Religion {
         | 'Wee Jas, the Witch'
       )[]
     | null;
+  relatedWorlds?: (number | World)[] | null;
+  relatedNPCs?: (number | Npc)[] | null;
+  relatedFactions?: (number | Faction)[] | null;
+  relatedLocations?: (number | Location)[] | null;
   summary: string;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lore".
+ */
+export interface Lore {
+  id: number;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  name: string;
+  highlight?: boolean | null;
+  type?:
+    | (
+        | 'doctrine'
+        | 'religion_myth_and_magic'
+        | 'history_and_politics'
+        | 'culture_and_society'
+        | 'places_and_objects'
+        | 'people_and_figures'
+        | 'general_lore'
+      )
+    | null;
+  subtype?:
+    | (
+        | 'ideology'
+        | 'philosophy'
+        | 'cosmology'
+        | 'religion'
+        | 'myth'
+        | 'prophecy'
+        | 'arcane'
+        | 'ritual'
+        | 'history'
+        | 'event'
+        | 'war'
+        | 'treaty'
+        | 'law_policy'
+        | 'disaster'
+        | 'culture'
+        | 'tradition'
+        | 'language'
+        | 'holiday'
+        | 'landmark'
+        | 'geology'
+        | 'technology'
+        | 'tome'
+        | 'legendary_figure'
+        | 'general'
+      )
+    | null;
+  era?: string | null;
+  summary: string;
+  relatedFactions?: (number | Faction)[] | null;
+  relatedReligions?: (number | Religion)[] | null;
+  relatedNPCs?: (number | Npc)[] | null;
+  relatedWorld?: (number | null) | World;
+  relatedLocations?: (number | Location)[] | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -520,6 +593,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'religions';
         value: number | Religion;
+      } | null)
+    | ({
+        relationTo: 'lore';
+        value: number | Lore;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -643,6 +720,7 @@ export interface LocationsSelect<T extends boolean = true> {
   population?: T;
   economy?: T;
   summary?: T;
+  relatedNPCs?: T;
   parentLocation?: T;
   relatedWorld?: T;
   generateSlug?: T;
@@ -677,10 +755,12 @@ export interface FactionsSelect<T extends boolean = true> {
         title?: T;
         description?: T;
         ranking?: T;
+        relatedNPCs?: T;
         id?: T;
       };
   summary?: T;
   relatedLocations?: T;
+  leader?: T;
   relatedWorld?: T;
   generateSlug?: T;
   slug?: T;
@@ -706,6 +786,8 @@ export interface NpcsSelect<T extends boolean = true> {
   species?: T;
   age?: T;
   disposition?: T;
+  allies?: T;
+  adversaries?: T;
   summary?: T;
   home?: T;
   relatedWorld?: T;
@@ -724,9 +806,34 @@ export interface ReligionsSelect<T extends boolean = true> {
   icon?: T;
   type?: T;
   deities?: T;
+  relatedWorlds?: T;
+  relatedNPCs?: T;
+  relatedFactions?: T;
+  relatedLocations?: T;
   summary?: T;
   generateSlug?: T;
   slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lore_select".
+ */
+export interface LoreSelect<T extends boolean = true> {
+  generateSlug?: T;
+  slug?: T;
+  name?: T;
+  highlight?: T;
+  type?: T;
+  subtype?: T;
+  era?: T;
+  summary?: T;
+  relatedFactions?: T;
+  relatedReligions?: T;
+  relatedNPCs?: T;
+  relatedWorld?: T;
+  relatedLocations?: T;
   updatedAt?: T;
   createdAt?: T;
 }
