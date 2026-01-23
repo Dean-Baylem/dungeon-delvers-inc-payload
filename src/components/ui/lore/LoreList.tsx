@@ -2,14 +2,13 @@
 import { AnimatePresence, motion } from 'motion/react';
 
 import ContentCard from '../cards/ContentCard';
-import { LoreCardType } from '@/types/loreCard/lordcard';
+import { LoreCardType } from '@/types/loreCard/lordCard';
 
 type Props = {
   allItems: Array<LoreCardType>;
 };
 
 export default function LoreList({ allItems }: Props) {
-  console.log(allItems);
   return (
     <motion.ul
       className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"

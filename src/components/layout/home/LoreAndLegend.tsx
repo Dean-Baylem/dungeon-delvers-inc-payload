@@ -6,7 +6,7 @@ import { RichText } from '@/components/ui/RichText';
 import Image from 'next/image';
 import { SerializedEditorState } from 'node_modules/lexical/LexicalEditorState';
 import CTALink from '@/components/ui/links/CTALink';
-import { LoreCardType } from '@/types/loreCard/lordcard';
+import { LoreCardType } from '@/types/loreCard/lordCard';
 
 type Props = {
   richText: SerializedEditorState;
@@ -14,36 +14,6 @@ type Props = {
 };
 
 export default function LoreAndLegend({ richText, loreItems }: Props) {
-  // const loreItems = [
-  //   {
-  //     type: 'lore',
-  //     name: 'The Giant Kingdoms',
-  //     slug: 'giant-kingdoms',
-  //     summary:
-  //       'An overview of the ancient Giant Kingdoms that once ruled the world before the great flood.',
-  //   },
-  //   {
-  //     type: 'legend',
-  //     name: 'The Old Evil',
-  //     slug: 'old-evil',
-  //     summary: 'Legends surrounding the Old Evil, a malevolent force that threatens the land.',
-  //   },
-  //   {
-  //     type: 'lore',
-  //     name: 'The Spider Queen',
-  //     slug: 'spider-queen',
-  //     summary: 'Lore about the Spider Queen of the Abyss and her dark influence.',
-  //   },
-  //   {
-  //     type: 'legend',
-  //     name: 'Heroes of the Flanaess',
-  //     slug: 'heroes-flanaess',
-  //     summary: 'Tales of legendary heroes who shaped the history of the Flanaess.',
-  //   },
-  // ];
-
-  console.log(loreItems);
-
   return (
     <PageSection title="Lore & Legend">
       <BlockGroup

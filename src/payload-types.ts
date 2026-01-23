@@ -75,6 +75,9 @@ export interface Config {
     npcs: Npc;
     religions: Religion;
     lore: Lore;
+    sessions: Session;
+    characters: Character;
+    adventures: Adventure;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -90,6 +93,9 @@ export interface Config {
     npcs: NpcsSelect<false> | NpcsSelect<true>;
     religions: ReligionsSelect<false> | ReligionsSelect<true>;
     lore: LoreSelect<false> | LoreSelect<true>;
+    sessions: SessionsSelect<false> | SessionsSelect<true>;
+    characters: CharactersSelect<false> | CharactersSelect<true>;
+    adventures: AdventuresSelect<false> | AdventuresSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -493,6 +499,7 @@ export interface Lore {
   slug: string;
   name: string;
   highlight?: boolean | null;
+  startDateSort?: number | null;
   type?:
     | (
         | 'doctrine'
@@ -533,12 +540,144 @@ export interface Lore {
       )
     | null;
   era?: string | null;
+  startDateYear?: number | null;
+  startDateMonth?: number | null;
   summary: string;
   relatedFactions?: (number | Faction)[] | null;
   relatedReligions?: (number | Religion)[] | null;
   relatedNPCs?: (number | Npc)[] | null;
   relatedWorld?: (number | null) | World;
   relatedLocations?: (number | Location)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sessions".
+ */
+export interface Session {
+  id: number;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  title: string;
+  relatedWorld: number | World;
+  highlight?: boolean | null;
+  sessionNumber: number;
+  sessionDate: string;
+  worldDate: string;
+  location?: (number | Location)[] | null;
+  relatedNPCs?: (number | Npc)[] | null;
+  dmNotes?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  outcomeNotes?:
+    | {
+        outcome?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  summary: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "characters".
+ */
+export interface Character {
+  id: number;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  name: string;
+  icon: number | Media;
+  dmNotes?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "adventures".
+ */
+export interface Adventure {
+  id: number;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  name: string;
+  startDateSort?: number | null;
+  status: 'abandoned' | 'completed' | 'failed' | 'in_progress' | 'not_started';
+  startDateYear: number;
+  startDateMonth: number;
+  relatedWorld: number | World;
+  relatedCharacters?: (number | Character)[] | null;
+  relatedLocations?: (number | Location)[] | null;
+  relatedNPCs?: (number | Npc)[] | null;
+  relatedFactions?: (number | Faction)[] | null;
+  relatedReligions?: (number | Religion)[] | null;
+  plotHooks?:
+    | {
+        plotHook?: string | null;
+        public?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  consequences?:
+    | {
+        consequence?: string | null;
+        public?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  summary: string;
+  dmNotes?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -597,6 +736,18 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'lore';
         value: number | Lore;
+      } | null)
+    | ({
+        relationTo: 'sessions';
+        value: number | Session;
+      } | null)
+    | ({
+        relationTo: 'characters';
+        value: number | Character;
+      } | null)
+    | ({
+        relationTo: 'adventures';
+        value: number | Adventure;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -825,15 +976,94 @@ export interface LoreSelect<T extends boolean = true> {
   slug?: T;
   name?: T;
   highlight?: T;
+  startDateSort?: T;
   type?: T;
   subtype?: T;
   era?: T;
+  startDateYear?: T;
+  startDateMonth?: T;
   summary?: T;
   relatedFactions?: T;
   relatedReligions?: T;
   relatedNPCs?: T;
   relatedWorld?: T;
   relatedLocations?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sessions_select".
+ */
+export interface SessionsSelect<T extends boolean = true> {
+  generateSlug?: T;
+  slug?: T;
+  title?: T;
+  relatedWorld?: T;
+  highlight?: T;
+  sessionNumber?: T;
+  sessionDate?: T;
+  worldDate?: T;
+  location?: T;
+  relatedNPCs?: T;
+  dmNotes?: T;
+  outcomeNotes?:
+    | T
+    | {
+        outcome?: T;
+        id?: T;
+      };
+  summary?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "characters_select".
+ */
+export interface CharactersSelect<T extends boolean = true> {
+  generateSlug?: T;
+  slug?: T;
+  name?: T;
+  icon?: T;
+  dmNotes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "adventures_select".
+ */
+export interface AdventuresSelect<T extends boolean = true> {
+  generateSlug?: T;
+  slug?: T;
+  name?: T;
+  startDateSort?: T;
+  status?: T;
+  startDateYear?: T;
+  startDateMonth?: T;
+  relatedWorld?: T;
+  relatedCharacters?: T;
+  relatedLocations?: T;
+  relatedNPCs?: T;
+  relatedFactions?: T;
+  relatedReligions?: T;
+  plotHooks?:
+    | T
+    | {
+        plotHook?: T;
+        public?: T;
+        id?: T;
+      };
+  consequences?:
+    | T
+    | {
+        consequence?: T;
+        public?: T;
+        id?: T;
+      };
+  summary?: T;
+  dmNotes?: T;
   updatedAt?: T;
   createdAt?: T;
 }

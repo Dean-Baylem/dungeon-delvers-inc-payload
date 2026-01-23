@@ -1,5 +1,5 @@
-import { SelectField } from '@payloadcms/ui';
 import { slugField, type CollectionConfig } from 'payload';
+import generateSortableDate from '@/payloadHooks/generateSortableDate';
 
 export const Lore: CollectionConfig = {
   slug: 'lore',
@@ -27,6 +27,16 @@ export const Lore: CollectionConfig = {
       ],
     },
     {
+      name: 'startDateSort',
+      type: 'number',
+      admin: {
+        hidden: true,
+      },
+      hooks: {
+        beforeChange: [generateSortableDate],
+      },
+    },
+    {
       type: 'group',
       label: 'Infobox details',
       fields: [
@@ -45,6 +55,9 @@ export const Lore: CollectionConfig = {
                 { label: 'People & Figures', value: 'people_and_figures' },
                 { label: 'General Lore', value: 'general_lore' },
               ],
+              admin: {
+                width: '50%',
+              },
             },
             {
               name: 'subtype',
@@ -75,6 +88,9 @@ export const Lore: CollectionConfig = {
                 { value: 'legendary_figure', label: 'Legendary Figure' },
                 { value: 'general', label: 'General Lore' },
               ],
+              admin: {
+                width: '50%',
+              },
             },
           ],
         },
@@ -82,12 +98,34 @@ export const Lore: CollectionConfig = {
           name: 'era',
           label: 'Date / Era',
           type: 'text',
+          admin: {
+            width: '25%',
+          },
+        },
+        {
+          name: 'startDateYear',
+          label: 'World Year Started',
+          type: 'number',
+          admin: {
+            width: '25%',
+          },
+        },
+        {
+          name: 'startDateMonth',
+          label: 'World Month Started',
+          type: 'number',
+          admin: {
+            width: '25%',
+          },
         },
         {
           name: 'summary',
           type: 'textarea',
           required: true,
           maxLength: 300,
+          admin: {
+            width: '100%',
+          },
         },
       ],
     },

@@ -2,7 +2,6 @@ import PageSection from '../page/PageSection';
 import BlockGroup from '@/components/blocks/group/BlockGroup';
 import InfoBox from '@/components/blocks/infobox/Infobox';
 import InfoBoxList from '@/components/blocks/infobox/InfoboxList';
-import BlockNavLinks from '@/components/blocks/nav/BlockNavLinks';
 import AdventureLogs from '@/components/ui/adventure/adventureLogs/AdventureLogs';
 import BlockSingleAdventure from '@/components/ui/adventure/BlockSingleAdventure';
 import PageTitle from '@/components/ui/typography/PageTitle';
@@ -10,53 +9,23 @@ import { RichText } from '@/components/ui/RichText';
 import { gridOptions } from '@/lib/options/gridOptions';
 import Image from 'next/image';
 import { SerializedEditorState } from 'node_modules/lexical/LexicalEditorState';
+import { AdventureLogType } from '@/types/adventureLog/adventureLog';
+import { AdventureCardType } from '@/types/adventureCard/adventureCard';
+import BlockNavLinks from '@/components/blocks/nav/BlockNavLinks';
 
 type Props = {
   richText: SerializedEditorState;
+  gazetterLinks: Array<AdventureLogType>;
+  sessionData: Array<AdventureLogType>;
+  adventureData: Array<AdventureCardType>;
 };
 
-export default function AdventureAndExploration({ richText }: Props) {
-  const adventureLogs = [
-    { link: '/adventures/log1', text: 'The Awakening of the Giant Kings' },
-    { link: '/adventures/log2', text: 'Siege of the Spider Queen' },
-    { link: '/adventures/log3', text: 'The Old Evil Rises' },
-  ];
-
-  const grandGazetter = [
-    { link: '/gazetter/entry1', text: 'The Forgotten City of Zel' },
-    { link: '/gazetter/entry2', text: 'The Whispering Woods' },
-    { link: '/gazetter/entry3', text: 'The Shattered Peaks' },
-  ];
-
-  const adventurerList = [
-    { iconSrc: '/icons/adventurer1.webp', name: 'Valen' },
-    { iconSrc: '/icons/adventurer2.png', name: 'Raltz' },
-    { iconSrc: '/icons/adventurer3.png', name: 'Spades' },
-    { iconSrc: '/icons/adventurer4.png', name: 'Sivan' },
-    { iconSrc: '/icons/adventurer5.png', name: 'Lem Naelax' },
-  ];
-
-  const dummyAdventures = [
-    {
-      title: 'The Lost Tomb of Horrors',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In fringilla nulla nisi, vitae porttitor sem rutrum a. Donec aliquam condimentum erat non pretium. Aliquam ligula nisi, vestibulum ac convallis ut, laoreet vel ex. Aliquam erat volutpat.',
-      adventurerList: adventurerList,
-    },
-    {
-      title: "Dragon's Lair",
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In fringilla nulla nisi, vitae porttitor sem rutrum a. Donec aliquam condimentum erat non pretium. Aliquam ligula nisi, vestibulum ac convallis ut, laoreet vel ex. Aliquam erat volutpat.',
-      adventurerList: adventurerList,
-    },
-    {
-      title: 'Cursed Forest',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. In fringilla nulla nisi, vitae porttitor sem rutrum a. Donec aliquam condimentum erat non pretium. Aliquam ligula nisi, vestibulum ac convallis ut, laoreet vel ex. Aliquam erat volutpat.',
-      adventurerList: adventurerList,
-    },
-  ];
-
+export default function AdventureAndExploration({
+  richText,
+  gazetterLinks,
+  sessionData,
+  adventureData,
+}: Props) {
   return (
     <PageSection title="Adventure & Exploration">
       <BlockGroup
@@ -104,7 +73,7 @@ export default function AdventureAndExploration({ richText }: Props) {
           row: { tab: gridOptions.row.tab[1], pc: gridOptions.row.pc[2] },
         }}
       >
-        <AdventureLogs logs={adventureLogs} gazetter={grandGazetter} />
+        <AdventureLogs sessions={sessionData} gazetter={gazetterLinks} />
       </BlockGroup>
       <BlockGroup
         options={{
@@ -116,20 +85,15 @@ export default function AdventureAndExploration({ richText }: Props) {
       >
         <RichText data={richText} />
         <BlockNavLinks
-          linkArray={[
-            { link: '/', text: 'Current Campaign', type: 'primary' },
-            { link: '/', text: 'Past Campaigns', type: 'secondary' },
-          ]}
+          linkArray={[{ link: '/sessions', text: 'Adventures and Tales', type: 'primary' }]}
         />
         <PageTitle as="h3" size="md" customClasses="mt-8">
           Ongoing Quests & Highlights
         </PageTitle>
-        {dummyAdventures.map((adventure, index) => (
+        {adventureData.map((adventure, index) => (
           <BlockSingleAdventure
-            title={adventure.title}
-            description={adventure.description}
-            list={adventure.adventurerList}
-            key={`adventure-${adventure.title}-${index}`}
+            key={`adventure-${index}-${adventure.title}`}
+            card={adventure as AdventureCardType}
           />
         ))}
       </BlockGroup>

@@ -9,10 +9,10 @@ type Props = {
 
 export default function AdventurerList({ list }: Props) {
   return (
-    <ul className="flex flex-wrap gap-4 justify-center">
+    <ul className="grid grid-cols-2 gap-4 justify-center justify-items-center">
       {list.map((adventurer, index) => (
         <li key={`adventurer-${adventurer.name}-${index}`}>
-          <figure className="grid grid-rows-[2.5rem_auto] justify-items-center gap-1 w-12">
+          <figure className="grid grid-rows-[2.5rem_auto] justify-items-center gap-1 w-full">
             <Image
               src={adventurer.iconSrc}
               alt={adventurer.name}

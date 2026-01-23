@@ -13,6 +13,9 @@ import { Factions } from './collections/Factions';
 import { NPCs } from './collections/NPCs';
 import { Religions } from './collections/Religions';
 import { Lore } from './collections/Lore';
+import { Sessions } from './collections/Sessions';
+import { Characters } from './collections/Characters';
+import { Adventures } from './collections/Adventures';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -24,7 +27,19 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Worlds, Locations, Factions, NPCs, Religions, Lore],
+  collections: [
+    Users,
+    Media,
+    Worlds,
+    Locations,
+    Factions,
+    NPCs,
+    Religions,
+    Lore,
+    Sessions,
+    Characters,
+    Adventures,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

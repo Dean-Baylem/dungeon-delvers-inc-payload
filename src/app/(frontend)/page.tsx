@@ -12,15 +12,20 @@ import { NPCListSingle } from '@/types/NPC/npcTypes';
 import FaithsAndOrigins from '@/components/layout/home/FaithsAndOrigins';
 import { FactionLocationCardType } from '@/types/factionsAndLocations/factionsAndLocations';
 import { ReligionCardType } from '@/types/religionCard/religionCard';
-import Image from 'next/image';
-import { LoreCardType } from '@/types/loreCard/lordcard';
+import { LoreCardType } from '@/types/loreCard/lordCard';
+import { AdventureLogType } from '@/types/adventureLog/adventureLog';
+import { AdventureCardType } from '@/types/adventureCard/adventureCard';
+import { Character } from '@/payload-types';
 
 const handlePayloadQuery = async (): Promise<{
   worldData: any;
   keyNPCData: Array<NPCListSingle>;
-  locationFactions: Array<FactionLocationCardType>;
+  factionData: Array<FactionLocationCardType>;
   religionData: Array<ReligionCardType>;
   loreData: Array<LoreCardType>;
+  locationData: Array<AdventureLogType>;
+  sessionData: Array<AdventureLogType>;
+  adventureData: Array<AdventureCardType>;
 }> => {
   const payloadConfig = await config;
   const payload = await getPayload({ config: payloadConfig });
@@ -30,8 +35,7 @@ const handlePayloadQuery = async (): Promise<{
     depth: 2,
   });
 
-  // Gather NPC Data
-
+  // Key NPC Data Collection
   const keyNPCs = await payload.find({
     collection: 'npcs',
     limit: 10,
@@ -59,7 +63,8 @@ const handlePayloadQuery = async (): Promise<{
     summary: npc.summary,
   }));
 
-  const locationData = await payload.find({
+  // Key Location Data Collection
+  const locationQuery = await payload.find({
     collection: 'locations',
     limit: 5,
     depth: 1,
@@ -68,7 +73,13 @@ const handlePayloadQuery = async (): Promise<{
     },
   });
 
-  const factionData = await payload.find({
+  const locationData: AdventureLogType[] = locationQuery.docs.map((location) => ({
+    link: `/locations/${location.slug}`,
+    text: location.name,
+  }));
+
+  // Key Faction Data Collection
+  const factionQuery = await payload.find({
     collection: 'factions',
     limit: 5,
     depth: 1,
@@ -77,7 +88,7 @@ const handlePayloadQuery = async (): Promise<{
     },
   });
 
-  const locationFactions: FactionLocationCardType[] = factionData.docs.map((faction) => ({
+  const factionData: FactionLocationCardType[] = factionQuery.docs.map((faction) => ({
     type: 'faction' as const,
     title: faction.name,
     summary: faction.summary,
@@ -85,6 +96,7 @@ const handlePayloadQuery = async (): Promise<{
     iconSrc: faction.symbol?.symbolImage?.url,
   }));
 
+  // Key Religion Data Collection
   const religiousOrder = await payload.find({
     collection: 'religions',
     limit: 6,
@@ -110,6 +122,7 @@ const handlePayloadQuery = async (): Promise<{
         : undefined,
     }));
 
+  // Key Lore Data Collection
   const loreDataQuery = await payload.find({
     collection: 'lore',
     limit: 16,
@@ -127,18 +140,67 @@ const handlePayloadQuery = async (): Promise<{
     summary: lore.summary,
   }));
 
+  // Key Session Data Collection
+  const sessionQuery = await payload.find({
+    collection: 'sessions',
+    limit: 3,
+    depth: 1,
+    where: {
+      relatedWorld: worldData.docs[0].id,
+    },
+  });
+
+  const sessionData: AdventureLogType[] = sessionQuery.docs.map((session) => ({
+    link: `/sessions/${session.slug}`,
+    text: session.title,
+  }));
+
+  const adventureQuery = await payload.find({
+    collection: 'adventures',
+    limit: 3,
+    depth: 2,
+    where: {
+      relatedWorld: worldData.docs[0].id,
+    },
+  });
+
+  const adventureData: AdventureCardType[] = adventureQuery.docs.map((adventure) => ({
+    title: adventure.name,
+    summary: adventure.summary,
+    link: `/adventures/${adventure.slug}`,
+    characterList: Array.isArray(adventure?.relatedCharacters)
+      ? adventure?.relatedCharacters.map((adventure) => {
+          return {
+            iconSrc: adventure?.icon?.url,
+            name: adventure?.name,
+          };
+        })
+      : [],
+  }));
+
   return {
     worldData,
     keyNPCData,
-    locationFactions,
+    factionData,
     religionData,
     loreData,
+    locationData,
+    sessionData,
+    adventureData,
   };
 };
 
 export default async function HomePage() {
-  const { worldData, keyNPCData, locationFactions, religionData, loreData } =
-    await handlePayloadQuery();
+  const {
+    worldData,
+    keyNPCData,
+    factionData,
+    religionData,
+    loreData,
+    locationData,
+    sessionData,
+    adventureData,
+  } = await handlePayloadQuery();
 
   if (worldData.totalDocs === 0) {
     return (
@@ -184,13 +246,18 @@ export default async function HomePage() {
         </HeroQuote>
       </Hero>
       <PageContents>
-        <AdventureAndExploration richText={adventureAndExploration} />
+        <AdventureAndExploration
+          richText={adventureAndExploration}
+          gazetterLinks={locationData}
+          sessionData={sessionData}
+          adventureData={adventureData}
+        />
         <LoreAndLegend richText={loreAndLegend} loreItems={loreData} />
         <FactionsAndSocieties
           richText={factionsAndSocieties}
           npcRichText={alliesRivalsAndVillains}
           keyNPCData={keyNPCData}
-          factionsAndLocations={locationFactions}
+          factionData={factionData}
         />
         <FaithsAndOrigins
           richText={deitiesAndCosmology}

@@ -15,88 +15,15 @@ type Props = {
   richText: SerializedEditorState;
   npcRichText: SerializedEditorState;
   keyNPCData: Array<NPCListSingle>;
-  factionsAndLocations: Array<FactionLocationCardType>;
+  factionData: Array<FactionLocationCardType>;
 };
 
 export default function FactionsAndSocieties({
   richText,
   npcRichText,
   keyNPCData,
-  factionsAndLocations,
+  factionData,
 }: Props) {
-  const dummyData: FactionLocationCardType[] = [
-    {
-      type: 'faction',
-      title: 'The Harpers',
-      CTAlink: '/factions/the-harpers',
-      summary:
-        'A semi-secret organization dedicated to promoting good, preserving history, and maintaining balance in the world.',
-    },
-    {
-      type: 'location',
-      title: 'Greyhawk City',
-      CTAlink: '/locations/greyhawk-city',
-      summary:
-        'Society and culture of the bustling city of Greyhawk, a hub of commerce and adventure.',
-    },
-    {
-      type: 'faction',
-      title: 'The Harpers',
-      CTAlink: '/factions/the-harpers',
-      summary:
-        'A semi-secret organization dedicated to promoting good, preserving history, and maintaining balance in the world.',
-    },
-    {
-      type: 'location',
-      title: 'Greyhawk City',
-      CTAlink: '/locations/greyhawk-city',
-      summary:
-        'Society and culture of the bustling city of Greyhawk, a hub of commerce and adventure.',
-    },
-    {
-      type: 'faction',
-      title: 'The Harpers',
-      CTAlink: '/factions/the-harpers',
-      summary:
-        'A semi-secret organization dedicated to promoting good, preserving history, and maintaining balance in the world.',
-    },
-    {
-      type: 'location',
-      title: 'Greyhawk City',
-      CTAlink: '/locations/greyhawk-city',
-      summary:
-        'Society and culture of the bustling city of Greyhawk, a hub of commerce and adventure.',
-    },
-    {
-      type: 'faction',
-      title: 'The Harpers',
-      CTAlink: '/factions/the-harpers',
-      summary:
-        'A semi-secret organization dedicated to promoting good, preserving history, and maintaining balance in the world.',
-    },
-    {
-      type: 'location',
-      title: 'Greyhawk City',
-      CTAlink: '/locations/greyhawk-city',
-      summary:
-        'Society and culture of the bustling city of Greyhawk, a hub of commerce and adventure.',
-    },
-    {
-      type: 'faction',
-      title: 'The Harpers',
-      CTAlink: '/factions/the-harpers',
-      summary:
-        'A semi-secret organization dedicated to promoting good, preserving history, and maintaining balance in the world.',
-    },
-    {
-      type: 'location',
-      title: 'Greyhawk City',
-      CTAlink: '/locations/greyhawk-city',
-      summary:
-        'Society and culture of the bustling city of Greyhawk, a hub of commerce and adventure.',
-    },
-  ];
-
   return (
     <PageSection title="Factions & Societies" reverseTitle={true}>
       <BlockGroup
@@ -135,7 +62,7 @@ export default function FactionsAndSocieties({
           order: gridOptions.order[2],
         }}
       >
-        <CardStack list={factionsAndLocations} />
+        <CardStack list={factionData} />
         <div className="mt-6">
           <PageTitle as="h3" size="md">
             Allies, Rivals, and Villains
