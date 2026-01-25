@@ -3,18 +3,31 @@ import NoPosts from '@/components/layout/noPosts/noPosts';
 import PageContents from '@/components/layout/page/PageContents';
 import PageSection from '@/components/layout/page/PageSection';
 import Hero from '@/components/ui/hero/Hero';
+import LoreDisplay from '@/components/ui/lore/LoreDisplay';
 import { gridOptions } from '@/lib/options/gridOptions';
 import ArchiveQuery from '@/lib/query/archiveQuery';
 import type { Lore } from '@/payload-types';
 import { LoreCardType } from '@/types/loreCard/lordCard';
+import { Where, WhereField } from 'payload';
 
-export default async function Lore({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
-  const { page } = await searchParams;
+export default async function Lore({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string; type?: string }>;
+}) {
+  const { page, type } = await searchParams;
+
+  const where: Where = {
+    relatedWorld: '1' as WhereField,
+    ...(type && {
+      subtype: Array.isArray(type) ? { in: type } : { equals: type },
+    }),
+  };
 
   const loreQuery = await ArchiveQuery({
     collection: 'lore',
     page: page ? Number(page) : 1,
-    worldId: 1,
+    where,
   });
 
   if (!loreQuery || loreQuery.totalDocs === 0) {
@@ -23,6 +36,7 @@ export default async function Lore({ searchParams }: { searchParams: Promise<{ p
 
   const loreData: LoreCardType[] = loreQuery.docs.map((lore: Lore) => ({
     type: lore.type ?? '',
+    subtype: lore.subtype ?? '',
     name: lore.name,
     slug: lore.slug,
     summary: lore.summary,
@@ -53,6 +67,7 @@ export default async function Lore({ searchParams }: { searchParams: Promise<{ p
               Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
               mollit anim id est laborum.
             </p>
+            <LoreDisplay loreData={loreData} />
           </BlockGroup>
         </PageSection>
       </PageContents>

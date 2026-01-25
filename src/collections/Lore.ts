@@ -1,10 +1,15 @@
 import { slugField, type CollectionConfig } from 'payload';
 import generateSortableDate from '@/payloadHooks/generateSortableDate';
+import { LORE_TYPES } from '@/constants/loreTypes';
+import { LORE_SUBTYPES } from '@/constants/loreSubtypes';
 
 export const Lore: CollectionConfig = {
   slug: 'lore',
   admin: {
     useAsTitle: 'name',
+  },
+  access: {
+    read: () => true,
   },
   fields: [
     slugField({ useAsSlug: 'name' }),
@@ -46,15 +51,7 @@ export const Lore: CollectionConfig = {
             {
               name: 'type',
               type: 'select',
-              options: [
-                { label: 'Doctrine', value: 'doctrine' },
-                { label: 'Religion, Myth, & Magic', value: 'religion_myth_and_magic' },
-                { label: 'History & Politics', value: 'history_and_politics' },
-                { label: 'Culture & Society', value: 'culture_and_society' },
-                { label: 'Places, Objects', value: 'places_and_objects' },
-                { label: 'People & Figures', value: 'people_and_figures' },
-                { label: 'General Lore', value: 'general_lore' },
-              ],
+              options: LORE_TYPES,
               admin: {
                 width: '50%',
               },
@@ -62,32 +59,7 @@ export const Lore: CollectionConfig = {
             {
               name: 'subtype',
               type: 'select',
-              options: [
-                { value: 'ideology', label: 'Ideology' },
-                { value: 'philosophy', label: 'Philosophy' },
-                { value: 'cosmology', label: 'Cosmology' },
-                { value: 'religion', label: 'Religion' },
-                { value: 'myth', label: 'Myth' },
-                { value: 'prophecy', label: 'Prophecy' },
-                { value: 'arcane', label: 'Arcane Lore' },
-                { value: 'ritual', label: 'Ritual' },
-                { value: 'history', label: 'History' },
-                { value: 'event', label: 'Event' },
-                { value: 'war', label: 'War' },
-                { value: 'treaty', label: 'Treaty' },
-                { value: 'law_policy', label: 'Law / Policy' },
-                { value: 'disaster', label: 'Disaster' },
-                { value: 'culture', label: 'Culture' },
-                { value: 'tradition', label: 'Tradition' },
-                { value: 'language', label: 'Language' },
-                { value: 'holiday', label: 'Holiday / Festival' },
-                { value: 'landmark', label: 'Landmark' },
-                { value: 'geology', label: 'Geology' },
-                { value: 'technology', label: 'Technology' },
-                { value: 'tome', label: 'Tome / Text' },
-                { value: 'legendary_figure', label: 'Legendary Figure' },
-                { value: 'general', label: 'General Lore' },
-              ],
+              options: LORE_SUBTYPES,
               admin: {
                 width: '50%',
               },

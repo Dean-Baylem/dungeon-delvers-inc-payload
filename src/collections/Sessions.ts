@@ -5,6 +5,9 @@ export const Sessions: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
   },
+  access: {
+    read: () => true,
+  },
   fields: [
     slugField({ useAsSlug: 'title' }),
     {
@@ -96,6 +99,9 @@ export const Sessions: CollectionConfig = {
         {
           name: 'dmNotes',
           type: 'richText',
+          access: {
+            read: ({ req }) => !!req.user,
+          },
         },
       ],
     },
