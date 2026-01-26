@@ -6,8 +6,10 @@ import { LoreCardType } from '@/types/loreCard/lordCard';
 import { AdventureLogType } from '@/types/adventureLog/adventureLog';
 import { AdventureCardType } from '@/types/adventureCard/adventureCard';
 import { NPCListSingle } from '@/types/NPC/npcTypes';
-import { Media } from '@/payload-types';
+import { Adventure, Media } from '@/payload-types';
 import mediaTypeCheck from './mediaTypeCheck';
+import { mapNPCDocToCard } from '../mappers/NPCCardMapper';
+import { mapAdventureDocToCard } from '../mappers/adventureCardMapper';
 
 export default async function HomeQuery(): Promise<{
   worldData: any;
@@ -38,21 +40,7 @@ export default async function HomeQuery(): Promise<{
     },
   });
 
-  const keyNPCData = keyNPCs.docs.map((npc) => ({
-    id: npc.id,
-    slug: npc.slug,
-    name: npc.name,
-    portrait: mediaTypeCheck(npc.portrait),
-    disposition: npc.disposition,
-    location: typeof npc.home === 'number' ? 'Unknown' : npc.home?.name || 'Unknown',
-    faction:
-      Array.isArray(npc?.relatedFaction) && npc?.relatedFaction[0]
-        ? typeof npc?.relatedFaction[0] === 'number'
-          ? ''
-          : npc?.relatedFaction[0]?.name
-        : '',
-    summary: npc.summary,
-  }));
+  const keyNPCData = keyNPCs.docs.map((npc) => mapNPCDocToCard(npc));
 
   // Key Location Data Collection
   const locationQuery = await payload.find({
@@ -151,19 +139,9 @@ export default async function HomeQuery(): Promise<{
     },
   });
 
-  const adventureData: AdventureCardType[] = adventureQuery.docs.map((adventure) => ({
-    title: adventure.name,
-    summary: adventure.summary,
-    link: `/adventures/${adventure.slug}`,
-    characterList: Array.isArray(adventure.relatedCharacters)
-      ? adventure.relatedCharacters
-          .filter((char): char is Exclude<typeof char, number> => typeof char !== 'number')
-          .map((char) => ({
-            iconSrc: mediaTypeCheck(char.icon).src,
-            name: char.name,
-          }))
-      : [],
-  }));
+  const adventureData: AdventureCardType[] = adventureQuery.docs.map((adventure: Adventure) =>
+    mapAdventureDocToCard(adventure),
+  );
 
   return {
     worldData,

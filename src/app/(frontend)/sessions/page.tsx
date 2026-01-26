@@ -13,6 +13,8 @@ import BlockSingleAdventure from '@/components/ui/adventure/BlockSingleAdventure
 import { AdventureCardType } from '@/types/adventureCard/adventureCard';
 import Link from 'next/link';
 import CTALink from '@/components/ui/links/CTALink';
+import { WhereField } from 'payload';
+import { mapAdventureDocToCard } from '@/lib/mappers/adventureCardMapper';
 
 export default async function Sessions({
   searchParams,
@@ -24,13 +26,13 @@ export default async function Sessions({
   const sessionData = await archiveQuery({
     collection: 'sessions',
     page: 1,
-    worldId: 1,
+    where: { relatedWorld: '1' as WhereField },
   });
 
   const adventureQuery = await archiveQuery({
     collection: 'adventures',
     page: page ? Number(page) : 1,
-    worldId: 1,
+    where: { relatedWorld: '1' as WhereField },
   });
 
   if (
@@ -40,19 +42,9 @@ export default async function Sessions({
     return <NoPosts />;
   }
 
-  const adventureData: AdventureCardType[] = adventureQuery.docs.map((adventure: Adventure) => ({
-    title: adventure.name,
-    summary: adventure.summary,
-    link: `/adventures/${adventure.slug}`,
-    characterList: Array.isArray(adventure?.relatedCharacters)
-      ? adventure?.relatedCharacters.map((character) => {
-          return {
-            iconSrc: character?.icon?.url,
-            name: character?.name,
-          };
-        })
-      : [],
-  }));
+  const adventureData: AdventureCardType[] = adventureQuery.docs.map((adventure: Adventure) =>
+    mapAdventureDocToCard(adventure),
+  );
 
   return (
     <main>
@@ -78,7 +70,7 @@ export default async function Sessions({
                     <InfoBoxList
                       list={[
                         { title: 'Total Sessions:', text: `${sessionData.totalDocs}` },
-                        { title: 'Total Adventures:', text: `${adventureData?.totalDocs || 0}` },
+                        { title: 'Total Adventures:', text: `${adventureQuery?.totalDocs || 0}` },
                       ]}
                     />
                   ),

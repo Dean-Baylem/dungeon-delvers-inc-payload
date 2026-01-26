@@ -2,35 +2,35 @@ import BlockGroup from '@/components/blocks/group/BlockGroup';
 import PageContents from '@/components/layout/page/PageContents';
 import PageSection from '@/components/layout/page/PageSection';
 import Hero from '@/components/ui/hero/Hero';
-import LoreDisplay from '@/components/ui/lore/LoreDisplay';
-import { mapLoreDocToCard } from '@/lib/mappers/loreCardMapper';
+import NPCDisplay from '@/components/ui/npcs/NPCDisplay';
+import NPCList from '@/components/ui/npcs/NPCList';
+import { mapNPCDocToCard } from '@/lib/mappers/NPCCardMapper';
 import { gridOptions } from '@/lib/options/gridOptions';
 import ArchiveQuery from '@/lib/query/archiveQuery';
-import type { Lore } from '@/payload-types';
-import { LoreCardType } from '@/types/loreCard/lordCard';
+import { Npc } from '@/payload-types';
 import { Where, WhereField } from 'payload';
 
-export default async function Lore({
+export default async function NPCArchive({
   searchParams,
 }: {
-  searchParams: Promise<{ page?: string; type?: string }>;
+  searchParams: Promise<{ page?: string; disposition?: string }>;
 }) {
-  const { page, type } = await searchParams;
+  const { page, disposition } = await searchParams;
 
   const where: Where = {
     relatedWorld: '1' as WhereField,
-    ...(type && {
-      subtype: Array.isArray(type) ? { in: type } : { equals: type },
+    ...(disposition && {
+      disposition: Array.isArray(disposition) ? { in: disposition } : { equals: disposition },
     }),
   };
 
-  const loreQuery = await ArchiveQuery({
-    collection: 'lore',
+  const npcQuery = await ArchiveQuery({
+    collection: 'npcs',
     page: page ? Number(page) : 1,
     where,
   });
 
-  const loreData: LoreCardType[] = loreQuery.docs.map((lore: Lore) => mapLoreDocToCard(lore));
+  const npcData = npcQuery.docs.map((npc: Npc) => mapNPCDocToCard(npc));
 
   return (
     <main>
@@ -40,7 +40,7 @@ export default async function Lore({
         image={{ src: '/home/hero-home.webp', alt: 'hero-image-adventurers-overlooking-city' }}
       />
       <PageContents>
-        <PageSection title="Lore from the Vaults">
+        <PageSection title="NPC's of the Flanaess">
           <BlockGroup
             options={{
               span: { tab: gridOptions.span.tab[11], pc: gridOptions.span.pc[11] },
@@ -57,7 +57,7 @@ export default async function Lore({
               Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
               mollit anim id est laborum.
             </p>
-            <LoreDisplay loreData={loreData} />
+            <NPCDisplay npcData={npcData} />
           </BlockGroup>
         </PageSection>
       </PageContents>
