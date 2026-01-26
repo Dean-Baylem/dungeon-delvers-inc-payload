@@ -3,6 +3,8 @@ Locations
 Represents individual places within a region
 */
 
+import { LOCATION_TERRAINS } from '@/constants/locationTerrain';
+import { LOCATION_TYPES } from '@/constants/locationTypes';
 import { slugField, type CollectionConfig } from 'payload';
 
 export const Locations: CollectionConfig = {
@@ -34,36 +36,12 @@ export const Locations: CollectionConfig = {
           name: 'type',
           type: 'select',
           required: true,
-          options: [
-            { label: 'City', value: 'city' },
-            { label: 'Dungeon', value: 'dungeon' },
-            { label: 'Fortress', value: 'fortress' },
-            { label: 'Other', value: 'other' },
-            { label: 'Ruins', value: 'ruins' },
-            { label: 'Town', value: 'town' },
-            { label: 'Village', value: 'village' },
-            { label: 'Wilderness', value: 'wilderness' },
-          ],
+          options: LOCATION_TYPES,
         },
         {
           name: 'terrain',
           type: 'select',
-          options: [
-            { label: 'Caverns', value: 'caverns' },
-            { label: 'Coastal', value: 'coastal' },
-            { label: 'Desert', value: 'desert' },
-            { label: 'Forest', value: 'forest' },
-            { label: 'Hills', value: 'hills' },
-            { label: 'Jungle', value: 'jungle' },
-            { label: 'Mountains', value: 'mountains' },
-            { label: 'Plains', value: 'plains' },
-            { label: 'Ruins', value: 'ruins' },
-            { label: 'Swamp', value: 'swamp' },
-            { label: 'Tundra', value: 'tundra' },
-            { label: 'Underground', value: 'underground' },
-            { label: 'Urban', value: 'urban' },
-            { label: 'Wetlands', value: 'wetlands' },
-          ],
+          options: LOCATION_TERRAINS,
           required: false,
         },
         {

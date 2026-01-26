@@ -23,7 +23,7 @@ export default function AdventureLogs({ sessions, gazetter }: Props) {
         <AdventureLogGroup
           title="Grand Gazetteer"
           logs={gazetter}
-          cta={{ link: `/grand-gazetter`, text: 'See More', type: 'secondary' }}
+          cta={{ link: `/grand-gazetteer`, text: 'See More', type: 'secondary' }}
         />
       )}
     </div>
