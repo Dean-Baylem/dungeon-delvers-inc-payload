@@ -1,4 +1,4 @@
-import ArchiveQuery from '@/lib/query/archiveQuery';
+import archiveQuery from '@/lib/query/archiveQuery';
 import { Where, WhereField } from 'payload';
 import { mapLocationToGazetteerCard } from '@/lib/mappers/gazetteerCardMapper';
 import { GazetteerCardType } from '@/types/gazetteerCard/gazetteerCardType';
@@ -20,7 +20,7 @@ export default async function GrandGazetteerArchive({
     relatedWorld: '1' as WhereField,
   };
 
-  const grandGazetteerQuery = await ArchiveQuery({
+  const grandGazetteerQuery = await archiveQuery({
     collection: 'locations',
     page: page ? Number(page) : 1,
     where,

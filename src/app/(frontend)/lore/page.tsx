@@ -5,7 +5,7 @@ import Hero from '@/components/ui/hero/Hero';
 import LoreDisplay from '@/components/ui/lore/LoreDisplay';
 import { mapLoreDocToCard } from '@/lib/mappers/loreCardMapper';
 import { gridOptions } from '@/lib/options/gridOptions';
-import ArchiveQuery from '@/lib/query/archiveQuery';
+import archiveQuery from '@/lib/query/archiveQuery';
 import type { Lore } from '@/payload-types';
 import { LoreCardType } from '@/types/loreCard/lordCard';
 import { Where, WhereField } from 'payload';
@@ -24,7 +24,7 @@ export default async function Lore({
     }),
   };
 
-  const loreQuery = await ArchiveQuery({
+  const loreQuery = await archiveQuery({
     collection: 'lore',
     page: page ? Number(page) : 1,
     where,

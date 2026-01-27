@@ -6,7 +6,7 @@ import NPCDisplay from '@/components/ui/npcs/NPCDisplay';
 import NPCList from '@/components/ui/npcs/NPCList';
 import { mapNPCDocToCard } from '@/lib/mappers/NPCCardMapper';
 import { gridOptions } from '@/lib/options/gridOptions';
-import ArchiveQuery from '@/lib/query/archiveQuery';
+import archiveQuery from '@/lib/query/archiveQuery';
 import { Npc } from '@/payload-types';
 import { Where, WhereField } from 'payload';
 
@@ -24,7 +24,7 @@ export default async function NPCArchive({
     }),
   };
 
-  const npcQuery = await ArchiveQuery({
+  const npcQuery = await archiveQuery({
     collection: 'npcs',
     page: page ? Number(page) : 1,
     where,
