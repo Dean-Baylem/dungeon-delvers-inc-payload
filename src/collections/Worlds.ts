@@ -1,4 +1,5 @@
-import type { CollectionConfig } from 'payload'
+import { slugField } from 'payload';
+import type { CollectionConfig } from 'payload';
 
 export const Worlds: CollectionConfig = {
   slug: 'worlds',
@@ -9,11 +10,6 @@ export const Worlds: CollectionConfig = {
   fields: [
     {
       name: 'name',
-      type: 'text',
-      required: true,
-    },
-    {
-      name: 'slug',
       type: 'text',
       required: true,
     },
@@ -31,9 +27,11 @@ export const Worlds: CollectionConfig = {
         { name: 'adventureAndExploration', type: 'richText' },
         { name: 'loreAndLegend', type: 'richText' },
         { name: 'factionsAndSocieties', type: 'richText' },
+        { name: 'alliesRivalsAndVillains', type: 'richText' },
         { name: 'deitiesAndCosmology', type: 'richText' },
         { name: 'planarHistory', type: 'richText' },
       ],
     },
+    slugField({ useAsSlug: 'name' }),
   ],
-}
+};

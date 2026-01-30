@@ -1,0 +1,16 @@
+export const LOCATION_TERRAINS = [
+  { label: 'Caverns', value: 'caverns' },
+  { label: 'Coastal', value: 'coastal' },
+  { label: 'Desert', value: 'desert' },
+  { label: 'Forest', value: 'forest' },
+  { label: 'Hills', value: 'hills' },
+  { label: 'Jungle', value: 'jungle' },
+  { label: 'Mountains', value: 'mountains' },
+  { label: 'Plains', value: 'plains' },
+  { label: 'Ruins', value: 'ruins' },
+  { label: 'Swamp', value: 'swamp' },
+  { label: 'Tundra', value: 'tundra' },
+  { label: 'Underground', value: 'underground' },
+  { label: 'Urban', value: 'urban' },
+  { label: 'Wetlands', value: 'wetlands' },
+];

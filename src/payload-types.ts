@@ -69,6 +69,15 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    worlds: World;
+    locations: Location;
+    factions: Faction;
+    npcs: Npc;
+    religions: Religion;
+    lore: Lore;
+    sessions: Session;
+    characters: Character;
+    adventures: Adventure;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +87,15 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    worlds: WorldsSelect<false> | WorldsSelect<true>;
+    locations: LocationsSelect<false> | LocationsSelect<true>;
+    factions: FactionsSelect<false> | FactionsSelect<true>;
+    npcs: NpcsSelect<false> | NpcsSelect<true>;
+    religions: ReligionsSelect<false> | ReligionsSelect<true>;
+    lore: LoreSelect<false> | LoreSelect<true>;
+    sessions: SessionsSelect<false> | SessionsSelect<true>;
+    characters: CharactersSelect<false> | CharactersSelect<true>;
+    adventures: AdventuresSelect<false> | AdventuresSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -160,6 +178,510 @@ export interface Media {
   focalY?: number | null;
 }
 /**
+ * The root collection for all other collections. One world per instance.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "worlds".
+ */
+export interface World {
+  id: number;
+  name: string;
+  allowedUsers?: (number | User)[] | null;
+  overview?: {
+    adventureAndExploration?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    loreAndLegend?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    factionsAndSocieties?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    alliesRivalsAndVillains?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    deitiesAndCosmology?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+    planarHistory?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
+  };
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations".
+ */
+export interface Location {
+  id: number;
+  name: string;
+  highlight?: boolean | null;
+  type: 'city' | 'dungeon' | 'fortress' | 'other' | 'ruins' | 'town' | 'village' | 'wilderness';
+  terrain?:
+    | (
+        | 'caverns'
+        | 'coastal'
+        | 'desert'
+        | 'forest'
+        | 'hills'
+        | 'jungle'
+        | 'mountains'
+        | 'plains'
+        | 'ruins'
+        | 'swamp'
+        | 'tundra'
+        | 'underground'
+        | 'urban'
+        | 'wetlands'
+      )
+    | null;
+  resources?:
+    | {
+        singleResource?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  population?: string | null;
+  economy?: string | null;
+  summary: string;
+  relatedNPCs?: (number | Npc)[] | null;
+  parentLocation?: (number | null) | Location;
+  relatedWorld?: (number | null) | World;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "npcs".
+ */
+export interface Npc {
+  id: number;
+  name: string;
+  relatedFaction?: (number | Faction)[] | null;
+  hidden?: boolean | null;
+  highlight?: boolean | null;
+  portrait: number | Media;
+  aliases?:
+    | {
+        alias?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  species?: string | null;
+  age?: string | null;
+  disposition: 'ally' | 'neutral' | 'villain';
+  allies?: (number | Npc)[] | null;
+  adversaries?: (number | Npc)[] | null;
+  summary: string;
+  home?: (number | null) | Location;
+  relatedWorld?: (number | null) | World;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "factions".
+ */
+export interface Faction {
+  id: number;
+  name: string;
+  highlight?: boolean | null;
+  symbol?: {
+    symbolImage?: (number | null) | Media;
+    symbolDescription?: string | null;
+  };
+  factiontype?:
+    | (
+        | 'adventuring'
+        | 'artistic'
+        | 'arcane'
+        | 'criminal'
+        | 'knowledge'
+        | 'mercantile'
+        | 'military'
+        | 'nature'
+        | 'occult'
+        | 'political'
+        | 'religious'
+        | 'other'
+      )
+    | null;
+  goals?:
+    | {
+        goal: string;
+        id?: string | null;
+      }[]
+    | null;
+  mantra?: string | null;
+  membershipStructure?:
+    | {
+        title: string;
+        description: string;
+        ranking: number;
+        relatedNPCs?: (number | null) | Npc;
+        id?: string | null;
+      }[]
+    | null;
+  summary: string;
+  relatedLocations?: (number | Location)[] | null;
+  leader?: (number | null) | Npc;
+  relatedWorld?: (number | null) | World;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "religions".
+ */
+export interface Religion {
+  id: number;
+  name: string;
+  highlight?: boolean | null;
+  icon?: (number | null) | Media;
+  type?:
+    | (
+        | 'ancestral_faith'
+        | 'celestial_faith'
+        | 'civic_faith'
+        | 'death_faith'
+        | 'elemental_faith'
+        | 'fiendish_faith'
+        | 'heretical_sect'
+        | 'ideological_order'
+        | 'monastic_order'
+        | 'monotheism'
+        | 'mystery_faith'
+        | 'other'
+        | 'pantheism'
+        | 'primal_faith'
+        | 'prophetic_faith'
+        | 'revivalist_faith'
+        | 'shadow_faith'
+        | 'trickster_faith'
+      )
+    | null;
+  deities?:
+    | (
+        | 'Beory, Heart of Oerth'
+        | 'Berei of the Hearth'
+        | 'Boccob the Uncaring, Archmage of the Gods'
+        | 'Celestian, the Far Wanderer'
+        | 'St. Cuthbert of the Cudgel'
+        | 'Ehlonna of the Forests'
+        | 'Iuz the Evil'
+        | 'Lolth, Spider Queen'
+        | 'Nerull, the Reaper'
+        | 'Pelor, the Radiant Sun'
+        | 'Pholtus of the Blinding Light'
+        | 'Rao, the Mediator'
+        | 'Tharizdun, the Eater of Worlds'
+        | 'Vecna, the Whispered One'
+        | 'Wee Jas, the Witch'
+      )[]
+    | null;
+  relatedWorlds?: (number | World)[] | null;
+  relatedNPCs?: (number | Npc)[] | null;
+  relatedFactions?: (number | Faction)[] | null;
+  relatedLocations?: (number | Location)[] | null;
+  summary: string;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lore".
+ */
+export interface Lore {
+  id: number;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  name: string;
+  highlight?: boolean | null;
+  startDateSort?: number | null;
+  type?:
+    | (
+        | 'doctrine'
+        | 'religion_myth_and_magic'
+        | 'history_and_politics'
+        | 'culture_and_society'
+        | 'places_and_objects'
+        | 'people_and_figures'
+        | 'general_lore'
+      )
+    | null;
+  subtype?:
+    | (
+        | 'ideology'
+        | 'philosophy'
+        | 'cosmology'
+        | 'religion'
+        | 'myth'
+        | 'prophecy'
+        | 'arcane'
+        | 'ritual'
+        | 'history'
+        | 'event'
+        | 'war'
+        | 'treaty'
+        | 'law_policy'
+        | 'disaster'
+        | 'culture'
+        | 'tradition'
+        | 'language'
+        | 'holiday'
+        | 'landmark'
+        | 'geology'
+        | 'technology'
+        | 'tome'
+        | 'legendary_figure'
+        | 'general'
+      )
+    | null;
+  era?: string | null;
+  startDateYear?: number | null;
+  startDateMonth?: number | null;
+  summary: string;
+  relatedFactions?: (number | Faction)[] | null;
+  relatedReligions?: (number | Religion)[] | null;
+  relatedNPCs?: (number | Npc)[] | null;
+  relatedWorld?: (number | null) | World;
+  relatedLocations?: (number | Location)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sessions".
+ */
+export interface Session {
+  id: number;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  title: string;
+  relatedWorld: number | World;
+  highlight?: boolean | null;
+  sessionNumber: number;
+  sessionDate: string;
+  worldDate: string;
+  location?: (number | Location)[] | null;
+  relatedNPCs?: (number | Npc)[] | null;
+  dmNotes?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  outcomeNotes?:
+    | {
+        outcome?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  summary: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "characters".
+ */
+export interface Character {
+  id: number;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  name: string;
+  icon: number | Media;
+  dmNotes?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "adventures".
+ */
+export interface Adventure {
+  id: number;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  name: string;
+  startDateSort?: number | null;
+  status: 'abandoned' | 'completed' | 'failed' | 'in_progress' | 'not_started';
+  startDateYear: number;
+  startDateMonth: number;
+  relatedWorld: number | World;
+  relatedCharacters?: (number | Character)[] | null;
+  relatedLocations?: (number | Location)[] | null;
+  relatedNPCs?: (number | Npc)[] | null;
+  relatedFactions?: (number | Faction)[] | null;
+  relatedReligions?: (number | Religion)[] | null;
+  plotHooks?:
+    | {
+        plotHook?: string | null;
+        public?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  consequences?:
+    | {
+        consequence?: string | null;
+        public?: boolean | null;
+        id?: string | null;
+      }[]
+    | null;
+  summary: string;
+  dmNotes?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -190,6 +712,42 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'worlds';
+        value: number | World;
+      } | null)
+    | ({
+        relationTo: 'locations';
+        value: number | Location;
+      } | null)
+    | ({
+        relationTo: 'factions';
+        value: number | Faction;
+      } | null)
+    | ({
+        relationTo: 'npcs';
+        value: number | Npc;
+      } | null)
+    | ({
+        relationTo: 'religions';
+        value: number | Religion;
+      } | null)
+    | ({
+        relationTo: 'lore';
+        value: number | Lore;
+      } | null)
+    | ({
+        relationTo: 'sessions';
+        value: number | Session;
+      } | null)
+    | ({
+        relationTo: 'characters';
+        value: number | Character;
+      } | null)
+    | ({
+        relationTo: 'adventures';
+        value: number | Adventure;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -272,6 +830,242 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "worlds_select".
+ */
+export interface WorldsSelect<T extends boolean = true> {
+  name?: T;
+  allowedUsers?: T;
+  overview?:
+    | T
+    | {
+        adventureAndExploration?: T;
+        loreAndLegend?: T;
+        factionsAndSocieties?: T;
+        alliesRivalsAndVillains?: T;
+        deitiesAndCosmology?: T;
+        planarHistory?: T;
+      };
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "locations_select".
+ */
+export interface LocationsSelect<T extends boolean = true> {
+  name?: T;
+  highlight?: T;
+  type?: T;
+  terrain?: T;
+  resources?:
+    | T
+    | {
+        singleResource?: T;
+        id?: T;
+      };
+  population?: T;
+  economy?: T;
+  summary?: T;
+  relatedNPCs?: T;
+  parentLocation?: T;
+  relatedWorld?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "factions_select".
+ */
+export interface FactionsSelect<T extends boolean = true> {
+  name?: T;
+  highlight?: T;
+  symbol?:
+    | T
+    | {
+        symbolImage?: T;
+        symbolDescription?: T;
+      };
+  factiontype?: T;
+  goals?:
+    | T
+    | {
+        goal?: T;
+        id?: T;
+      };
+  mantra?: T;
+  membershipStructure?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        ranking?: T;
+        relatedNPCs?: T;
+        id?: T;
+      };
+  summary?: T;
+  relatedLocations?: T;
+  leader?: T;
+  relatedWorld?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "npcs_select".
+ */
+export interface NpcsSelect<T extends boolean = true> {
+  name?: T;
+  relatedFaction?: T;
+  hidden?: T;
+  highlight?: T;
+  portrait?: T;
+  aliases?:
+    | T
+    | {
+        alias?: T;
+        id?: T;
+      };
+  species?: T;
+  age?: T;
+  disposition?: T;
+  allies?: T;
+  adversaries?: T;
+  summary?: T;
+  home?: T;
+  relatedWorld?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "religions_select".
+ */
+export interface ReligionsSelect<T extends boolean = true> {
+  name?: T;
+  highlight?: T;
+  icon?: T;
+  type?: T;
+  deities?: T;
+  relatedWorlds?: T;
+  relatedNPCs?: T;
+  relatedFactions?: T;
+  relatedLocations?: T;
+  summary?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "lore_select".
+ */
+export interface LoreSelect<T extends boolean = true> {
+  generateSlug?: T;
+  slug?: T;
+  name?: T;
+  highlight?: T;
+  startDateSort?: T;
+  type?: T;
+  subtype?: T;
+  era?: T;
+  startDateYear?: T;
+  startDateMonth?: T;
+  summary?: T;
+  relatedFactions?: T;
+  relatedReligions?: T;
+  relatedNPCs?: T;
+  relatedWorld?: T;
+  relatedLocations?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sessions_select".
+ */
+export interface SessionsSelect<T extends boolean = true> {
+  generateSlug?: T;
+  slug?: T;
+  title?: T;
+  relatedWorld?: T;
+  highlight?: T;
+  sessionNumber?: T;
+  sessionDate?: T;
+  worldDate?: T;
+  location?: T;
+  relatedNPCs?: T;
+  dmNotes?: T;
+  outcomeNotes?:
+    | T
+    | {
+        outcome?: T;
+        id?: T;
+      };
+  summary?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "characters_select".
+ */
+export interface CharactersSelect<T extends boolean = true> {
+  generateSlug?: T;
+  slug?: T;
+  name?: T;
+  icon?: T;
+  dmNotes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "adventures_select".
+ */
+export interface AdventuresSelect<T extends boolean = true> {
+  generateSlug?: T;
+  slug?: T;
+  name?: T;
+  startDateSort?: T;
+  status?: T;
+  startDateYear?: T;
+  startDateMonth?: T;
+  relatedWorld?: T;
+  relatedCharacters?: T;
+  relatedLocations?: T;
+  relatedNPCs?: T;
+  relatedFactions?: T;
+  relatedReligions?: T;
+  plotHooks?:
+    | T
+    | {
+        plotHook?: T;
+        public?: T;
+        id?: T;
+      };
+  consequences?:
+    | T
+    | {
+        consequence?: T;
+        public?: T;
+        id?: T;
+      };
+  summary?: T;
+  dmNotes?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

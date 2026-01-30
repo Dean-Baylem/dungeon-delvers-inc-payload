@@ -1,15 +1,24 @@
-import { postgresAdapter } from '@payloadcms/db-postgres'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import path from 'path'
-import { buildConfig } from 'payload'
-import { fileURLToPath } from 'url'
-import sharp from 'sharp'
+import { postgresAdapter } from '@payloadcms/db-postgres';
+import { lexicalEditor } from '@payloadcms/richtext-lexical';
+import path from 'path';
+import { buildConfig } from 'payload';
+import { fileURLToPath } from 'url';
+import sharp from 'sharp';
 
-import { Users } from './collections/Users'
-import { Media } from './collections/Media'
+import { Users } from './collections/Users';
+import { Media } from './collections/Media';
+import { Worlds } from './collections/Worlds';
+import { Locations } from './collections/Locations';
+import { Factions } from './collections/Factions';
+import { NPCs } from './collections/NPCs';
+import { Religions } from './collections/Religions';
+import { Lore } from './collections/Lore';
+import { Sessions } from './collections/Sessions';
+import { Characters } from './collections/Characters';
+import { Adventures } from './collections/Adventures';
 
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
 export default buildConfig({
   admin: {
@@ -18,7 +27,19 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [
+    Users,
+    Media,
+    Worlds,
+    Locations,
+    Factions,
+    NPCs,
+    Religions,
+    Lore,
+    Sessions,
+    Characters,
+    Adventures,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -31,4 +52,4 @@ export default buildConfig({
   }),
   sharp,
   plugins: [],
-})
+});
