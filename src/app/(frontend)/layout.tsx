@@ -41,8 +41,9 @@ const lugrasimo = Lugrasimo({
 });
 
 export const metadata = {
-  description: 'A blank template using Payload in a Next.js app.',
-  title: 'Payload Blank Template',
+  description:
+    'Welcome to Dungeon Delvers Inc. where we chronical the adventures and events happening my campaign world. The current campaign is the Fall of Boltztail, set in the Greyhawk setting. The seals upon ancient giants are breaking, a draconic curse tied to their origins, and machinations of evil cults are rising in this fantasy campaign world.',
+  title: 'Dungeon Delvers Inc. - Greyhawk Campaign World',
 };
 
 export default function RootLayout({

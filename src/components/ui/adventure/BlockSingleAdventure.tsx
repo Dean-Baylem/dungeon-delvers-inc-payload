@@ -17,9 +17,9 @@ export default function BlockSingleAdventure({ card }: Props) {
           {title}
         </PageTitle>
         <PageText customClasses="font-medium">{summary}</PageText>
-        <span className="hidden md:block">
+        {/* <span className="hidden md:block">
           <BlockNavLinks linkArray={[{ link: link, text: 'See Adventure', type: 'primary' }]} />
-        </span>
+        </span> */}
       </div>
       <div className="flex flex-col gap-4 text-center relative">
         <span className="absolute h-4/5 w-0.5 bg-heading block top-1/2 -left-3 transform -translate-y-1/2"></span>
@@ -27,9 +27,9 @@ export default function BlockSingleAdventure({ card }: Props) {
           Adventurers
         </PageTitle>
         <AdventurerList list={characterList} />
-        <span className="md:hidden mx-auto mt-4">
+        {/* <span className="md:hidden mx-auto mt-4">
           <BlockNavLinks linkArray={[{ link: link, text: 'See Adventure', type: 'primary' }]} />
-        </span>
+        </span> */}
       </div>
     </article>
   );

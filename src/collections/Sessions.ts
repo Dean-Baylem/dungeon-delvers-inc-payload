@@ -77,12 +77,12 @@ export const Sessions: CollectionConfig = {
               relationTo: 'npcs',
               hasMany: true,
             },
-            // {
-            //     type: "relationship",
-            //     name: "relatedAdventures",
-            //     relationTo: "adventures",
-            //     hasMany: true,
-            // }
+            {
+              type: 'relationship',
+              name: 'relatedAdventures',
+              relationTo: 'adventures',
+              hasMany: true,
+            },
           ],
         },
       ],
@@ -91,11 +91,10 @@ export const Sessions: CollectionConfig = {
       type: 'group',
       label: 'Session Notes',
       fields: [
-        // {
-        //     name: "playerNotes",
-        //     type: "blocks",
-        //     blocks: []
-        // }
+        {
+          name: 'content',
+          type: 'richText',
+        },
         {
           name: 'dmNotes',
           type: 'richText',

@@ -148,5 +148,22 @@ export const Lore: CollectionConfig = {
         },
       ],
     },
+    {
+      type: 'group',
+      label: 'Session Notes',
+      fields: [
+        {
+          name: 'content',
+          type: 'richText',
+        },
+        {
+          name: 'dmNotes',
+          type: 'richText',
+          access: {
+            read: ({ req }) => !!req.user,
+          },
+        },
+      ],
+    },
   ],
 };
