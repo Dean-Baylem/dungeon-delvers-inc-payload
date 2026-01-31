@@ -326,6 +326,36 @@ export interface Location {
   relatedNPCs?: (number | Npc)[] | null;
   parentLocation?: (number | null) | Location;
   relatedWorld?: (number | null) | World;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  dmNotes?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -359,6 +389,36 @@ export interface Npc {
   summary: string;
   home?: (number | null) | Location;
   relatedWorld?: (number | null) | World;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  dmNotes?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -415,6 +475,36 @@ export interface Faction {
   relatedLocations?: (number | Location)[] | null;
   leader?: (number | null) | Npc;
   relatedWorld?: (number | null) | World;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  dmNotes?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -548,6 +638,36 @@ export interface Lore {
   relatedNPCs?: (number | Npc)[] | null;
   relatedWorld?: (number | null) | World;
   relatedLocations?: (number | Location)[] | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  dmNotes?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -570,6 +690,22 @@ export interface Session {
   worldDate: string;
   location?: (number | Location)[] | null;
   relatedNPCs?: (number | Npc)[] | null;
+  relatedAdventures?: (number | Adventure)[] | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   dmNotes?: {
     root: {
       type: string;
@@ -592,37 +728,6 @@ export interface Session {
       }[]
     | null;
   summary: string;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "characters".
- */
-export interface Character {
-  id: number;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  name: string;
-  icon: number | Media;
-  dmNotes?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -663,6 +768,37 @@ export interface Adventure {
       }[]
     | null;
   summary: string;
+  dmNotes?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "characters".
+ */
+export interface Character {
+  id: number;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  name: string;
+  icon: number | Media;
   dmNotes?: {
     root: {
       type: string;
@@ -874,6 +1010,8 @@ export interface LocationsSelect<T extends boolean = true> {
   relatedNPCs?: T;
   parentLocation?: T;
   relatedWorld?: T;
+  content?: T;
+  dmNotes?: T;
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;
@@ -913,6 +1051,8 @@ export interface FactionsSelect<T extends boolean = true> {
   relatedLocations?: T;
   leader?: T;
   relatedWorld?: T;
+  content?: T;
+  dmNotes?: T;
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;
@@ -942,6 +1082,8 @@ export interface NpcsSelect<T extends boolean = true> {
   summary?: T;
   home?: T;
   relatedWorld?: T;
+  content?: T;
+  dmNotes?: T;
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;
@@ -988,6 +1130,8 @@ export interface LoreSelect<T extends boolean = true> {
   relatedNPCs?: T;
   relatedWorld?: T;
   relatedLocations?: T;
+  content?: T;
+  dmNotes?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1006,6 +1150,8 @@ export interface SessionsSelect<T extends boolean = true> {
   worldDate?: T;
   location?: T;
   relatedNPCs?: T;
+  relatedAdventures?: T;
+  content?: T;
   dmNotes?: T;
   outcomeNotes?:
     | T

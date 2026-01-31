@@ -110,6 +110,23 @@ export const Locations: CollectionConfig = {
       relationTo: 'worlds',
       maxDepth: 0,
     },
+    {
+      type: 'group',
+      label: 'Session Notes',
+      fields: [
+        {
+          name: 'content',
+          type: 'richText',
+        },
+        {
+          name: 'dmNotes',
+          type: 'richText',
+          access: {
+            read: ({ req }) => !!req.user,
+          },
+        },
+      ],
+    },
     slugField({ useAsSlug: 'name' }),
   ],
   admin: {

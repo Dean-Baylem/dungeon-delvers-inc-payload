@@ -53,7 +53,7 @@ export default async function HomeQuery(): Promise<{
   });
 
   const locationData: AdventureLogType[] = locationQuery.docs.map((location) => ({
-    link: `/locations/${location.slug}`,
+    link: `/grand-gazetteer/${location.slug}`,
     text: location.name,
   }));
 
