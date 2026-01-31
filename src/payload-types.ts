@@ -568,6 +568,36 @@ export interface Religion {
   relatedFactions?: (number | Faction)[] | null;
   relatedLocations?: (number | Location)[] | null;
   summary: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  dmNotes?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -1104,6 +1134,8 @@ export interface ReligionsSelect<T extends boolean = true> {
   relatedFactions?: T;
   relatedLocations?: T;
   summary?: T;
+  content?: T;
+  dmNotes?: T;
   generateSlug?: T;
   slug?: T;
   updatedAt?: T;
