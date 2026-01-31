@@ -53,7 +53,7 @@ export default function LoreAndLegend({ richText, loreItems }: Props) {
         <div className="flex justify-center md:justify-start">
           <CTALink link="/lore" text="Explore Lore" type="primary" />
         </div>
-        <LoreList allItems={loreItems} />
+        <LoreList allItems={loreItems} id="lore-card-list" isLoading={false} />
       </BlockGroup>
     </PageSection>
   );
