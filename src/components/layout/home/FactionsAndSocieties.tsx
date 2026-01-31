@@ -72,7 +72,7 @@ export default function FactionsAndSocieties({
         <div className="flex">
           <CTALink link="/npcs" text="See All NPCs" type="primary" />
         </div>
-        <NPCList list={keyNPCData} allowedDispositions={['ally', 'villain', 'neutral']} />
+        <NPCList list={keyNPCData} isLoading={false} />
       </BlockGroup>
     </PageSection>
   );
