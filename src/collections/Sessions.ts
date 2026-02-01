@@ -9,7 +9,6 @@ export const Sessions: CollectionConfig = {
     read: () => true,
   },
   fields: [
-    slugField({ useAsSlug: 'title' }),
     {
       type: 'row',
       fields: [
@@ -37,6 +36,11 @@ export const Sessions: CollectionConfig = {
           admin: {
             width: '20%',
           },
+        },
+        {
+          name: 'pageSlug',
+          type: 'text',
+          required: true,
         },
       ],
     },

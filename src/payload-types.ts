@@ -521,6 +521,7 @@ export interface Religion {
   id: number;
   name: string;
   highlight?: boolean | null;
+  pageSlug: string;
   icon?: (number | null) | Media;
   type?:
     | (
@@ -598,11 +599,6 @@ export interface Religion {
     };
     [k: string]: unknown;
   } | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -707,14 +703,10 @@ export interface Lore {
  */
 export interface Session {
   id: number;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
   title: string;
   relatedWorld: number | World;
   highlight?: boolean | null;
+  pageSlug: string;
   sessionNumber: number;
   sessionDate: string;
   worldDate: string;
@@ -1126,6 +1118,7 @@ export interface NpcsSelect<T extends boolean = true> {
 export interface ReligionsSelect<T extends boolean = true> {
   name?: T;
   highlight?: T;
+  pageSlug?: T;
   icon?: T;
   type?: T;
   deities?: T;
@@ -1136,8 +1129,6 @@ export interface ReligionsSelect<T extends boolean = true> {
   summary?: T;
   content?: T;
   dmNotes?: T;
-  generateSlug?: T;
-  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1172,11 +1163,10 @@ export interface LoreSelect<T extends boolean = true> {
  * via the `definition` "sessions_select".
  */
 export interface SessionsSelect<T extends boolean = true> {
-  generateSlug?: T;
-  slug?: T;
   title?: T;
   relatedWorld?: T;
   highlight?: T;
+  pageSlug?: T;
   sessionNumber?: T;
   sessionDate?: T;
   worldDate?: T;

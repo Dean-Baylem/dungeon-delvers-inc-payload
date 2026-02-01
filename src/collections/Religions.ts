@@ -23,6 +23,11 @@ export const Religions: CollectionConfig = {
             width: '20%',
           },
         },
+        {
+          name: 'pageSlug',
+          type: 'text',
+          required: true,
+        },
       ],
     },
     {
@@ -122,6 +127,6 @@ export const Religions: CollectionConfig = {
         },
       ],
     },
-    slugField({ useAsSlug: 'name' }),
+    // slugField({ useAsSlug: 'name' }),
   ],
 };
