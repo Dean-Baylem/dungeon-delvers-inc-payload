@@ -90,7 +90,7 @@ export default async function HomeQuery(): Promise<{
     .map((religion) => ({
       type: religion.type!,
       name: religion.name,
-      slug: religion.slug,
+      slug: religion.pageSlug,
       summary: religion.summary,
       deities: religion.deities ?? [],
       icon: mediaTypeCheck(religion.icon) || undefined,
@@ -126,7 +126,7 @@ export default async function HomeQuery(): Promise<{
   });
 
   const sessionData: AdventureLogType[] = sessionQuery.docs.map((session) => ({
-    link: `/sessions/${session.slug}`,
+    link: `/sessions/${session.pageSlug}`,
     text: session.title,
   }));
 

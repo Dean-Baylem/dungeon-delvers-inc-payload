@@ -82,7 +82,7 @@ export default async function Sessions({
                       {sessionData.docs.map((session: Session) => (
                         <li key={session.id}>
                           <a
-                            href={`/sessions/${session.slug}`}
+                            href={`/sessions/${session.pageSlug}`}
                             className="text-mainText font-medium font-serif underline underline-offset-2 text-center block"
                           >
                             {session.title}

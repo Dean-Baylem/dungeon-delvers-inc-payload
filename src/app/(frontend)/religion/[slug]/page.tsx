@@ -18,7 +18,7 @@ export async function generateStaticParams() {
   });
 
   return data.docs.map((doc) => ({
-    slug: doc.slug,
+    slug: doc.pageSlug,
   }));
 }
 
