@@ -13,7 +13,7 @@ export default async function singleQuery({
 }) {
   const payload = await getPayload({ config });
   const collectionSlug = collection as CollectionSlug;
-  singleData = await payload.find({
+  const singleData = await payload.find({
     collection: collectionSlug,
     limit: 1,
     where: {
