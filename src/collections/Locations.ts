@@ -26,6 +26,11 @@ export const Locations: CollectionConfig = {
             width: '20%',
           },
         },
+        {
+          name: 'pageSlug',
+          type: 'text',
+          required: true,
+        },
       ],
     },
     {
@@ -127,7 +132,6 @@ export const Locations: CollectionConfig = {
         },
       ],
     },
-    slugField({ useAsSlug: 'name' }),
   ],
   admin: {
     useAsTitle: 'name',

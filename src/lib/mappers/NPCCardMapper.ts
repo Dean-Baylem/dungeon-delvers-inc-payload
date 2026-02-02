@@ -4,7 +4,7 @@ import mediaTypeCheck from '../query/mediaTypeCheck';
 
 export const mapNPCDocToCard = (npc: Npc): NPCListSingle => ({
   id: npc.id,
-  slug: npc.slug,
+  slug: npc.pageSlug,
   name: npc.name,
   portrait: mediaTypeCheck(npc.portrait),
   disposition: npc.disposition,

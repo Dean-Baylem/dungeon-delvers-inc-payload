@@ -127,6 +127,5 @@ export const Religions: CollectionConfig = {
         },
       ],
     },
-    // slugField({ useAsSlug: 'name' }),
   ],
 };

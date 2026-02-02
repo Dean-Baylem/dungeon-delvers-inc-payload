@@ -28,6 +28,14 @@ export const NPCs: CollectionConfig = {
           },
         },
         {
+          name: 'pageSlug',
+          type: 'text',
+          required: true,
+          admin: {
+            width: '60%',
+          },
+        },
+        {
           name: 'hidden',
           type: 'checkbox',
           defaultValue: false,
@@ -142,6 +150,5 @@ export const NPCs: CollectionConfig = {
         },
       ],
     },
-    slugField({ useAsSlug: 'name' }),
   ],
 };

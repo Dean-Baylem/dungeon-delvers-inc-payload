@@ -53,7 +53,7 @@ export default async function HomeQuery(): Promise<{
   });
 
   const locationData: AdventureLogType[] = locationQuery.docs.map((location) => ({
-    link: `/grand-gazetteer/${location.slug}`,
+    link: `/grand-gazetteer/${location.pageSlug}`,
     text: location.name,
   }));
 
@@ -71,7 +71,7 @@ export default async function HomeQuery(): Promise<{
     type: 'faction' as const,
     title: faction.name,
     summary: faction.summary,
-    CTAlink: `/factions/${faction.slug}`,
+    CTAlink: `/factions/${faction.pageSlug}`,
     iconSrc: mediaTypeCheck(faction.symbol?.symbolImage)?.src,
   }));
 
@@ -111,7 +111,7 @@ export default async function HomeQuery(): Promise<{
     type: lore.type ?? '',
     subtype: lore.subtype ?? '',
     name: lore.name,
-    slug: lore.slug,
+    slug: lore.pageSlug,
     summary: lore.summary,
   }));
 

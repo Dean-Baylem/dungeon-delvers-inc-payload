@@ -13,28 +13,15 @@ export default async function singleQuery({
 }) {
   const payload = await getPayload({ config });
   const collectionSlug = collection as CollectionSlug;
-  let singleData;
-  if (collectionSlug === 'religions' || collectionSlug === 'sessions') {
-    singleData = await payload.find({
-      collection: collectionSlug,
-      limit: 1,
-      where: {
-        pageSlug: {
-          equals: slug,
-        } as WhereField,
-      },
-    });
-  } else {
-    singleData = await payload.find({
-      collection: collectionSlug,
-      limit: 1,
-      where: {
-        slug: {
-          equals: slug,
-        } as WhereField,
-      },
-    });
-  }
+  const singleData = await payload.find({
+    collection: collectionSlug,
+    limit: 1,
+    where: {
+      pageSlug: {
+        equals: slug,
+      } as WhereField,
+    },
+  });
 
   if (singleData.totalDocs === 0) {
     notFound();

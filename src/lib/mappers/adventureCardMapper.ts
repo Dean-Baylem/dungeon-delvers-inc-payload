@@ -5,7 +5,7 @@ import mediaTypeCheck from '../query/mediaTypeCheck';
 export const mapAdventureDocToCard = (adventure: Adventure): AdventureCardType => ({
   title: adventure.name,
   summary: adventure.summary,
-  link: `/adventures/${adventure.slug}`,
+  link: `/adventures/${adventure.pageSlug}`,
   characterList: Array.isArray(adventure?.relatedCharacters)
     ? adventure?.relatedCharacters.map((char) => {
         return {

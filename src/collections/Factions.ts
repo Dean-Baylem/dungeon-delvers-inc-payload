@@ -19,6 +19,11 @@ export const Factions: CollectionConfig = {
             width: '20%',
           },
         },
+        {
+          name: 'pageSlug',
+          type: 'text',
+          required: true,
+        },
       ],
     },
     {
@@ -156,7 +161,6 @@ export const Factions: CollectionConfig = {
         },
       ],
     },
-    slugField({ useAsSlug: 'name' }),
   ],
   admin: {
     useAsTitle: 'name',
