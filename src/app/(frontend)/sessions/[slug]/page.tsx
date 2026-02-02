@@ -15,6 +15,10 @@ export async function generateStaticParams() {
       },
     },
   });
+
+  return data.docs.map((doc) => ({
+    slug: doc.pageSlug,
+  }));
 }
 
 export default async function SingleSessionPage({ params }: { params: Promise<{ slug: string }> }) {
