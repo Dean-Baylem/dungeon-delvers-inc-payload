@@ -1,13 +1,21 @@
-import BlockGroup from '@/components/blocks/group/BlockGroup';
-import PageContents from '@/components/layout/page/PageContents';
-import PageSection from '@/components/layout/page/PageSection';
 import SinglePage from '@/components/layout/page/SinglePage';
-import Hero from '@/components/ui/hero/Hero';
-import CTALink from '@/components/ui/links/CTALink';
-import { RichText } from '@/components/ui/RichText';
-import { gridOptions } from '@/lib/options/gridOptions';
 import singleQuery from '@/lib/query/singleQuery';
 import { Session } from '@/payload-types';
+import { getPayload } from 'payload';
+import config from '@/payload.config';
+
+export async function generateStaticParams() {
+  const payload = await getPayload({ config });
+  const data = await payload.find({
+    collection: 'sessions',
+    limit: 100,
+    populate: {
+      sessions: {
+        pageSlug: true,
+      },
+    },
+  });
+}
 
 export default async function SingleSessionPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

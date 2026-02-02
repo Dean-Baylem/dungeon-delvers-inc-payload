@@ -12,7 +12,7 @@ export async function generateStaticParams() {
     limit: 100,
     populate: {
       locations: {
-        slug: true,
+        pageSlug: true,
       },
     },
   });
