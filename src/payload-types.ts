@@ -186,6 +186,7 @@ export interface Media {
 export interface World {
   id: number;
   name: string;
+  pageSlug: string;
   allowedUsers?: (number | User)[] | null;
   overview?: {
     adventureAndExploration?: {
@@ -279,11 +280,6 @@ export interface World {
       [k: string]: unknown;
     } | null;
   };
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -295,6 +291,7 @@ export interface Location {
   id: number;
   name: string;
   highlight?: boolean | null;
+  pageSlug: string;
   type: 'city' | 'dungeon' | 'fortress' | 'other' | 'ruins' | 'town' | 'village' | 'wilderness';
   terrain?:
     | (
@@ -356,11 +353,6 @@ export interface Location {
     };
     [k: string]: unknown;
   } | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -372,6 +364,7 @@ export interface Npc {
   id: number;
   name: string;
   relatedFaction?: (number | Faction)[] | null;
+  pageSlug: string;
   hidden?: boolean | null;
   highlight?: boolean | null;
   portrait: number | Media;
@@ -419,11 +412,6 @@ export interface Npc {
     };
     [k: string]: unknown;
   } | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -435,6 +423,7 @@ export interface Faction {
   id: number;
   name: string;
   highlight?: boolean | null;
+  pageSlug: string;
   symbol?: {
     symbolImage?: (number | null) | Media;
     symbolDescription?: string | null;
@@ -505,11 +494,6 @@ export interface Faction {
     };
     [k: string]: unknown;
   } | null;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -608,13 +592,9 @@ export interface Religion {
  */
 export interface Lore {
   id: number;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
   name: string;
   highlight?: boolean | null;
+  pageSlug: string;
   startDateSort?: number | null;
   type?:
     | (
@@ -759,12 +739,8 @@ export interface Session {
  */
 export interface Adventure {
   id: number;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
   name: string;
+  pageSlug: string;
   startDateSort?: number | null;
   status: 'abandoned' | 'completed' | 'failed' | 'in_progress' | 'not_started';
   startDateYear: number;
@@ -814,12 +790,8 @@ export interface Adventure {
  */
 export interface Character {
   id: number;
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
   name: string;
+  pageSlug: string;
   icon: number | Media;
   dmNotes?: {
     root: {
@@ -995,6 +967,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface WorldsSelect<T extends boolean = true> {
   name?: T;
+  pageSlug?: T;
   allowedUsers?: T;
   overview?:
     | T
@@ -1006,8 +979,6 @@ export interface WorldsSelect<T extends boolean = true> {
         deitiesAndCosmology?: T;
         planarHistory?: T;
       };
-  generateSlug?: T;
-  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1018,6 +989,7 @@ export interface WorldsSelect<T extends boolean = true> {
 export interface LocationsSelect<T extends boolean = true> {
   name?: T;
   highlight?: T;
+  pageSlug?: T;
   type?: T;
   terrain?: T;
   resources?:
@@ -1034,8 +1006,6 @@ export interface LocationsSelect<T extends boolean = true> {
   relatedWorld?: T;
   content?: T;
   dmNotes?: T;
-  generateSlug?: T;
-  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1046,6 +1016,7 @@ export interface LocationsSelect<T extends boolean = true> {
 export interface FactionsSelect<T extends boolean = true> {
   name?: T;
   highlight?: T;
+  pageSlug?: T;
   symbol?:
     | T
     | {
@@ -1075,8 +1046,6 @@ export interface FactionsSelect<T extends boolean = true> {
   relatedWorld?: T;
   content?: T;
   dmNotes?: T;
-  generateSlug?: T;
-  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1087,6 +1056,7 @@ export interface FactionsSelect<T extends boolean = true> {
 export interface NpcsSelect<T extends boolean = true> {
   name?: T;
   relatedFaction?: T;
+  pageSlug?: T;
   hidden?: T;
   highlight?: T;
   portrait?: T;
@@ -1106,8 +1076,6 @@ export interface NpcsSelect<T extends boolean = true> {
   relatedWorld?: T;
   content?: T;
   dmNotes?: T;
-  generateSlug?: T;
-  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1137,10 +1105,9 @@ export interface ReligionsSelect<T extends boolean = true> {
  * via the `definition` "lore_select".
  */
 export interface LoreSelect<T extends boolean = true> {
-  generateSlug?: T;
-  slug?: T;
   name?: T;
   highlight?: T;
+  pageSlug?: T;
   startDateSort?: T;
   type?: T;
   subtype?: T;
@@ -1190,9 +1157,8 @@ export interface SessionsSelect<T extends boolean = true> {
  * via the `definition` "characters_select".
  */
 export interface CharactersSelect<T extends boolean = true> {
-  generateSlug?: T;
-  slug?: T;
   name?: T;
+  pageSlug?: T;
   icon?: T;
   dmNotes?: T;
   updatedAt?: T;
@@ -1203,9 +1169,8 @@ export interface CharactersSelect<T extends boolean = true> {
  * via the `definition` "adventures_select".
  */
 export interface AdventuresSelect<T extends boolean = true> {
-  generateSlug?: T;
-  slug?: T;
   name?: T;
+  pageSlug?: T;
   startDateSort?: T;
   status?: T;
   startDateYear?: T;

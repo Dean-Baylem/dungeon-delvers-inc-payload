@@ -12,7 +12,6 @@ export const Lore: CollectionConfig = {
     read: () => true,
   },
   fields: [
-    slugField({ useAsSlug: 'name' }),
     {
       type: 'row',
       fields: [
@@ -28,6 +27,11 @@ export const Lore: CollectionConfig = {
           admin: {
             width: '20%',
           },
+        },
+        {
+          name: 'pageSlug',
+          type: 'text',
+          required: true,
         },
       ],
     },

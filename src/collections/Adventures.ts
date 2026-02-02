@@ -7,9 +7,13 @@ export const Adventures: CollectionConfig = {
     useAsTitle: 'name',
   },
   fields: [
-    slugField({ useAsSlug: 'name' }),
     {
       name: 'name',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'pageSlug',
       type: 'text',
       required: true,
     },

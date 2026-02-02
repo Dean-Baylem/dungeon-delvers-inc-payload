@@ -14,6 +14,11 @@ export const Worlds: CollectionConfig = {
       required: true,
     },
     {
+      name: 'pageSlug',
+      type: 'text',
+      required: true,
+    },
+    {
       name: 'allowedUsers',
       type: 'relationship',
       relationTo: 'users',
@@ -32,6 +37,5 @@ export const Worlds: CollectionConfig = {
         { name: 'planarHistory', type: 'richText' },
       ],
     },
-    slugField({ useAsSlug: 'name' }),
   ],
 };

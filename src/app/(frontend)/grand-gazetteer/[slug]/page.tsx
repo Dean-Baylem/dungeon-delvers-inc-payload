@@ -12,13 +12,13 @@ export async function generateStaticParams() {
     limit: 100,
     populate: {
       locations: {
-        slug: true,
+        pageSlug: true,
       },
     },
   });
 
   return data.docs.map((doc) => ({
-    slug: doc.slug,
+    slug: doc.pageSlug,
   }));
 }
 
