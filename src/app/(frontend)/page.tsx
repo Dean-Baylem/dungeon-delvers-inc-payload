@@ -9,6 +9,8 @@ import FactionsAndSocieties from '@/components/layout/home/FactionsAndSocieties'
 import FaithsAndOrigins from '@/components/layout/home/FaithsAndOrigins';
 import HomeQuery from '@/lib/query/homeQuery';
 
+export const revalidate = 60 * 60 * 24 * 375;
+
 export default async function HomePage() {
   const {
     worldData,
