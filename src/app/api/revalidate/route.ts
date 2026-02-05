@@ -1,19 +1,22 @@
 import { revalidatePath } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
+import { getPayload } from 'payload';
+import config from '@payload-config';
 
 export async function GET(request: NextRequest) {
-  const res = await fetch(`/api/worlds/me`, {
-    credentials: 'include',
-  });
+  const payload = await getPayload({ config });
 
-  if (!res.ok) return;
+  const { user } = await payload.auth({ headers: request.headers });
 
-  const data = await res.json();
-  if (data.user === null) return;
+  if (!user) {
+    return new NextResponse('Unauthorized', { status: 401 });
+  }
 
   const url = new URL(request.url);
   let path = url.searchParams.get('path') || '/';
-  path.replaceAll('|', '/');
+  path = path.replaceAll('|', '/');
+
   revalidatePath(path);
+
   return new NextResponse('Revalidated');
 }
