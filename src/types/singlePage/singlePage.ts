@@ -4,11 +4,12 @@ import { ReactNode } from 'react';
 export type SinglePageType = {
   title: string;
   lead?: string;
+  subtitle?: string;
   heroImage: {
     src: string;
     alt: string;
   };
   heroChildren?: ReactNode;
   content?: SerializedEditorState;
-  infobox?: ReactNode;
+  infobox?: Array<{ title: string; content: ReactNode }>;
 };

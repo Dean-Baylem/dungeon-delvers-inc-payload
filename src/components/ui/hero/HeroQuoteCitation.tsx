@@ -5,5 +5,9 @@ type Props = {
 };
 
 export default function HeroQuoteCitation({ children }: Props) {
-  return <p className="text-white text-sm text-end font-sans italic font-light mt-2">{children}</p>;
+  return (
+    <p className="text-white text-xs sm:text-sm text-end font-sans italic font-light mt-2">
+      {children}
+    </p>
+  );
 }

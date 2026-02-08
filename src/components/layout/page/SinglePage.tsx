@@ -1,4 +1,5 @@
 import BlockGroup from '@/components/blocks/group/BlockGroup';
+import InfoBox from '@/components/blocks/infobox/Infobox';
 import PageContents from '@/components/layout/page/PageContents';
 import PageSection from '@/components/layout/page/PageSection';
 import Hero from '@/components/ui/hero/Hero';
@@ -8,7 +9,7 @@ import { gridOptions } from '@/lib/options/gridOptions';
 import { SinglePageType } from '@/types/singlePage/singlePage';
 
 export default function SinglePage(props: SinglePageType) {
-  const { title, lead, content, infobox, heroChildren } = props;
+  const { title, lead, subtitle = 'Session Details', content, infobox, heroChildren } = props;
 
   return (
     <main>
@@ -21,7 +22,7 @@ export default function SinglePage(props: SinglePageType) {
         {heroChildren}
       </Hero>
       <PageContents>
-        <PageSection title={`${content ? 'Session Details' : 'No Recorded Content'}`}>
+        <PageSection title={`${content ? subtitle : 'No Recorded Content'}`}>
           <BlockGroup
             options={{
               span: { tab: gridOptions.span.tab[11], pc: gridOptions.span.pc[11] },
@@ -31,15 +32,14 @@ export default function SinglePage(props: SinglePageType) {
             }}
           >
             {content ? (
-              <div>
+              <div className={`${infobox ? 'hasInfobox' : ''}`}>
                 {infobox && (
-                  <div>
-                    <p>BOX</p>
-                    <p></p>
+                  <div className="sm:float-right w-fit sm:ml-4 mb-6 sm:mb-4">
+                    <InfoBox groups={infobox}></InfoBox>
                   </div>
                 )}
                 <RichText data={content} />
-                <hr className="border-0 h-0.5 bg-heading mt-4" />
+                <hr className="border-0 h-0.5 bg-heading mt-8 w-full" />
               </div>
             ) : (
               <p className="font-medium font-serif text-center text-lg">
@@ -48,7 +48,7 @@ export default function SinglePage(props: SinglePageType) {
                 Please check back later.
               </p>
             )}
-            <div className="flex items-center justify-center gap-6 mt-4">
+            <div className="grid text-center sm:flex sm:flex-col items-center justify-center gap-4 sm:gap-6 mt-4 mb-4 sm:mb-0">
               <CTALink link={'/sessions'} type="secondary" text="Sessions Archive"></CTALink>
               <CTALink link={'/'} type="primary" text="Home Page"></CTALink>
             </div>

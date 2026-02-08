@@ -21,8 +21,8 @@ export default function BlockSingleAdventure({ card }: Props) {
           <BlockNavLinks linkArray={[{ link: link, text: 'See Adventure', type: 'primary' }]} />
         </span> */}
       </div>
-      <div className="flex flex-col gap-4 text-center relative">
-        <span className="absolute h-4/5 w-0.5 bg-heading block top-1/2 -left-3 transform -translate-y-1/2"></span>
+      <div className="border-t-2 md:border-t-0 border-heading flex flex-col gap-4 text-center relative">
+        <span className="none md:absolute h-4/5 w-0.5 bg-heading block top-1/2 -left-3 transform -translate-y-1/2"></span>
         <PageTitle as="h5" size="xsm">
           Adventurers
         </PageTitle>
