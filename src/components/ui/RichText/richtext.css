@@ -33,3 +33,19 @@
     font-size: 1.125rem;
     color: var(--colorMainText);
 }
+
+.hasInfobox .richTextContent {
+    display: block;
+}
+
+.hasInfobox .richTextContent > *:not(:first-child) {
+    margin-top: 1rem;
+}
+
+@media screen and (max-width: 640px) {
+    .hasInfobox {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
