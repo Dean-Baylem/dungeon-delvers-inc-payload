@@ -8,6 +8,8 @@ import LoreAndLegend from '@/components/layout/home/LoreAndLegend';
 import FactionsAndSocieties from '@/components/layout/home/FactionsAndSocieties';
 import FaithsAndOrigins from '@/components/layout/home/FaithsAndOrigins';
 import HomeQuery from '@/lib/query/homeQuery';
+import HeroQuoteText from '@/components/ui/hero/HeroQuoteText';
+import HeroQuoteCitation from '@/components/ui/hero/HeroQuoteCitation';
 
 export const revalidate = 32400000;
 export default async function HomePage() {
@@ -54,15 +56,13 @@ export default async function HomePage() {
         image={{ src: '/home/hero-home.webp', alt: 'hero-image-adventurers-overlooking-city' }}
       >
         <HeroQuote>
-          <p className="font-subheading text-white text-center max-w-2xl leading-loose">
+          <HeroQuoteText>
             <span className="px-1">&ldquo;</span>
             Before the Flanaess flooded, a force more oppressive than the secret sects of the South,
             the Spider Queen of the Abyss, and even the Old Evil ruled — The Giant Kingdoms.
             <span className="px-1">&rdquo;</span>
-          </p>
-          <p className="text-white text-sm text-end font-sans italic font-light mt-2">
-            The Chronicals of the Giants - Archmage Arullias
-          </p>
+          </HeroQuoteText>
+          <HeroQuoteCitation>The Chronicals of the Giants - Archmage Arullias</HeroQuoteCitation>
         </HeroQuote>
       </Hero>
       <PageContents>

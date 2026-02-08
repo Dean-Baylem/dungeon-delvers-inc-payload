@@ -8,7 +8,7 @@ import { gridOptions } from '@/lib/options/gridOptions';
 import { SinglePageType } from '@/types/singlePage/singlePage';
 
 export default function SinglePage(props: SinglePageType) {
-  const { title, lead, content } = props;
+  const { title, lead, content, infobox, heroChildren } = props;
 
   return (
     <main>
@@ -17,22 +17,30 @@ export default function SinglePage(props: SinglePageType) {
         title={title}
         lead={lead}
         image={{ src: '/home/hero-home.webp', alt: 'hero-image-adventurers-overlooking-city' }}
-      />
+      >
+        {heroChildren}
+      </Hero>
       <PageContents>
         <PageSection title={`${content ? 'Session Details' : 'No Recorded Content'}`}>
           <BlockGroup
             options={{
               span: { tab: gridOptions.span.tab[11], pc: gridOptions.span.pc[11] },
               start: { tab: gridOptions.start.tab[0], pc: gridOptions.start.pc[0] },
-              row: { tab: gridOptions.row.tab[1], pc: gridOptions.row.pc[1] },
+              row: { tab: gridOptions.row.tab[0], pc: gridOptions.row.pc[0] },
               rowSpan: { tab: gridOptions.rowSpan.tab[1], pc: gridOptions.rowSpan.pc[1] },
             }}
           >
             {content ? (
-              <>
+              <div>
+                {infobox && (
+                  <div>
+                    <p>BOX</p>
+                    <p></p>
+                  </div>
+                )}
                 <RichText data={content} />
                 <hr className="border-0 h-0.5 bg-heading mt-4" />
-              </>
+              </div>
             ) : (
               <p className="font-medium font-serif text-center text-lg">
                 Currently the records for this session are being finalised.

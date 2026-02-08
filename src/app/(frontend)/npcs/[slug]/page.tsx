@@ -4,6 +4,7 @@ import SinglePage from '@/components/layout/page/SinglePage';
 import { notFound } from 'next/navigation';
 import { getPayload } from 'payload';
 import config from '@/payload.config';
+import HeroQuote from '@/components/ui/hero/HeroQuote';
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config });
@@ -36,10 +37,13 @@ export default async function SingleLocationPage({
 
   if (!data) notFound();
 
+  console.log(data);
+
   return (
     <SinglePage
       title={data.name}
       content={data.content ? data.content : undefined}
+      heroChildren={<HeroQuote>{data.summary}</HeroQuote>}
       heroImage={{
         src: '/home/hero-home.webp',
         alt: 'hero-image-adventurers-overlooking-city',
