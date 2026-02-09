@@ -29,14 +29,14 @@ export default function Header() {
       name: 'Locations',
       link: '/grand-gazetteer',
     },
-    {
-      name: 'Factions',
-      link: '/factions',
-    },
-    {
-      name: 'Religions',
-      link: '/religions',
-    },
+    // {
+    //   name: 'Factions',
+    //   link: '/factions',
+    // },
+    // {
+    //   name: 'Religions',
+    //   link: '/religions',
+    // },
   ];
 
   const handleHamburgerClick = () => {
