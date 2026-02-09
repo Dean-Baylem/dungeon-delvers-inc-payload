@@ -51,7 +51,7 @@ export default function Header() {
   return (
     <>
       <header className="fixed top-0 left-0 w-full py-4 px-6 bg-[rgba(0,0,0,0.75)] z-50">
-        <nav className="flex flex-wrap gap-4 max-w-360 mx-auto items-center justify-center">
+        <nav className="flex gap-4 max-w-360 mx-auto items-center justify-center">
           <Link href="/" className="mr-auto duration-150 hover:opacity-80">
             <Image
               src="/common/logo-white.png"
@@ -62,7 +62,7 @@ export default function Header() {
               className="h-14 md:h-full w-auto"
             />
           </Link>
-          <ul>
+          <ul className="flex gap-4">
             {headerGroup.map((link, index) => (
               <li key={`header-link-${link.name}-${index}`} className="hidden md:block">
                 <Link
