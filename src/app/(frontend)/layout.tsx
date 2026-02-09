@@ -9,6 +9,7 @@ import {
 import './styles.css';
 import { AuthStoreProvider } from '@/providers/auth-provider';
 import Footer from '@/components/layout/footer/Footer';
+import Header from '@/components/layout/header/Header';
 
 const crimsonPro = Crimson_Pro({
   variable: '--font-body-serif',
@@ -57,6 +58,7 @@ export default function RootLayout({
         className={`${crimsonPro.variable} ${lugrasimo.variable} ${cormorantGaramond.variable} ${leagueSpartan.variable} ${charmFont.variable} antialiased`}
       >
         <AuthStoreProvider>
+          <Header />
           {children}
           <Footer />
         </AuthStoreProvider>
