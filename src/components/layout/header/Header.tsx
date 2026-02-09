@@ -62,7 +62,7 @@ export default function Header() {
               className="h-14 md:h-full w-auto"
             />
           </Link>
-          <ul>
+          <ul className="flex gap-4">
             {headerGroup.map((link, index) => (
               <li key={`header-link-${link.name}-${index}`} className="hidden md:block">
                 <Link
