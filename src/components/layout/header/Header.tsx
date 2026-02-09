@@ -96,7 +96,7 @@ export default function Header() {
       <nav
         ref={sideNav}
         id={'side-nav'}
-        className={`fixed h-full py-20 bg-[rgba(0,0,0,0.9)] top-0 left-0 w-full z-20 overflow-hidden duration-150 opacity-0 ${navOpen ? 'opacity-100' : ''}`}
+        className={`fixed h-full py-20 bg-[rgba(0,0,0,0.9)] top-0 left-0 w-full z-20 overflow-hidden duration-150 opacity-0 ${navOpen ? 'opacity-100' : ''} ${navOpen ? 'pointer-events-auto' : 'pointer-events-none'}`}
       >
         <ul className="h-full overflow-auto flex flex-col gap-6 items-center justify-center">
           {headerGroup.map((link, index) => (
