@@ -12,8 +12,8 @@ type Props = {
 };
 
 export default function Hero({ variant = 'full', title, lead, image, children }: Props) {
-  const minHeight = variant === 'full' ? 'min-h-175' : 'min-h-126';
-  const maxHeight = variant === 'full' ? 'max-h-175' : 'max-h-126';
+  const minHeight = variant === 'full' ? 'min-h-175' : 'min-h-100 md:min-h-126';
+  const maxHeight = variant === 'full' ? 'max-h-175' : 'max-h-100 md:max-h-126';
   return (
     <section className={`relative grid ${minHeight}`}>
       <div className="w-full relative col-start-1 row-start-1">
@@ -30,7 +30,7 @@ export default function Hero({ variant = 'full', title, lead, image, children }:
       <div className="col-start-1 row-start-1 self-center justify-self-center flex flex-col items-center justify-center gap-8 z-10 px-4">
         <hgroup className="font-heading text-white text-center">
           {lead && <p className="text-2xl">{lead}</p>}
-          <h1 className="text-6xl mt-3 capitalize">{title}</h1>
+          <h1 className="text-5xl lg:text-6xl mt-3 capitalize">{title}</h1>
         </hgroup>
         {children}
       </div>

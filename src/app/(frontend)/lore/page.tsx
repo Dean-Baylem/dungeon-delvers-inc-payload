@@ -46,7 +46,7 @@ export default async function Lore({
         </HeroQuote>
       </Hero>
       <PageContents>
-        <PageSection>
+        <PageSection title="Documented Lore of the Flanaess">
           <BlockGroup
             options={{
               span: { tab: gridOptions.span.tab[11], pc: gridOptions.span.pc[11] },
@@ -55,8 +55,8 @@ export default async function Lore({
               rowSpan: { tab: gridOptions.rowSpan.tab[1], pc: gridOptions.rowSpan.pc[1] },
             }}
           >
-            <span className="-mt-8 pb-4">
-              <LoreDisplay loreData={loreData} headingLevel="h2" />
+            <span className="pb-4">
+              <LoreDisplay loreData={loreData} headingLevel="h3" />
             </span>
           </BlockGroup>
         </PageSection>

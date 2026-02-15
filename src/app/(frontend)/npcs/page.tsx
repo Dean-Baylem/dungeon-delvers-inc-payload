@@ -2,6 +2,8 @@ import BlockGroup from '@/components/blocks/group/BlockGroup';
 import PageContents from '@/components/layout/page/PageContents';
 import PageSection from '@/components/layout/page/PageSection';
 import Hero from '@/components/ui/hero/Hero';
+import HeroQuote from '@/components/ui/hero/HeroQuote';
+import HeroQuoteText from '@/components/ui/hero/HeroQuoteText';
 import NPCDisplay from '@/components/ui/npcs/NPCDisplay';
 import NPCList from '@/components/ui/npcs/NPCList';
 import { mapNPCDocToCard } from '@/lib/mappers/NPCCardMapper';
@@ -36,9 +38,13 @@ export default async function NPCArchive({
     <main>
       <Hero
         variant="half"
-        title={`Session Archive`}
+        title={`NPC Archive`}
         image={{ src: '/home/hero-home.webp', alt: 'hero-image-adventurers-overlooking-city' }}
-      />
+      >
+        <HeroQuote>
+          <HeroQuoteText>Documented NPC's: {npcQuery.totalDocs}</HeroQuoteText>
+        </HeroQuote>
+      </Hero>
       <PageContents>
         <PageSection title="NPC's of the Flanaess">
           <BlockGroup
@@ -49,14 +55,6 @@ export default async function NPCArchive({
               rowSpan: { tab: gridOptions.rowSpan.tab[1], pc: gridOptions.rowSpan.pc[1] },
             }}
           >
-            <p className="-mt-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-              dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-              mollit anim id est laborum.
-            </p>
             <NPCDisplay npcData={npcData} />
           </BlockGroup>
         </PageSection>

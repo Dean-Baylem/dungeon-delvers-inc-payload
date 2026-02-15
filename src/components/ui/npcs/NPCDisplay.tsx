@@ -31,7 +31,7 @@ export default function NPCDisplay({ npcData }: Props) {
 
   return (
     <div>
-      <div role="tablist" className="flex flex-wrap gap-4 items-center mb-4">
+      <div role="tablist" className="flex flex-wrap gap-4 items-center mb-8">
         {['all', 'ally', 'neutral', 'villain'].map((disposition) => (
           <button
             key={disposition}
