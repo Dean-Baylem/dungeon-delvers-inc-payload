@@ -54,7 +54,7 @@ export default function Header() {
         <nav className="flex flex-wrap gap-4 max-w-360 mx-auto items-center justify-center">
           <Link href="/" className="mr-auto duration-150 hover:opacity-80">
             <Image
-              src="/common/logo-white.png"
+              src="/common/logo-white.webp"
               alt="Dungeon Delvers Inc. - Where Adventures Begin"
               width="200"
               height="75"

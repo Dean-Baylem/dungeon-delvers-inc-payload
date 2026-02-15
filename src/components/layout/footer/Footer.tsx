@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="max-w-7xl w-full md:w-[calc(100vw-2.5rem)] mx-auto">
         <Link href="/">
           <Image
-            src="/common/logo-white.png"
+            src="/common/logo-white.webp"
             alt="Dungeon Delvers Inc. - Where Adventures Begin"
             width="260"
             height="98"
