@@ -8,6 +8,10 @@ import PageSection from '@/components/layout/page/PageSection';
 import BlockGroup from '@/components/blocks/group/BlockGroup';
 import GazetteerCard from '@/components/ui/cards/GazetteerCard';
 import { gridOptions } from '@/lib/options/gridOptions';
+import { RichText } from '@/components/ui/RichText';
+import PageText from '@/components/ui/typography/PageText';
+import HeroQuote from '@/components/ui/hero/HeroQuote';
+import HeroQuoteText from '@/components/ui/hero/HeroQuoteText';
 
 export default async function GrandGazetteerArchive({
   searchParams,
@@ -34,11 +38,15 @@ export default async function GrandGazetteerArchive({
     <main>
       <Hero
         variant="half"
-        title={`Session Archive`}
+        title={`Grand Gazetteer`}
         image={{ src: '/home/hero-home.webp', alt: 'hero-image-adventurers-overlooking-city' }}
-      />
+      >
+        <HeroQuote>
+          <HeroQuoteText>Documented Locations: {grandGazetteerQuery.totalDocs}</HeroQuoteText>
+        </HeroQuote>
+      </Hero>
       <PageContents>
-        <PageSection title="Grand Gazetteer Explored">
+        <PageSection title="Grand Gazetteer">
           <BlockGroup
             options={{
               span: { tab: gridOptions.span.tab[11], pc: gridOptions.span.pc[11] },
@@ -47,14 +55,13 @@ export default async function GrandGazetteerArchive({
               rowSpan: { tab: gridOptions.rowSpan.tab[1], pc: gridOptions.rowSpan.pc[1] },
             }}
           >
-            <p className="-mt-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-              dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-              mollit anim id est laborum.
-            </p>
+            <PageText customClasses="-mt-4 text-lg font-medium leading-[1.8]">
+              Our archives contain information regarding locations the adventuring parties have
+              previously visited. Currently, the locations documented are found in the region
+              surrounding the Free City of Greyhawk. Over time, we expect to expand our records and
+              categorise them by region as well as location type, but this is not required at this
+              time.
+            </PageText>
             {grandGazetteerData.length > 0 ? (
               <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
                 {grandGazetteerData.map((location, index) => (
