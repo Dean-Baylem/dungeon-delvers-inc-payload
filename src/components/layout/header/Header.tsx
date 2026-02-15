@@ -59,7 +59,7 @@ export default function Header() {
               width="200"
               height="75"
               loading="lazy"
-              className="h-14 md:h-full w-auto"
+              className="h-8 md:h-10 lg:h-14 w-auto"
             />
           </Link>
           <ul className="flex gap-4">

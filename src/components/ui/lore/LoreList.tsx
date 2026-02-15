@@ -8,9 +8,16 @@ type Props = {
   id?: string;
   isLoading: boolean;
   hasMounted?: boolean;
+  headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 };
 
-export default function LoreList({ allItems, id, isLoading, hasMounted = true }: Props) {
+export default function LoreList({
+  allItems,
+  id,
+  isLoading,
+  headingLevel,
+  hasMounted = true,
+}: Props) {
   return (
     <AnimatePresence mode="wait">
       <motion.ul
@@ -26,9 +33,9 @@ export default function LoreList({ allItems, id, isLoading, hasMounted = true }:
           },
         }}
       >
-        {allItems.map((item) => (
+        {allItems.map((item, index) => (
           <motion.li
-            key={item.slug}
+            key={`lore-item-${index}-${item.slug}`}
             variants={{
               hidden: { opacity: 0, y: 10 },
               show: { opacity: 1, y: 0 },
@@ -36,7 +43,7 @@ export default function LoreList({ allItems, id, isLoading, hasMounted = true }:
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
           >
-            <LoreCard loreData={item} isLoading={isLoading} />
+            <LoreCard loreData={item} isLoading={isLoading} headingLevel={headingLevel} />
           </motion.li>
         ))}
       </motion.ul>

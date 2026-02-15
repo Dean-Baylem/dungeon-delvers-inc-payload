@@ -2,6 +2,8 @@ import BlockGroup from '@/components/blocks/group/BlockGroup';
 import PageContents from '@/components/layout/page/PageContents';
 import PageSection from '@/components/layout/page/PageSection';
 import Hero from '@/components/ui/hero/Hero';
+import HeroQuote from '@/components/ui/hero/HeroQuote';
+import HeroQuoteText from '@/components/ui/hero/HeroQuoteText';
 import LoreDisplay from '@/components/ui/lore/LoreDisplay';
 import { mapLoreDocToCard } from '@/lib/mappers/loreCardMapper';
 import { gridOptions } from '@/lib/options/gridOptions';
@@ -36,11 +38,15 @@ export default async function Lore({
     <main>
       <Hero
         variant="half"
-        title={`Session Archive`}
+        title={`Lore Archive`}
         image={{ src: '/home/hero-home.webp', alt: 'hero-image-adventurers-overlooking-city' }}
-      />
+      >
+        <HeroQuote>
+          <HeroQuoteText>Documented Lore Entries: {loreQuery.totalDocs}</HeroQuoteText>
+        </HeroQuote>
+      </Hero>
       <PageContents>
-        <PageSection title="Lore from the Vaults">
+        <PageSection>
           <BlockGroup
             options={{
               span: { tab: gridOptions.span.tab[11], pc: gridOptions.span.pc[11] },
@@ -49,15 +55,9 @@ export default async function Lore({
               rowSpan: { tab: gridOptions.rowSpan.tab[1], pc: gridOptions.rowSpan.pc[1] },
             }}
           >
-            <p className="-mt-4">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
-              incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-              dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-              mollit anim id est laborum.
-            </p>
-            <LoreDisplay loreData={loreData} />
+            <span className="-mt-8 pb-4">
+              <LoreDisplay loreData={loreData} headingLevel="h2" />
+            </span>
           </BlockGroup>
         </PageSection>
       </PageContents>

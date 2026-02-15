@@ -5,15 +5,19 @@ import { LoreCardType } from '@/types/loreCard/lordCard';
 type Props = {
   loreData: LoreCardType;
   isLoading?: boolean;
+  headingLevel?: 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 };
 
-export default function LoreCard({ loreData, isLoading }: Props) {
+export default function LoreCard({ loreData, isLoading, headingLevel = 'h4' }: Props) {
   const { name, summary, type, subtype, slug } = loreData;
+
+  const Heading = headingLevel;
+
   return (
     <div
       className={`border-2 border-heading bg-surface bg-[url(/transparent-bg/crossword.png)] bg-size-cover h-full flex flex-col gap-2 p-4 transition-opacity duration-200 ${isLoading ? 'opacity-50 pointer-events-none' : ''}`}
     >
-      <h4 className="font-bold font-subheading text-center text-heading">{name}</h4>
+      <Heading className="font-bold font-subheading text-center text-heading">{name}</Heading>
       {subtype && (
         <p className="font-serif font-bold flex items-center gap-2">
           <span className="w-full h-px bg-mainText flex-1"></span>

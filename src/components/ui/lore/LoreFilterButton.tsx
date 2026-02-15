@@ -15,6 +15,7 @@ export default function LoreFilterButton({ subtype, handleFilterClick, querySubt
         : false;
   const selectedClass = 'bg-secondary text-white';
   const unselectedClass = 'bg-background text-mainText hover:bg-mainText hover:text-white';
+
   return (
     <button
       role="tab"
@@ -22,7 +23,9 @@ export default function LoreFilterButton({ subtype, handleFilterClick, querySubt
       aria-selected={false}
       aria-controls="lore-card-list"
       id={`filterButton-${subtype === undefined ? 'all' : subtype.value}`}
-      className={`${isSelected ? selectedClass : unselectedClass} py-1 px-4 text-lg font-bold font-sans rounded border border-secondary duration-150 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 cursor-pointer`}
+      className={`${isSelected ? selectedClass : unselectedClass} py-1 px-4 lg
+      
+      :text-lg font-bold font-sans rounded border border-secondary duration-150 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 cursor-pointer`}
       onClick={() => {
         handleFilterClick(subtype === undefined ? 'all' : subtype.value);
       }}
