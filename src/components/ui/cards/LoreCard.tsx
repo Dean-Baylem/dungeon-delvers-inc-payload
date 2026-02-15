@@ -17,11 +17,15 @@ export default function LoreCard({ loreData, isLoading, headingLevel = 'h4' }: P
     <div
       className={`border-2 border-heading bg-surface bg-[url(/transparent-bg/crossword.png)] bg-size-cover h-full flex flex-col gap-2 p-4 transition-opacity duration-200 ${isLoading ? 'opacity-50 pointer-events-none' : ''}`}
     >
-      <Heading className="font-bold font-subheading text-center text-heading">{name}</Heading>
+      <Heading className="text-sm md:text-base font-bold font-subheading text-center text-heading">
+        {name}
+      </Heading>
       {subtype && (
-        <p className="font-serif font-bold flex items-center gap-2">
+        <p className="font-serif font-bold grid grid-cols-[1fr_auto_1fr] items-center gap-4">
           <span className="w-full h-px bg-mainText flex-1"></span>
-          <span className="capitalize text-center flex-2">{subtype.replaceAll('_', ' ')}</span>
+          <span className="text-sm md:text-base capitalize text-center flex-2">
+            {subtype.replaceAll('_', ' ')}
+          </span>
           <span className="w-full h-px bg-mainText flex-1"></span>
         </p>
       )}

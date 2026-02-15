@@ -23,9 +23,7 @@ export default function LoreFilterButton({ subtype, handleFilterClick, querySubt
       aria-selected={false}
       aria-controls="lore-card-list"
       id={`filterButton-${subtype === undefined ? 'all' : subtype.value}`}
-      className={`${isSelected ? selectedClass : unselectedClass} py-1 px-4 lg
-      
-      :text-lg font-bold font-sans rounded border border-secondary duration-150 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 cursor-pointer`}
+      className={`${isSelected ? selectedClass : unselectedClass} py-1 px-2 md:px-4 text-sm md:text-base lg:text-lg font-bold font-sans rounded border border-secondary duration-150 focus:outline-none focus:ring-2 focus:ring-secondary focus:ring-offset-2 cursor-pointer`}
       onClick={() => {
         handleFilterClick(subtype === undefined ? 'all' : subtype.value);
       }}
