@@ -168,8 +168,21 @@ export const Adventures: CollectionConfig = {
       required: true,
     },
     {
-      name: 'dmNotes',
-      type: 'richText',
+      type: 'group',
+      label: 'Adventure Notes',
+      fields: [
+        {
+          name: 'content',
+          type: 'richText',
+        },
+        {
+          name: 'dmNotes',
+          type: 'richText',
+          access: {
+            read: ({ req }) => !!req.user,
+          },
+        },
+      ],
     },
   ],
 };

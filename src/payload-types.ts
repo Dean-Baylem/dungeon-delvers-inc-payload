@@ -766,6 +766,21 @@ export interface Adventure {
       }[]
     | null;
   summary: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   dmNotes?: {
     root: {
       type: string;
@@ -1196,6 +1211,7 @@ export interface AdventuresSelect<T extends boolean = true> {
         id?: T;
       };
   summary?: T;
+  content?: T;
   dmNotes?: T;
   updatedAt?: T;
   createdAt?: T;
