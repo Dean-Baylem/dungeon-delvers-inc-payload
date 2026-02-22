@@ -68,27 +68,38 @@ const createLoreInfoBoxGroup = (lore: Lore) => {
 
   const relatedItems = [];
   if (relatedNPCs.length) {
-    relatedItems.push({ title: 'Related NPCs', text: relatedNPCs.map((n) => n.name).join(', ') });
+    relatedItems.push({
+      title: 'Related NPCs',
+      text: relatedNPCs
+        .map((n) => (typeof n === 'object' && n !== null ? n.name : String(n)))
+        .join(', '),
+    });
   }
 
   if (relatedReligions.length) {
     relatedItems.push({
       title: 'Religions',
-      text: relatedReligions.map((r) => r.name).join(', '),
+      text: relatedReligions
+        .map((r) => (typeof r === 'object' && r !== null ? r.name : String(r)))
+        .join(', '),
     });
   }
 
   if (relatedLocations.length) {
     relatedItems.push({
       title: 'Locations',
-      text: relatedLocations.map((l) => l.name).join(', '),
+      text: relatedLocations
+        .map((l) => (typeof l === 'object' && l !== null ? l.name : String(l)))
+        .join(', '),
     });
   }
 
   if (relatedFactions.length) {
     relatedItems.push({
       title: 'Factions',
-      text: relatedFactions.map((f) => f.name).join(', '),
+      text: relatedFactions
+        .map((f) => (typeof f === 'object' && f !== null ? f.name : String(f)))
+        .join(', '),
     });
   }
 
