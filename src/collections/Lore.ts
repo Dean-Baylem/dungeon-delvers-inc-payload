@@ -71,6 +71,11 @@ export const Lore: CollectionConfig = {
           ],
         },
         {
+          name: 'LoreImage',
+          type: 'upload',
+          relationTo: 'media',
+        },
+        {
           name: 'era',
           label: 'Date / Era',
           type: 'text',
