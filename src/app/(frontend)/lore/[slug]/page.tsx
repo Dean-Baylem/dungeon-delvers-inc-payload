@@ -1,9 +1,106 @@
-import { Location, Lore } from '@/payload-types';
+import { Lore } from '@/payload-types';
 import singleQuery from '@/lib/query/singleQuery';
 import SinglePage from '@/components/layout/page/SinglePage';
 import { notFound } from 'next/navigation';
 import { getPayload } from 'payload';
 import config from '@/payload.config';
+import mediaTypeCheck from '@/lib/query/mediaTypeCheck';
+import Image from 'next/image';
+import { camelToTextMapper } from '@/lib/mappers/camelToTextMapper';
+import InfoBoxList from '@/components/blocks/infobox/InfoboxList';
+
+const loreInfoPointListCreation = (lore: Lore, list: readonly (keyof Lore)[]) => {
+  return list.reduce<{ title: string; text: string }[]>((acc, point) => {
+    const value = lore[point];
+    if (value) {
+      acc.push({
+        title: camelToTextMapper(point),
+        text: camelToTextMapper(String(value)).replaceAll('_', ' '),
+      });
+    }
+    return acc;
+  }, []);
+};
+
+const createLoreInfoBoxGroup = (lore: Lore) => {
+  let groups = [];
+  const { src, alt } = mediaTypeCheck(lore.LoreImage);
+  const typeListPoints = ['type', 'subtype'] as const;
+  const typeList = loreInfoPointListCreation(lore, typeListPoints);
+
+  const dateListPoints = ['era', 'startDateYear'] as const;
+  const dateList = loreInfoPointListCreation(lore, dateListPoints);
+
+  const relatedNPCs = Array.isArray(lore.relatedNPCs) ? lore.relatedNPCs : [];
+  const relatedFactions = Array.isArray(lore.relatedFactions) ? lore.relatedFactions : [];
+  const relatedReligions = Array.isArray(lore.relatedReligions) ? lore.relatedReligions : [];
+  const relatedLocations = Array.isArray(lore.relatedLocations) ? lore.relatedLocations : [];
+
+  if (src) {
+    groups.push({
+      title: 'Image',
+      content: (
+        <Image
+          className="w-full f-full object-cover"
+          src={src}
+          alt={alt || lore.name}
+          width="280"
+          height="280"
+          loading="eager"
+        />
+      ),
+    });
+  }
+
+  if (typeList.length) {
+    groups.push({
+      title: 'Type',
+      content: <InfoBoxList list={typeList} />,
+    });
+  }
+
+  if (dateList.length) {
+    groups.push({
+      title: 'Date / Era',
+      content: <InfoBoxList list={dateList} />,
+    });
+  }
+
+  const relatedItems = [];
+  if (relatedNPCs.length) {
+    relatedItems.push({ title: 'Related NPCs', text: relatedNPCs.map((n) => n.name).join(', ') });
+  }
+
+  if (relatedReligions.length) {
+    relatedItems.push({
+      title: 'Religions',
+      text: relatedReligions.map((r) => r.name).join(', '),
+    });
+  }
+
+  if (relatedLocations.length) {
+    relatedItems.push({
+      title: 'Locations',
+      text: relatedLocations.map((l) => l.name).join(', '),
+    });
+  }
+
+  if (relatedFactions.length) {
+    relatedItems.push({
+      title: 'Factions',
+      text: relatedFactions.map((f) => f.name).join(', '),
+    });
+  }
+
+  if (relatedItems.length) {
+    groups.push({
+      title: 'Related Entries',
+      content: <InfoBoxList list={relatedItems} />,
+    });
+  }
+
+  return groups;
+};
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config });
@@ -32,6 +129,9 @@ export default async function SingleLorePage({ params }: { params: Promise<{ slu
 
   if (!data) notFound();
 
+  const infoBoxGroups: Array<{ title: string; content: React.ReactNode }> =
+    createLoreInfoBoxGroup(data);
+
   return (
     <SinglePage
       title={data.name}
@@ -40,6 +140,7 @@ export default async function SingleLorePage({ params }: { params: Promise<{ slu
         src: '/home/hero-home.webp',
         alt: 'hero-image-adventurers-overlooking-city',
       }}
+      infobox={infoBoxGroups}
     />
   );
 }

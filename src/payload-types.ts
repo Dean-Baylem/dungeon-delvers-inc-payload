@@ -635,6 +635,7 @@ export interface Lore {
         | 'general'
       )
     | null;
+  LoreImage?: (number | null) | Media;
   era?: string | null;
   startDateYear?: number | null;
   startDateMonth?: number | null;
@@ -1126,6 +1127,7 @@ export interface LoreSelect<T extends boolean = true> {
   startDateSort?: T;
   type?: T;
   subtype?: T;
+  LoreImage?: T;
   era?: T;
   startDateYear?: T;
   startDateMonth?: T;

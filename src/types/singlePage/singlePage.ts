@@ -12,4 +12,5 @@ export type SinglePageType = {
   heroChildren?: ReactNode;
   content?: SerializedEditorState;
   infobox?: Array<{ title: string; content: ReactNode }>;
+  children?: ReactNode;
 };

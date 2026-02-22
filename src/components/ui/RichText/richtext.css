@@ -26,7 +26,10 @@
     margin-top: 1rem;
 }
 
-.richTextContent p {
+.richTextContent p,
+.richTextContent li,
+.richTextContent dt,
+.richTextContent dd {
     font-family: var(--font-body-serif);
     font-weight: 500;
     line-height: 1.8;
@@ -40,6 +43,16 @@
 
 .hasInfobox .richTextContent > *:not(:first-child) {
     margin-top: 1rem;
+}
+
+.richTextContent ul {
+    list-style-type: disc;
+    padding-left: 1rem;
+}
+
+.richTextContent ul > li > ul {
+    list-style-type: circle;
+    padding-left: 1rem;
 }
 
 @media screen and (max-width: 640px) {

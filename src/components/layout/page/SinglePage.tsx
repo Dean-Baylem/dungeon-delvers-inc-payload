@@ -9,7 +9,15 @@ import { gridOptions } from '@/lib/options/gridOptions';
 import { SinglePageType } from '@/types/singlePage/singlePage';
 
 export default function SinglePage(props: SinglePageType) {
-  const { title, lead, subtitle = 'Session Details', content, infobox, heroChildren } = props;
+  const {
+    title,
+    lead,
+    subtitle = 'Session Details',
+    content,
+    infobox,
+    heroChildren,
+    children,
+  } = props;
 
   return (
     <main>
@@ -54,6 +62,7 @@ export default function SinglePage(props: SinglePageType) {
             </div>
           </BlockGroup>
         </PageSection>
+        {children}
       </PageContents>
     </main>
   );
