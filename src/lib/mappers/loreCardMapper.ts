@@ -5,5 +5,5 @@ export const mapLoreDocToCard = (loreItem: any): LoreCardType => ({
   summary: loreItem.summary,
   type: loreItem.type,
   subtype: loreItem.subtype,
-  slug: loreItem.slug,
+  slug: loreItem.pageSlug,
 });
