@@ -1,12 +1,18 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const hamburger = useRef<HTMLButtonElement>(null);
   const sideNav = useRef<HTMLElement>(null);
   const [navOpen, setNavOpen] = useState(false);
+  const pathname = usePathname();
+
+  useEffect(() => {
+    setNavOpen(false);
+  }, [pathname]);
 
   const headerGroup = [
     {
@@ -29,14 +35,6 @@ export default function Header() {
       name: 'Locations',
       link: '/grand-gazetteer',
     },
-    // {
-    //   name: 'Factions',
-    //   link: '/factions',
-    // },
-    // {
-    //   name: 'Religions',
-    //   link: '/religions',
-    // },
   ];
 
   const handleHamburgerClick = () => {
@@ -73,6 +71,13 @@ export default function Header() {
                 </Link>
               </li>
             ))}
+            <li className="hidden md:block relative">
+              <button
+                className={`font-heading font-medium text-lg text-white hover:text-heading hover:brightness-200 duration-150`}
+              >
+                Login
+              </button>
+            </li>
           </ul>
           <button
             className="relative md:hidden h-4 w-6"
@@ -111,6 +116,19 @@ export default function Header() {
           ))}
         </ul>
       </nav>
+      <div>
+        <form>
+          <div>
+            <label>Email</label>
+            <input type="email" name="email" />
+          </div>
+          <div>
+            <label>Password</label>
+            <input type="password" name="password" />
+          </div>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </>
   );
 }
