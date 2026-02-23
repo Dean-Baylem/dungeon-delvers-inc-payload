@@ -3,11 +3,14 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRef, useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
+import PageTitle from '@/components/ui/typography/PageTitle';
+import LoginForm from '@/components/ui/login/LoginForm';
 
 export default function Header() {
   const hamburger = useRef<HTMLButtonElement>(null);
   const sideNav = useRef<HTMLElement>(null);
   const [navOpen, setNavOpen] = useState(false);
+  const [loginOpen, setLoginOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -74,6 +77,9 @@ export default function Header() {
             <li className="hidden md:block relative">
               <button
                 className={`font-heading font-medium text-lg text-white hover:text-heading hover:brightness-200 duration-150`}
+                onClick={() => {
+                  setLoginOpen(true);
+                }}
               >
                 Login
               </button>
@@ -116,19 +122,12 @@ export default function Header() {
           ))}
         </ul>
       </nav>
-      <div>
-        <form>
-          <div>
-            <label>Email</label>
-            <input type="email" name="email" />
-          </div>
-          <div>
-            <label>Password</label>
-            <input type="password" name="password" />
-          </div>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
+      <LoginForm
+        isOpen={loginOpen}
+        onClose={() => {
+          setLoginOpen(false);
+        }}
+      />
     </>
   );
 }
