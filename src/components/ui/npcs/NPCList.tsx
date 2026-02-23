@@ -17,8 +17,7 @@ export default function NPCList({ list, isLoading }: Props) {
         initial="hidden"
         animate="show"
         variants={{
-          hidden: {},
-          show: { transition: { staggerChildren: 0.1 } },
+          hidden: { transition: { staggerChildren: 0.1 } },
         }}
         className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 self-center"
       >

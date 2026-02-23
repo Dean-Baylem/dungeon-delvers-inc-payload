@@ -3,8 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRef, useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import PageTitle from '@/components/ui/typography/PageTitle';
 import LoginForm from '@/components/ui/login/LoginForm';
+import { useAuthStore } from '@/providers/auth-provider';
 
 export default function Header() {
   const hamburger = useRef<HTMLButtonElement>(null);
@@ -12,6 +12,7 @@ export default function Header() {
   const [navOpen, setNavOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const pathname = usePathname();
+  const { user, handleLogout } = useAuthStore((state) => state);
 
   useEffect(() => {
     setNavOpen(false);
@@ -78,10 +79,14 @@ export default function Header() {
               <button
                 className={`font-heading font-medium text-lg text-white hover:text-heading hover:brightness-200 duration-150`}
                 onClick={() => {
-                  setLoginOpen(true);
+                  if (user) {
+                    handleLogout('users');
+                  } else {
+                    setLoginOpen(true);
+                  }
                 }}
               >
-                Login
+                {user ? 'Logout' : 'Login'}
               </button>
             </li>
           </ul>
