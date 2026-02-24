@@ -1,6 +1,8 @@
+'use client';
 import { CTA_TYPES } from '@/constants/ctaTypes';
 import { AnimatePresence, motion } from 'motion/react';
 import { useAuthStore } from '@/providers/auth-provider';
+import { useState } from 'react';
 
 type LoginFormProps = {
   isOpen: boolean;
@@ -9,7 +11,8 @@ type LoginFormProps = {
 
 export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
   const { primary, secondary } = CTA_TYPES;
-  const { user, handleLogin, handleLogout } = useAuthStore((state) => state);
+  const { user, handleLogin } = useAuthStore((state) => state);
+  const [error, setError] = useState<string | null>(null);
 
   const formRow = 'flex flex-col gap-2';
   const formLabel = 'font-serif font-semibold text-lg';
@@ -18,13 +21,16 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form submitted');
     const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
+    const username = formData.get('username') as string;
     const password = formData.get('password') as string;
-
-    console.log(`Form Data: Email - ${email} | Password - ${password}`);
-    const response = await handleLogin({ email, password }, 'users');
+    try {
+      const response = await handleLogin({ username, password }, 'players');
+      onClose();
+    } catch (error) {
+      console.log('Login error:', error);
+      setError('Login failed. Please check your login details and try again.');
+    }
   };
 
   return (
@@ -39,7 +45,9 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
             onClick={onClose}
           />
           {user ? (
-            <p>ALREADY LOGGED IN</p>
+            <p className="font-subheading font-bold text-heading text-xl text-center">
+              ALREADY LOGGED IN
+            </p>
           ) : (
             <motion.div
               className="fixed inset-0 flex items-center justify-center z-30"
@@ -57,11 +65,12 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
                 <p className="font-subheading font-bold text-heading text-xl text-center">
                   Player Login
                 </p>
+                {error && <p className="text-red-500 text-center font-sans text-sm">{error}</p>}
                 <div className={formRow}>
-                  <label className={formLabel} htmlFor="email">
-                    Email
+                  <label className={formLabel} htmlFor="username">
+                    Username
                   </label>
-                  <input type="email" name="email" id="email" className={inputBase} />
+                  <input type="text" name="username" id="username" className={inputBase} />
                 </div>
                 <div className={formRow}>
                   <label className={formLabel} htmlFor="password">

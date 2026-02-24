@@ -64,6 +64,7 @@ export type SupportedTimezones =
 export interface Config {
   auth: {
     users: UserAuthOperations;
+    players: PlayerAuthOperations;
   };
   blocks: {};
   collections: {
@@ -78,6 +79,7 @@ export interface Config {
     sessions: Session;
     characters: Character;
     adventures: Adventure;
+    players: Player;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -96,6 +98,7 @@ export interface Config {
     sessions: SessionsSelect<false> | SessionsSelect<true>;
     characters: CharactersSelect<false> | CharactersSelect<true>;
     adventures: AdventuresSelect<false> | AdventuresSelect<true>;
+    players: PlayersSelect<false> | PlayersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -108,9 +111,13 @@ export interface Config {
   globals: {};
   globalsSelect: {};
   locale: null;
-  user: User & {
-    collection: 'users';
-  };
+  user:
+    | (User & {
+        collection: 'users';
+      })
+    | (Player & {
+        collection: 'players';
+      });
   jobs: {
     tasks: unknown;
     workflows: unknown;
@@ -132,6 +139,22 @@ export interface UserAuthOperations {
   unlock: {
     email: string;
     password: string;
+  };
+}
+export interface PlayerAuthOperations {
+  forgotPassword: {
+    username: string;
+  };
+  login: {
+    password: string;
+    username: string;
+  };
+  registerFirstUser: {
+    password: string;
+    username: string;
+  };
+  unlock: {
+    username: string;
   };
 }
 /**
@@ -829,6 +852,31 @@ export interface Character {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "players".
+ */
+export interface Player {
+  id: number;
+  updatedAt: string;
+  createdAt: string;
+  email?: string | null;
+  username: string;
+  resetPasswordToken?: string | null;
+  resetPasswordExpiration?: string | null;
+  salt?: string | null;
+  hash?: string | null;
+  loginAttempts?: number | null;
+  lockUntil?: string | null;
+  sessions?:
+    | {
+        id: string;
+        createdAt?: string | null;
+        expiresAt: string;
+      }[]
+    | null;
+  password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -894,12 +942,21 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'adventures';
         value: number | Adventure;
+      } | null)
+    | ({
+        relationTo: 'players';
+        value: number | Player;
       } | null);
   globalSlug?: string | null;
-  user: {
-    relationTo: 'users';
-    value: number | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: number | User;
+      }
+    | {
+        relationTo: 'players';
+        value: number | Player;
+      };
   updatedAt: string;
   createdAt: string;
 }
@@ -909,10 +966,15 @@ export interface PayloadLockedDocument {
  */
 export interface PayloadPreference {
   id: number;
-  user: {
-    relationTo: 'users';
-    value: number | User;
-  };
+  user:
+    | {
+        relationTo: 'users';
+        value: number | User;
+      }
+    | {
+        relationTo: 'players';
+        value: number | Player;
+      };
   key?: string | null;
   value?:
     | {
@@ -1217,6 +1279,29 @@ export interface AdventuresSelect<T extends boolean = true> {
   dmNotes?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "players_select".
+ */
+export interface PlayersSelect<T extends boolean = true> {
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  username?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

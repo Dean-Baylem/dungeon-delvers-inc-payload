@@ -16,7 +16,7 @@ export type AuthStoreState = {
 
 export type AuthStoreActions = {
   handleLogin: (
-    credentials: { email: string; password: string },
+    credentials: { username: string; password: string },
     collection: string,
   ) => Promise<void>;
   handleLogout: (collection: string) => void;

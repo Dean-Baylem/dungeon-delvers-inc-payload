@@ -77,10 +77,10 @@ export default function Header() {
             ))}
             <li className="hidden md:block relative">
               <button
-                className={`font-heading font-medium text-lg text-white hover:text-heading hover:brightness-200 duration-150`}
+                className={`font-heading font-medium text-lg text-white hover:text-heading hover:brightness-200 duration-150 cursor-pointer`}
                 onClick={() => {
                   if (user) {
-                    handleLogout('users');
+                    handleLogout('players');
                   } else {
                     setLoginOpen(true);
                   }
