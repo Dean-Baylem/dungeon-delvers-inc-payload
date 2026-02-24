@@ -79,10 +79,10 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
                   <input type="password" name="password" id="password" className={inputBase} />
                 </div>
                 <div className="grid grid-cols-2 gap-4 mt-2">
-                  <button type="submit" className={primary}>
+                  <button type="submit" className={`${primary} cursor-pointer`}>
                     Submit
                   </button>
-                  <button type="button" className={secondary} onClick={onClose}>
+                  <button type="button" className={`${secondary} cursor-pointer`} onClick={onClose}>
                     Close
                   </button>
                 </div>
