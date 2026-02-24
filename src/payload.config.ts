@@ -17,6 +17,7 @@ import { Lore } from './collections/Lore';
 import { Sessions } from './collections/Sessions';
 import { Characters } from './collections/Characters';
 import { Adventures } from './collections/Adventures';
+import { Players } from './collections/Players';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -40,6 +41,7 @@ export default buildConfig({
     Sessions,
     Characters,
     Adventures,
+    Players,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
