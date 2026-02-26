@@ -33,6 +33,12 @@ export const Comments: CollectionConfig = {
       name: 'parentComment',
       type: 'relationship',
       relationTo: 'comments',
+      required: false,
+    },
+    {
+      name: 'character',
+      type: 'relationship',
+      relationTo: 'characters',
       required: true,
     },
   ],

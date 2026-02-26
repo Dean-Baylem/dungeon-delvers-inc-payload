@@ -26,5 +26,11 @@ export const Characters: CollectionConfig = {
       name: 'dmNotes',
       type: 'richText',
     },
+    {
+      name: 'player',
+      type: 'relationship',
+      relationTo: 'players',
+      hasMany: false,
+    },
   ],
 };

@@ -74,7 +74,10 @@ export default async function SingleSessionPage({ params }: { params: Promise<{ 
         alt: 'hero-image-adventurers-overlooking-city',
       }}
     >
-      {/* <CommentSection comments={dummies} /> */}
+      <CommentSection
+        comments={dummies}
+        pageDetails={{ collection: 'sessions', id: Number(data.id) }}
+      />
     </SinglePage>
   );
 }

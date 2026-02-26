@@ -849,6 +849,7 @@ export interface Character {
     };
     [k: string]: unknown;
   } | null;
+  player?: (number | null) | Player;
   updatedAt: string;
   createdAt: string;
 }
@@ -911,7 +912,8 @@ export interface Comment {
         relationTo: 'sessions';
         value: number | Session;
       };
-  parentComment: number | Comment;
+  parentComment?: (number | null) | Comment;
+  character: number | Character;
   updatedAt: string;
   createdAt: string;
 }
@@ -1284,6 +1286,7 @@ export interface CharactersSelect<T extends boolean = true> {
   pageSlug?: T;
   icon?: T;
   dmNotes?: T;
+  player?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -1357,6 +1360,7 @@ export interface CommentsSelect<T extends boolean = true> {
   status?: T;
   parentPost?: T;
   parentComment?: T;
+  character?: T;
   updatedAt?: T;
   createdAt?: T;
 }
