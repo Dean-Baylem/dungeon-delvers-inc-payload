@@ -80,6 +80,7 @@ export interface Config {
     characters: Character;
     adventures: Adventure;
     players: Player;
+    comments: Comment;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -99,6 +100,7 @@ export interface Config {
     characters: CharactersSelect<false> | CharactersSelect<true>;
     adventures: AdventuresSelect<false> | AdventuresSelect<true>;
     players: PlayersSelect<false> | PlayersSelect<true>;
+    comments: CommentsSelect<false> | CommentsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -877,6 +879,44 @@ export interface Player {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments".
+ */
+export interface Comment {
+  id: number;
+  content: string;
+  author: number | Player;
+  status?: ('publish' | 'draft' | 'trash') | null;
+  parentPost:
+    | {
+        relationTo: 'adventures';
+        value: number | Adventure;
+      }
+    | {
+        relationTo: 'factions';
+        value: number | Faction;
+      }
+    | {
+        relationTo: 'lore';
+        value: number | Lore;
+      }
+    | {
+        relationTo: 'npcs';
+        value: number | Npc;
+      }
+    | {
+        relationTo: 'religions';
+        value: number | Religion;
+      }
+    | {
+        relationTo: 'sessions';
+        value: number | Session;
+      };
+  parentComment: number | Comment;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -946,6 +986,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'players';
         value: number | Player;
+      } | null)
+    | ({
+        relationTo: 'comments';
+        value: number | Comment;
       } | null);
   globalSlug?: string | null;
   user:
@@ -1302,6 +1346,19 @@ export interface PlayersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments_select".
+ */
+export interface CommentsSelect<T extends boolean = true> {
+  content?: T;
+  author?: T;
+  status?: T;
+  parentPost?: T;
+  parentComment?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

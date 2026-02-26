@@ -3,6 +3,7 @@ import singleQuery from '@/lib/query/singleQuery';
 import { Session } from '@/payload-types';
 import { getPayload } from 'payload';
 import config from '@/payload.config';
+import CommentSection from '@/components/layout/comments/CommentSection';
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config });
@@ -29,6 +30,40 @@ export default async function SingleSessionPage({ params }: { params: Promise<{ 
     slug,
   });
 
+  const dummyText = (
+    <p>
+      Here are the contents Here are the contents Here are the contents Here are the contents Here
+      are the contents Here are the contents
+    </p>
+  );
+
+  const dummies = [
+    {
+      image: {
+        src: '/icons/adventurer1.webp',
+        alt: 'token-alt',
+      },
+      username: 'username',
+      textContent: dummyText,
+    },
+    {
+      image: {
+        src: '/icons/adventurer1.webp',
+        alt: 'token-alt',
+      },
+      username: 'username',
+      textContent: dummyText,
+    },
+    {
+      image: {
+        src: '/icons/adventurer1.webp',
+        alt: 'token-alt',
+      },
+      username: 'username',
+      textContent: dummyText,
+    },
+  ];
+
   return (
     <SinglePage
       title={data.title}
@@ -38,6 +73,8 @@ export default async function SingleSessionPage({ params }: { params: Promise<{ 
         src: '/home/hero-home.webp',
         alt: 'hero-image-adventurers-overlooking-city',
       }}
-    />
+    >
+      {/* <CommentSection comments={dummies} /> */}
+    </SinglePage>
   );
 }
