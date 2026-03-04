@@ -8,6 +8,9 @@ import mediaTypeCheck from '@/lib/query/mediaTypeCheck';
 import Image from 'next/image';
 import { camelToTextMapper } from '@/lib/mappers/camelToTextMapper';
 import InfoBoxList from '@/components/blocks/infobox/InfoboxList';
+import { SingleCommentType } from '@/types/comments/singleCommentType';
+import commentQuery from '@/lib/query/commentQuery';
+import CommentSection from '@/components/layout/comments/CommentSection';
 
 const loreInfoPointListCreation = (lore: Lore, list: readonly (keyof Lore)[]) => {
   return list.reduce<{ title: string; text: string }[]>((acc, point) => {
@@ -140,6 +143,11 @@ export default async function SingleLorePage({ params }: { params: Promise<{ slu
 
   if (!data) notFound();
 
+  const comments: Array<SingleCommentType> = await commentQuery({
+    collection: 'lore',
+    pageId: Number(data.id),
+  });
+
   const infoBoxGroups: Array<{ title: string; content: React.ReactNode }> =
     createLoreInfoBoxGroup(data);
 
@@ -152,6 +160,11 @@ export default async function SingleLorePage({ params }: { params: Promise<{ slu
         alt: 'hero-image-adventurers-overlooking-city',
       }}
       infobox={infoBoxGroups}
-    />
+    >
+      <CommentSection
+        comments={comments}
+        pageDetails={{ collection: 'lore', id: Number(data.id) }}
+      />
+    </SinglePage>
   );
 }

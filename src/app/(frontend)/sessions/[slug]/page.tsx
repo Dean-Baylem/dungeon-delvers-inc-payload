@@ -44,33 +44,6 @@ export default async function SingleSessionPage({ params }: { params: Promise<{ 
     </p>
   );
 
-  const dummies = [
-    {
-      image: {
-        src: '/icons/adventurer1.webp',
-        alt: 'token-alt',
-      },
-      username: 'username',
-      textContent: dummyText,
-    },
-    {
-      image: {
-        src: '/icons/adventurer1.webp',
-        alt: 'token-alt',
-      },
-      username: 'username',
-      textContent: dummyText,
-    },
-    {
-      image: {
-        src: '/icons/adventurer1.webp',
-        alt: 'token-alt',
-      },
-      username: 'username',
-      textContent: dummyText,
-    },
-  ];
-
   return (
     <SinglePage
       title={data.title}

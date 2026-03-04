@@ -38,6 +38,7 @@ export default function CommentForm({ pageDetails, handleCommentListUpdate }: Pr
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formTarget = e.currentTarget as HTMLFormElement;
     const formData = new FormData(e.currentTarget);
     const commentText = formData.get('comment') as string;
     const characterId = formData.get('character') as string;
@@ -82,7 +83,7 @@ export default function CommentForm({ pageDetails, handleCommentListUpdate }: Pr
         userId: newComment.author.id,
         commentId: newComment.id,
       };
-      e.currentTarget.reset();
+      formTarget.reset();
       handleCommentListUpdate(newSingleComment);
     } catch (error) {
       console.error('Error submitting comment:', error);
