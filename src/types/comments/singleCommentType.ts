@@ -5,4 +5,6 @@ export type SingleCommentType = {
   };
   textContent: React.ReactNode;
   username: string;
+  userId: number;
+  commentId: number;
 };

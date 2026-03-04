@@ -28,7 +28,6 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
       const response = await handleLogin({ username, password }, 'players');
       onClose();
     } catch (error) {
-      console.log('Login error:', error);
       setError('Login failed. Please check your login details and try again.');
     }
   };

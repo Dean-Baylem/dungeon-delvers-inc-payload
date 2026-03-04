@@ -37,8 +37,6 @@ export default async function SingleSessionPage({ params }: { params: Promise<{ 
     pageId: Number(data.id),
   });
 
-  console.log(comments);
-
   const dummyText = (
     <p>
       Here are the contents Here are the contents Here are the contents Here are the contents Here

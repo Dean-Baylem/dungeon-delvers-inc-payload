@@ -42,8 +42,6 @@ export default function CommentForm({ pageDetails, handleCommentListUpdate }: Pr
     const commentText = formData.get('comment') as string;
     const characterId = formData.get('character') as string;
 
-    console.log(characterId);
-
     if (!characterId) {
       alert('Please select a character to comment with.');
       return;
@@ -61,8 +59,6 @@ export default function CommentForm({ pageDetails, handleCommentListUpdate }: Pr
       character: parseInt(characterId),
     };
 
-    console.log(data.character);
-
     try {
       const response = await fetch('/api/comments', {
         method: 'POST',
@@ -77,7 +73,16 @@ export default function CommentForm({ pageDetails, handleCommentListUpdate }: Pr
       }
 
       const newComment = await response.json();
-      handleCommentListUpdate(newComment);
+      const newSingleComment = {
+        image: newComment.character?.icon
+          ? { src: newComment.character.icon.url, alt: newComment.character.icon.alt }
+          : undefined,
+        textContent: newComment.content,
+        username: newComment.character?.name || 'Unknown Character',
+        userId: newComment.author.id,
+        commentId: newComment.id,
+      };
+      handleCommentListUpdate(newSingleComment);
     } catch (error) {
       console.error('Error submitting comment:', error);
       alert('There was an error submitting your comment. Please try again.');

@@ -43,6 +43,8 @@ export default async function commentQuery({
       image: image,
       textContent: comment.content,
       username: comment.character?.name || 'Unknown Character',
+      userId: comment.author.id,
+      commentId: comment.id,
     };
   });
 }
