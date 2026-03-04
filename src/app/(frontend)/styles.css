@@ -7,6 +7,8 @@
     --colorSecondary: #3a4f41;
     --colorSurface: #E6D1B9;
     --colorBorder: #908a7d;
+    --colorDanger: #d10000;
+    --colorDangerHover: #a50000;
 }
 
 @theme inline {
@@ -16,6 +18,8 @@
     --color-secondary: var(--colorSecondary);
     --color-surface: var(--colorSurface);
     --color-border: var(--colorBorder);
+    --color-danger: var(--colorDanger);
+    --color-danger-hover: var(--colorDangerHover);
     --font-sans: var(--font-body-sans);
     --font-serif: var(--font-body-serif);
     --font-heading: var(--font-heading);
