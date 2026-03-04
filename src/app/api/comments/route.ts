@@ -1,4 +1,5 @@
 import { getPayload } from 'payload';
+import { revalidatePath } from 'next/cache';
 import config from '@payload-config';
 
 export async function POST(req: Request) {
@@ -55,6 +56,11 @@ export async function DELETE(req: Request) {
       id: commentId,
     });
 
+    // Revalidate the current path to update the comment list on the frontend
+    const url = new URL(req.url);
+    const path = url.pathname;
+    revalidatePath(path);
+
     return Response.json({ success: true });
   } catch (error) {
     return new Response('Error deleting comment', { status: 500 });
@@ -96,6 +102,10 @@ export async function PATCH(req: Request) {
       id: commentId,
       data: { content: textContent },
     });
+
+    const url = new URL(req.url);
+    const path = url.pathname;
+    revalidatePath(path);
 
     return Response.json({
       success: true,
