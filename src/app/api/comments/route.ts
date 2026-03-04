@@ -42,7 +42,10 @@ export async function DELETE(req: Request) {
     return new Response('Comment not found', { status: 404 });
   }
 
-  if (existingComment.author.id !== user.id) {
+  const authorId =
+    typeof existingComment.author === 'object' ? existingComment.author.id : existingComment.author;
+
+  if (authorId !== user.id) {
     return new Response('Forbidden', { status: 403 });
   }
 
@@ -80,7 +83,10 @@ export async function PATCH(req: Request) {
     return new Response('Comment not found', { status: 404 });
   }
 
-  if (existingComment.author.id !== user.id) {
+  const authorId =
+    typeof existingComment.author === 'object' ? existingComment.author.id : existingComment.author;
+
+  if (authorId !== user.id) {
     return new Response('Forbidden', { status: 403 });
   }
 
