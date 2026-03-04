@@ -13,7 +13,7 @@ export default function CommentSingle({ comment }: Props) {
   return (
     <li className="grid grid-cols-[3.125rem_1fr] gap-x-4 gap-y-0.5 py-4 border-b border-border">
       <div className="col-start-1 row-span-2 mt-2">
-        <Image src={image.src} alt={image.alt} width="50" height="50" loading="lazy" />
+        {image && <Image src={image.src} alt={image.alt} width="50" height="50" loading="lazy" />}
       </div>
       <div className="col-start-2">
         <p className="font-bold font-heading text-2xl text-heading capitalize">{username}</p>

@@ -1,6 +1,7 @@
 import { getPayload, Config, WhereField } from 'payload';
 import config from '@/payload.config';
-import { notFound } from 'next/navigation';
+import mediaTypeCheck from './mediaTypeCheck';
+import { SingleCommentType } from '@/types/comments/singleCommentType';
 
 type CollectionSlug = keyof Config['collections'];
 
@@ -17,9 +18,31 @@ export default async function commentQuery({
     collection: 'comments',
     limit: 100,
     where: {
-      parentPost: {
-        equals: pageId,
-      } as WhereField,
+      and: [
+        {
+          'parentPost.value': {
+            equals: pageId,
+          } as WhereField,
+        },
+        {
+          'parentPost.relationTo': {
+            equals: collectionSlug,
+          },
+        },
+      ],
     },
+  });
+
+  if (commentData.totalDocs === 0) {
+    return [];
+  }
+
+  return commentData.docs.map((comment): SingleCommentType => {
+    const image = comment.character?.icon ? mediaTypeCheck(comment.character?.icon) : undefined;
+    return {
+      image: image,
+      textContent: comment.content,
+      username: comment.character?.name || 'Unknown Character',
+    };
   });
 }

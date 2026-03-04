@@ -1,5 +1,5 @@
 export type SingleCommentType = {
-  image: {
+  image?: {
     src: string;
     alt: string;
   };

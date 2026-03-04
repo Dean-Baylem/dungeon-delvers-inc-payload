@@ -1,9 +1,11 @@
 import SinglePage from '@/components/layout/page/SinglePage';
 import singleQuery from '@/lib/query/singleQuery';
-import { Session } from '@/payload-types';
+import { Comment, Session } from '@/payload-types';
 import { getPayload } from 'payload';
 import config from '@/payload.config';
 import CommentSection from '@/components/layout/comments/CommentSection';
+import commentQuery from '@/lib/query/commentQuery';
+import { SingleCommentType } from '@/types/comments/singleCommentType';
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config });
@@ -29,6 +31,13 @@ export default async function SingleSessionPage({ params }: { params: Promise<{ 
     collection: 'sessions',
     slug,
   });
+
+  const comments: Array<SingleCommentType> = await commentQuery({
+    collection: 'sessions',
+    pageId: Number(data.id),
+  });
+
+  console.log(comments);
 
   const dummyText = (
     <p>
@@ -75,7 +84,7 @@ export default async function SingleSessionPage({ params }: { params: Promise<{ 
       }}
     >
       <CommentSection
-        comments={dummies}
+        comments={comments}
         pageDetails={{ collection: 'sessions', id: Number(data.id) }}
       />
     </SinglePage>
