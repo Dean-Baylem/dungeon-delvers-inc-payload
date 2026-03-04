@@ -38,12 +38,13 @@ export default async function commentQuery({
   }
 
   return commentData.docs.map((comment): SingleCommentType => {
-    const image = comment.character?.icon ? mediaTypeCheck(comment.character?.icon) : undefined;
+    const icon = typeof comment.character === 'object' ? comment.character.icon : undefined;
     return {
-      image: image,
+      image: icon ? mediaTypeCheck(icon) : undefined,
       textContent: comment.content,
-      username: comment.character?.name || 'Unknown Character',
-      userId: comment.author.id,
+      username:
+        typeof comment.character === 'object' ? comment.character.name : 'Unknown Character',
+      userId: typeof comment.author === 'object' ? comment.author.id : comment.author,
       commentId: comment.id,
     };
   });
