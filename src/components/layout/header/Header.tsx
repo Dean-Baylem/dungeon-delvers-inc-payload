@@ -125,6 +125,20 @@ export default function Header() {
               </Link>
             </li>
           ))}
+          <li className="relative">
+            <button
+              className={`md:hidden font-heading font-medium text-4xl text-white hover:text-heading hover:brightness-200 duration-150 cursor-pointer`}
+              onClick={() => {
+                if (user) {
+                  handleLogout('players');
+                } else {
+                  setLoginOpen(true);
+                }
+              }}
+            >
+              {user ? 'Logout' : 'Login'}
+            </button>
+          </li>
         </ul>
       </nav>
       <LoginForm
