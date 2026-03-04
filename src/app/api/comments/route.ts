@@ -2,9 +2,8 @@ import { getPayload } from 'payload';
 import { revalidatePath } from 'next/cache';
 import config from '@payload-config';
 
-const triggerRevalidation = (reqUrl: string) => {
-  const url = new URL(reqUrl);
-  const path = url.pathname;
+const triggerRevalidation = (path: string) => {
+  console.log(path);
   revalidatePath(path);
 };
 
@@ -19,13 +18,15 @@ export async function POST(req: Request) {
 
   const body = await req.json();
 
+  const { path, ...data } = body;
+
   const comment = await payload.create({
     collection: 'comments',
-    data: body,
+    data,
   });
 
   // Revalidate the current path to update the SSG page with the new comment
-  triggerRevalidation(req.url);
+  triggerRevalidation(path);
 
   return Response.json(comment);
 }
@@ -41,7 +42,7 @@ export async function DELETE(req: Request) {
 
   const body = await req.json();
 
-  const { commentId } = body;
+  const { commentId, path } = body;
 
   const existingComment = await payload.findByID({
     collection: 'comments',
@@ -66,7 +67,7 @@ export async function DELETE(req: Request) {
     });
 
     // Revalidate the current path to update the SSG page with the comment removed
-    triggerRevalidation(req.url);
+    triggerRevalidation(path);
 
     return Response.json({ success: true });
   } catch (error) {
@@ -85,7 +86,7 @@ export async function PATCH(req: Request) {
 
   const body = await req.json();
 
-  const { commentId, textContent } = body;
+  const { commentId, textContent, path } = body;
 
   const existingComment = await payload.findByID({
     collection: 'comments',
@@ -111,7 +112,7 @@ export async function PATCH(req: Request) {
     });
 
     // Revalidate the current path to update the SSG page with the comment updated
-    triggerRevalidation(req.url);
+    triggerRevalidation(path);
 
     return Response.json({
       success: true,

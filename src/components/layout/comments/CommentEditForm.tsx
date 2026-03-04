@@ -21,7 +21,9 @@ export default function CommentEditForm({
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading && setIsLoading(true);
-    const commentData = { commentId, textContent: value };
+    const url = new URL(window.location.href);
+    const path = url.pathname;
+    const commentData = { commentId, textContent: value, path };
 
     try {
       const response = await fetch('/api/comments', {

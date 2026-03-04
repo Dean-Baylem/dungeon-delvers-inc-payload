@@ -30,10 +30,13 @@ export default function CommentSingle({ comment, handleCommentDelete }: Props) {
     if (confirm('Are you sure you want to delete this comment? This action cannot be undone.')) {
       setIsLoading(true);
       try {
+        const url = new URL(window.location.href);
+        const path = url.pathname;
+
         const response = await fetch('/api/comments', {
           method: 'DELETE',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ commentId: comment.commentId }),
+          body: JSON.stringify({ commentId: comment.commentId, path }),
         });
 
         if (!response.ok) throw new Error('Failed to delete comment');

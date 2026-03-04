@@ -48,6 +48,9 @@ export default function CommentForm({ pageDetails, handleCommentListUpdate }: Pr
       return;
     }
 
+    const url = new URL(window.location.href);
+    const path = url.pathname;
+
     const data = {
       content: commentText,
       author: user.id,
@@ -56,6 +59,7 @@ export default function CommentForm({ pageDetails, handleCommentListUpdate }: Pr
         relationTo: pageDetails.collection,
         value: pageDetails.id,
       },
+      path: path,
       parentComment: null,
       character: parseInt(characterId),
     };
