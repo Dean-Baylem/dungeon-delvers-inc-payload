@@ -82,6 +82,7 @@ export default function CommentForm({ pageDetails, handleCommentListUpdate }: Pr
         userId: newComment.author.id,
         commentId: newComment.id,
       };
+      e.currentTarget.reset();
       handleCommentListUpdate(newSingleComment);
     } catch (error) {
       console.error('Error submitting comment:', error);
@@ -113,7 +114,7 @@ export default function CommentForm({ pageDetails, handleCommentListUpdate }: Pr
           ))}
         </select>
       </div>
-      <button type="submit" className={`${primary} col-start-1 row-start-2`}>
+      <button type="submit" className={`${primary} col-start-1 row-start-2 cursor-pointer`}>
         Submit Comment
       </button>
     </form>
