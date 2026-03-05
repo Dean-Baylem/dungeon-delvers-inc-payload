@@ -19,7 +19,11 @@ export default function Header() {
   }, [pathname]);
 
   useEffect(() => {
-    document.body.classList.toggle('overflow-hidden');
+    if (navOpen) {
+      document.body.classList.add('overflow-hidden');
+    } else {
+      document.body.classList.remove('overflow-hidden');
+    }
   }, [navOpen]);
 
   const headerGroup = [
