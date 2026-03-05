@@ -17,6 +17,7 @@ export default async function commentQuery({
   const commentData = await payload.find({
     collection: 'comments',
     limit: 100,
+    sort: '-createdAt',
     where: {
       and: [
         {
