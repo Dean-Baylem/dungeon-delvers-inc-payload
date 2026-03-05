@@ -9,8 +9,8 @@ export default function PageTitle({ as: Component, size, children, customClasses
   const sizeClasses = {
     xsm: 'font-subheading text-heading',
     sm: 'font-subheading text-heading text-lg',
-    md: 'font-bold font-heading text-heading text-3xl',
-    lg: 'font-bold font-heading text-heading text-4xl border-b-[3px] border-heading w-full pb-1',
+    md: 'font-bold font-heading text-heading text-2xl lg:text-3xl',
+    lg: 'font-bold font-heading text-heading text-3xl lg:text-4xl border-b-[3px] border-heading w-full pb-1',
   };
 
   return (

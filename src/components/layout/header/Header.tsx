@@ -18,6 +18,10 @@ export default function Header() {
     setNavOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    document.body.classList.toggle('overflow-hidden');
+  }, [navOpen]);
+
   const headerGroup = [
     {
       name: 'Home',
@@ -42,12 +46,7 @@ export default function Header() {
   ];
 
   const handleHamburgerClick = () => {
-    const hamburgerButton = hamburger.current;
-    if (hamburgerButton) {
-      hamburgerButton.setAttribute('aria-expanded', `${!navOpen}`);
-      document.body.classList.toggle('overflow-hidden');
-      setNavOpen(!navOpen);
-    }
+    setNavOpen(!navOpen);
   };
 
   return (
@@ -94,7 +93,7 @@ export default function Header() {
             className="relative md:hidden h-4 w-6"
             ref={hamburger}
             onClick={handleHamburgerClick}
-            aria-expanded="false"
+            aria-expanded={navOpen}
             aria-controls="side-nav"
           >
             <span
