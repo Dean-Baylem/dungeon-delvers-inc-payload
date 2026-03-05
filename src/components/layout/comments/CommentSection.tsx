@@ -19,8 +19,6 @@ export default function CommentSection({ comments, pageDetails }: Props) {
   const [commentList, setCommentList] = useState<Array<SingleCommentType>>(comments);
 
   const handleCommentListUpdate = (newComment: SingleCommentType) => {
-    console.log('New Comment Added:');
-    console.log(newComment);
     setCommentList((prevList) => [...prevList, newComment]);
   };
 

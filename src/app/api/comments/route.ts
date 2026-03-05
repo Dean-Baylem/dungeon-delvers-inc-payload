@@ -3,7 +3,6 @@ import { revalidatePath } from 'next/cache';
 import config from '@payload-config';
 
 const triggerRevalidation = (path: string) => {
-  console.log(path);
   revalidatePath(path);
 };
 
