@@ -22,7 +22,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function SingleLocationPage({
+export default async function singleReligionPage({
   params,
 }: {
   params: Promise<{ slug: string }>;

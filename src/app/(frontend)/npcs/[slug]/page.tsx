@@ -10,6 +10,9 @@ import Image from 'next/image';
 import mediaTypeCheck from '@/lib/query/mediaTypeCheck';
 import InfoBoxList from '@/components/blocks/infobox/InfoboxList';
 import { ReactNode } from 'react';
+import CommentSection from '@/components/layout/comments/CommentSection';
+import { SingleCommentType } from '@/types/comments/singleCommentType';
+import commentQuery from '@/lib/query/commentQuery';
 
 function isFactionOrNpc(f: unknown): f is Faction | Npc {
   return typeof f === 'object' && f !== null && 'name' in f && typeof (f as any).name === 'string';
@@ -113,6 +116,11 @@ export default async function SingleLocationPage({
 
   const infoBoxGroups: Array<{ title: string; content: ReactNode }> = createNpcInfoBoxGroup(data);
 
+  const comments: Array<SingleCommentType> = await commentQuery({
+    collection: 'npcs',
+    pageId: Number(data.id),
+  });
+
   return (
     <SinglePage
       title={data.name}
@@ -128,6 +136,15 @@ export default async function SingleLocationPage({
         alt: 'hero-image-adventurers-overlooking-city',
       }}
       infobox={infoBoxGroups}
-    />
+      archiveLink="/npcs"
+      archiveText="NPC Archive"
+    >
+      {data.content && (
+        <CommentSection
+          comments={comments}
+          pageDetails={{ collection: 'npcs', id: Number(data.id) }}
+        />
+      )}
+    </SinglePage>
   );
 }

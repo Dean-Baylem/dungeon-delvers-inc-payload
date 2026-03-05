@@ -155,16 +155,21 @@ export default async function SingleLorePage({ params }: { params: Promise<{ slu
     <SinglePage
       title={data.name}
       content={data.content ? data.content : undefined}
+      subtitle="Lore Details"
       heroImage={{
         src: '/home/hero-home.webp',
         alt: 'hero-image-adventurers-overlooking-city',
       }}
       infobox={infoBoxGroups}
+      archiveLink="/lore"
+      archiveText="Lore Archive"
     >
-      <CommentSection
-        comments={comments}
-        pageDetails={{ collection: 'lore', id: Number(data.id) }}
-      />
+      {data.content && (
+        <CommentSection
+          comments={comments}
+          pageDetails={{ collection: 'lore', id: Number(data.id) }}
+        />
+      )}
     </SinglePage>
   );
 }

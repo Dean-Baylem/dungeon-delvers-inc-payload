@@ -17,6 +17,8 @@ export default function SinglePage(props: SinglePageType) {
     infobox,
     heroChildren,
     children,
+    archiveText = 'Archive',
+    archiveLink,
   } = props;
 
   return (
@@ -57,7 +59,7 @@ export default function SinglePage(props: SinglePageType) {
               </p>
             )}
             <div className="grid text-center sm:flex sm:flex-col items-center justify-center gap-4 sm:gap-6 mt-4 mb-4 sm:mb-0">
-              <CTALink link={'/sessions'} type="secondary" text="Sessions Archive"></CTALink>
+              {archiveLink && <CTALink link={archiveLink} type="secondary" text={archiveText} />}
               <CTALink link={'/'} type="primary" text="Home Page"></CTALink>
             </div>
           </BlockGroup>

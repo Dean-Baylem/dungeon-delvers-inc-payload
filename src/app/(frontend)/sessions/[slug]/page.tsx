@@ -37,13 +37,6 @@ export default async function SingleSessionPage({ params }: { params: Promise<{ 
     pageId: Number(data.id),
   });
 
-  const dummyText = (
-    <p>
-      Here are the contents Here are the contents Here are the contents Here are the contents Here
-      are the contents Here are the contents
-    </p>
-  );
-
   return (
     <SinglePage
       title={data.title}
@@ -53,11 +46,15 @@ export default async function SingleSessionPage({ params }: { params: Promise<{ 
         src: '/home/hero-home.webp',
         alt: 'hero-image-adventurers-overlooking-city',
       }}
+      archiveLink="/sessions"
+      archiveText="Session Archive"
     >
-      <CommentSection
-        comments={comments}
-        pageDetails={{ collection: 'sessions', id: Number(data.id) }}
-      />
+      {data.content && (
+        <CommentSection
+          comments={comments}
+          pageDetails={{ collection: 'sessions', id: Number(data.id) }}
+        />
+      )}
     </SinglePage>
   );
 }

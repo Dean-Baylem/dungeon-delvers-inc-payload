@@ -44,6 +44,8 @@ export default async function SingleLocationPage({
         src: '/home/hero-home.webp',
         alt: 'hero-image-adventurers-overlooking-city',
       }}
+      archiveLink="/grand-gazetteer"
+      archiveText="Archive"
     />
   );
 }

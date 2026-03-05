@@ -42,6 +42,8 @@ export default async function singleAdventurePage({
         src: '/home/hero-home.webp',
         alt: 'hero-image-adventurers-overlooking-city',
       }}
+      archiveText="Archive"
+      archiveLink="/sessions"
     />
   );
 }
