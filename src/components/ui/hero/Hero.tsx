@@ -29,8 +29,8 @@ export default function Hero({ variant = 'full', title, lead, image, children }:
       </div>
       <div className="col-start-1 row-start-1 self-center justify-self-center flex flex-col items-center justify-center gap-8 z-10 px-4">
         <hgroup className="font-heading text-white text-center">
-          {lead && <p className="text-2xl">{lead}</p>}
-          <h1 className="text-5xl lg:text-6xl mt-3 capitalize">{title}</h1>
+          {lead && <p className="text-lg md:text-xl lg:text-2xl">{lead}</p>}
+          <h1 className="text-4xl md:text-5xl lg:text-6xl mt-3 capitalize">{title}</h1>
         </hgroup>
         {children}
       </div>
