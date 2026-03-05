@@ -51,7 +51,7 @@ export default function SinglePage(props: SinglePageType) {
               </div>
             ) : (
               <p className="font-medium font-serif text-center text-lg">
-                Currently the records for this session are being finalised.
+                Currently the records for this log are being finalised.
                 <br />
                 Please check back later.
               </p>
