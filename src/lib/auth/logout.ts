@@ -1,12 +1,15 @@
 export async function logoutUser(collection: string) {
-    const res = await fetch(`api/${collection}/logout`, {
-        method: 'POST',
-        credentials: 'include'
-    });
+  const res = await fetch(`/api/${collection}/logout`, {
+    method: 'POST',
+    credentials: 'include',
+  });
 
-    if (!res.ok) {
-        throw new Error('Logout failed');
-    }
+  console.log('Collection: ' + collection);
+  console.log('Logout response:', res);
 
-    return true;
+  if (!res.ok) {
+    throw new Error('Logout failed');
+  }
+
+  return true;
 }

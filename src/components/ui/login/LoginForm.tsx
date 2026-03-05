@@ -13,6 +13,7 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
   const { primary, secondary } = CTA_TYPES;
   const { user, handleLogin } = useAuthStore((state) => state);
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const formRow = 'flex flex-col gap-2';
   const formLabel = 'font-serif font-semibold text-lg';
@@ -21,6 +22,7 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData(e.currentTarget);
     const username = formData.get('username') as string;
     const password = formData.get('password') as string;
@@ -29,6 +31,8 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
       onClose();
     } catch (error) {
       setError('Login failed. Please check your login details and try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -59,8 +63,11 @@ export default function LoginForm({ isOpen, onClose }: LoginFormProps) {
                 onSubmit={(e) => {
                   handleFormSubmit(e);
                 }}
-                className="p-6 bg-surface border-heading border-4 flex flex-col gap-4 w-[80vw] max-w-115"
+                className={`p-6 bg-surface border-heading border-4 flex flex-col gap-4 w-[80vw] max-w-115 relative`}
               >
+                <span
+                  className={`absolute h-full w-full bg-[rgba(230,209,185,0.8)] top-0 left-0 ${isLoading ? 'opacity-100 pointer-events-auto animate-pulse' : 'opacity-0 pointer-events-none'}`}
+                ></span>
                 <p className="font-subheading font-bold text-heading text-xl text-center">
                   Player Login
                 </p>
