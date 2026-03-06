@@ -81,6 +81,7 @@ export interface Config {
     adventures: Adventure;
     players: Player;
     comments: Comment;
+    maps: Map;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -101,6 +102,7 @@ export interface Config {
     adventures: AdventuresSelect<false> | AdventuresSelect<true>;
     players: PlayersSelect<false> | PlayersSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
+    maps: MapsSelect<false> | MapsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -919,6 +921,20 @@ export interface Comment {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "maps".
+ */
+export interface Map {
+  id: number;
+  name?: string | null;
+  hidden?: boolean | null;
+  isWorldMap?: boolean | null;
+  image: number | Media;
+  relatedLocation?: (number | null) | Location;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -992,6 +1008,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'comments';
         value: number | Comment;
+      } | null)
+    | ({
+        relationTo: 'maps';
+        value: number | Map;
       } | null);
   globalSlug?: string | null;
   user:
@@ -1361,6 +1381,19 @@ export interface CommentsSelect<T extends boolean = true> {
   parentPost?: T;
   parentComment?: T;
   character?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "maps_select".
+ */
+export interface MapsSelect<T extends boolean = true> {
+  name?: T;
+  hidden?: T;
+  isWorldMap?: T;
+  image?: T;
+  relatedLocation?: T;
   updatedAt?: T;
   createdAt?: T;
 }

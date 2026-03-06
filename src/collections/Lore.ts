@@ -1,4 +1,4 @@
-import { slugField, type CollectionConfig } from 'payload';
+import { type CollectionConfig } from 'payload';
 import generateSortableDate from '@/payloadHooks/generateSortableDate';
 import { LORE_TYPES } from '@/constants/loreTypes';
 import { LORE_SUBTYPES } from '@/constants/loreSubtypes';

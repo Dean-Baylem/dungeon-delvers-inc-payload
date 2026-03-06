@@ -1,0 +1,13 @@
+img {
+    max-width: unset;
+}
+
+footer {
+    margin-top: 0 !important;
+}
+
+.interactiveMap--container {
+    height: calc(100dvh - 8.375rem);
+    overflow: hidden;
+    position: relative;
+}
