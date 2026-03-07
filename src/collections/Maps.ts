@@ -1,5 +1,4 @@
 import { type CollectionConfig } from 'payload';
-import { PIN_TYPES } from '@/constants/pinTypes';
 
 export const Maps: CollectionConfig = {
   slug: 'maps',

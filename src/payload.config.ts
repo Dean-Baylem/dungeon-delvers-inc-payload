@@ -20,6 +20,7 @@ import { Adventures } from './collections/Adventures';
 import { Players } from './collections/Players';
 import { Comments } from './collections/Comments';
 import { Maps } from './collections/Maps';
+import { MapPins } from './collections/MapPins';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -46,6 +47,7 @@ export default buildConfig({
     Players,
     Comments,
     Maps,
+    MapPins,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
