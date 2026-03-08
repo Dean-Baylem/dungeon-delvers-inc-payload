@@ -1,3 +1,50 @@
+.leaflet-top,
+.leaflet-bottom {
+    z-index: 5;
+    position: absolute;
+}
+
+.leaflet-top {
+    top: 0;
+}
+
+.leaflet-bottom {
+    bottom: 0;
+}
+
+.leaflet-left {
+    left: 0;
+}
+
+.leaflet-right {
+    right: 0;
+}
+
+.mapControls {
+    background: rgba(0,0,0,0.75);
+    border: 1px solid #fff;
+}
+
+.mapControls--displayOptions {
+    display: flex;
+    flex-direction: column;
+}
+
+.controlButton {
+    color: #fff;
+    font-family: "League Spartan", sans-serif;
+}
+
+.mapControls--label {
+    color: #fff;
+    font-family: "Cormorant Garamond", serif;
+    text-align: center;
+    font-weight: 700;
+    padding-block: 0.25rem;
+    padding-inline: 1rem;
+    border-bottom: 1px solid #fff;
+}
+
 img {
     max-width: unset;
 }

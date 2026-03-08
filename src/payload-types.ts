@@ -82,6 +82,7 @@ export interface Config {
     players: Player;
     comments: Comment;
     maps: Map;
+    'map-pins': MapPin;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -103,6 +104,7 @@ export interface Config {
     players: PlayersSelect<false> | PlayersSelect<true>;
     comments: CommentsSelect<false> | CommentsSelect<true>;
     maps: MapsSelect<false> | MapsSelect<true>;
+    'map-pins': MapPinsSelect<false> | MapPinsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -935,6 +937,61 @@ export interface Map {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "map-pins".
+ */
+export interface MapPin {
+  id: number;
+  pinLabel?: string | null;
+  pinType?:
+    | (
+        | 'arcane'
+        | 'fortress'
+        | 'cave'
+        | 'city'
+        | 'dungeon'
+        | 'faction'
+        | 'forest'
+        | 'geography'
+        | 'landmark'
+        | 'monster'
+        | 'route'
+        | 'ruins'
+        | 'settlement'
+        | 'temple'
+      )
+    | null;
+  relatedMap?: (number | null) | Map;
+  xPoint?: number | null;
+  yPoint?: number | null;
+  /**
+   * A brief summary of the location this pin represents.
+   */
+  summary?: string | null;
+  relatedDocuments?:
+    | (
+        | {
+            relationTo: 'locations';
+            value: number | Location;
+          }
+        | {
+            relationTo: 'factions';
+            value: number | Faction;
+          }
+        | {
+            relationTo: 'lore';
+            value: number | Lore;
+          }
+        | {
+            relationTo: 'religions';
+            value: number | Religion;
+          }
+      )[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -1012,6 +1069,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'maps';
         value: number | Map;
+      } | null)
+    | ({
+        relationTo: 'map-pins';
+        value: number | MapPin;
       } | null);
   globalSlug?: string | null;
   user:
@@ -1394,6 +1455,21 @@ export interface MapsSelect<T extends boolean = true> {
   isWorldMap?: T;
   image?: T;
   relatedLocation?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "map-pins_select".
+ */
+export interface MapPinsSelect<T extends boolean = true> {
+  pinLabel?: T;
+  pinType?: T;
+  relatedMap?: T;
+  xPoint?: T;
+  yPoint?: T;
+  summary?: T;
+  relatedDocuments?: T;
   updatedAt?: T;
   createdAt?: T;
 }

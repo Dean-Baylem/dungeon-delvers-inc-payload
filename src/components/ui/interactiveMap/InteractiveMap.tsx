@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import { MapContainer, ImageOverlay } from 'react-leaflet';
 import L from 'leaflet';
 import { InteractiveMapType } from '@/types/interactiveMap/interactiveMapType';
+import InteractiveMapControls from './InteractiveMapControls';
+import InteractiveMapPinCreator from './InteractiveMapPinCreator';
 
 export default function InteractiveMap({ mapUrl, mapId }: InteractiveMapType) {
   const [bounds, setBounds] = useState<[[number, number], [number, number]] | null>(null);
@@ -38,6 +40,8 @@ export default function InteractiveMap({ mapUrl, mapId }: InteractiveMapType) {
           bounds={bounds}
           center={center!}
         >
+          <InteractiveMapPinCreator mapId={mapId} />
+          <InteractiveMapControls />
           <ImageOverlay url={mapUrl} bounds={bounds} />
         </MapContainer>
       )}
