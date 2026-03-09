@@ -1,32 +1,57 @@
 'use client';
-import { useState } from 'react';
-import { useMapEvent } from 'react-leaflet';
+import { useState, useEffect } from 'react';
+import { useMapEvent, useMap } from 'react-leaflet';
 import { PIN_TYPES } from '@/constants/pinTypes';
 import { FORM_STYLES } from '@/constants/formStyles';
 import { AnimatePresence, motion } from 'motion/react';
 import { CTA_TYPES } from '@/constants/ctaTypes';
+import { useInteractiveMapStore } from '@/providers/interactive-map-provider';
+import { InteractiveMapPinType } from '@/types/interactiveMap/interactiveMapPinType';
 
 type Props = {
   mapId: string;
 };
 
 export default function InteractiveMapPinCreator({ mapId }: Props) {
+  const map = useMap();
   const { primary, secondary } = CTA_TYPES;
   const [latLng, setLatLng] = useState({ lat: 0, lng: 0 });
   const [isCreatingPin, setIsCreatingPin] = useState(false);
+  const { handleAddNewPin } = useInteractiveMapStore((state) => state);
+  const { formRow, formLabel, inputBase } = FORM_STYLES;
 
   useMapEvent('click', (e) => {
-    const { lat, lng } = e.latlng;
-    setIsCreatingPin(true);
-    console.log(`Create new icon here: lat: ${lat} | lng: ${lng}`);
+    if (!isCreatingPin) {
+      const { lat, lng } = e.latlng;
+      console.log(`Create new icon here: lat: ${lat} | lng: ${lng}`);
+      setLatLng({ lat, lng });
+      setIsCreatingPin(true);
+    }
   });
+
+  useEffect(() => {
+    if (isCreatingPin) {
+      map.doubleClickZoom.disable();
+      map.scrollWheelZoom.disable();
+    } else {
+      map.doubleClickZoom.enable();
+      map.scrollWheelZoom.enable();
+    }
+  }, [isCreatingPin]);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form Submitted');
+    const formData = new FormData(e.currentTarget);
+    const newPinData: InteractiveMapPinType = {
+      pinLabel: formData.get('pinLabel') as string,
+      pinType: formData.get('pinType') as string,
+      relatedMap: Number(mapId),
+      xPoint: latLng.lng,
+      yPoint: latLng.lat,
+      summary: formData.get('summary') as string,
+    };
+    handleAddNewPin(newPinData);
   };
-
-  const { formRow, formLabel, inputBase } = FORM_STYLES;
 
   return (
     <>
@@ -55,6 +80,11 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
+              onDoubleClick={(e) => {
+                if (isCreatingPin) {
+                  e.stopPropagation();
+                }
+              }}
             >
               <form
                 onSubmit={handleFormSubmit}

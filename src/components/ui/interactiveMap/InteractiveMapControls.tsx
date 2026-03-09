@@ -2,6 +2,12 @@
 import { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
+import { documentDrawerBaseClass } from '@payloadcms/ui';
+
+const toggleActiveClass = (e: Event) => {
+  const btn = e.currentTarget as HTMLButtonElement;
+  btn.classList.toggle('active');
+};
 
 export default function InteractiveMapControls() {
   const map = useMap();
@@ -13,7 +19,7 @@ export default function InteractiveMapControls() {
 
         const menuOptions = [
           {
-            legend: 'Display Options',
+            legend: 'Display Actions',
             groupClass: 'mapControls--displayOptions',
             mainOptions: [
               {
@@ -21,7 +27,7 @@ export default function InteractiveMapControls() {
                 id: 'show-regions',
                 title: 'Toggle Regions Display',
                 onClick: (e: Event) => {
-                  console.log('Toggle Regions Display');
+                  toggleActiveClass(e);
                 },
               },
               {
@@ -29,7 +35,32 @@ export default function InteractiveMapControls() {
                 id: 'show-pins',
                 title: 'Toggle Pins Display',
                 onClick: (e: Event) => {
+                  toggleActiveClass(e);
                   console.log('Toggle Pins Display');
+                },
+              },
+              {
+                label: 'Add New Pin',
+                id: 'add-new-pin',
+                title: 'Add New Pin',
+                onClick: (e: Event) => {
+                  toggleActiveClass(e);
+                  const newRegionBtn = document.getElementById('add-new-region');
+                  if (newRegionBtn) {
+                    newRegionBtn.classList.remove('active');
+                  }
+                },
+              },
+              {
+                label: 'Add New Region',
+                id: 'add-new-region',
+                title: 'Add New Region',
+                onClick: (e: Event) => {
+                  toggleActiveClass(e);
+                  const newPinBtn = document.getElementById('add-new-pin');
+                  if (newPinBtn) {
+                    newPinBtn.classList.remove('active');
+                  }
                 },
               },
             ],
@@ -46,6 +77,7 @@ export default function InteractiveMapControls() {
             const button = L.DomUtil.create('button', `controlButton controlButton--${id}`, box);
             button.innerHTML = label;
             button.title = title;
+            button.id = id;
 
             L.DomEvent.on(button, 'click', L.DomEvent.stopPropagation)
               .on(button, 'click', L.DomEvent.preventDefault)
