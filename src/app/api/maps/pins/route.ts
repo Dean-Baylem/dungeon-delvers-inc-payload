@@ -1,6 +1,26 @@
 import { getPayload } from 'payload';
 import config from '@payload-config';
 
+export async function GET(req: Request) {
+  const payload = await getPayload({ config });
+  const { searchParams } = new URL(req.url);
+  const mapId = searchParams.get('mapId');
+
+  try {
+    const pins = await payload.find({
+      collection: 'map-pins',
+      limit: -1,
+      where: {
+        relatedMap: { equals: mapId },
+      },
+    });
+
+    return Response.json(pins);
+  } catch (error) {
+    return new Response('Error Fetching Map Pins', { status: 500 });
+  }
+}
+
 export async function POST(req: Request) {
   const payload = await getPayload({ config });
 

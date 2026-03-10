@@ -10,7 +10,12 @@ import InteractiveMapStyleHandler from './InteractiveMapStyleHandler';
 import InteractiveMapPins from './InteractiveMapPins';
 import InteractiveMapInfobar from './InteractiveMapInfobar';
 
-export default function InteractiveMap({ mapUrl, mapId }: InteractiveMapType) {
+export default function InteractiveMap({
+  mapUrl,
+  mapId,
+  mapContent = undefined,
+  mapName,
+}: InteractiveMapType) {
   const [bounds, setBounds] = useState<[[number, number], [number, number]] | null>(null);
   const [center, setCenter] = useState<[number, number] | null>(null);
   const [imageSize, setImageSize] = useState<{ width: number; height: number } | null>(null);
@@ -33,7 +38,7 @@ export default function InteractiveMap({ mapUrl, mapId }: InteractiveMapType) {
 
   return (
     <div className="h-full w-full relative">
-      <InteractiveMapInfobar />
+      <InteractiveMapInfobar mapContent={mapContent} mapName={mapName} />
       {bounds && (
         <MapContainer
           crs={L.CRS.Simple}

@@ -932,6 +932,21 @@ export interface Map {
   isWorldMap?: boolean | null;
   image: number | Media;
   relatedLocation?: (number | null) | Location;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1455,6 +1470,7 @@ export interface MapsSelect<T extends boolean = true> {
   isWorldMap?: T;
   image?: T;
   relatedLocation?: T;
+  content?: T;
   updatedAt?: T;
   createdAt?: T;
 }

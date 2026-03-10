@@ -3,7 +3,7 @@ import { InteractiveMapPinType } from '@/types/interactiveMap/interactiveMapPinT
 
 export async function mapPinQuery({ mapId }: { mapId: number }) {
   try {
-    const response = await fetch(`/api/map-pins?where[relatedMap][equals]=${mapId}`, {
+    const response = await fetch(`/api/maps/pins?mapId=${mapId}`, {
       method: 'GET',
     });
 

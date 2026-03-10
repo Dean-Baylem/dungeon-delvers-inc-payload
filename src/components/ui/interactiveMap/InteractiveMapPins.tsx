@@ -1,5 +1,5 @@
 'use client';
-import { Marker, Popup } from 'react-leaflet';
+import { Marker, Tooltip } from 'react-leaflet';
 import L from 'leaflet';
 import { mapPinQuery } from '@/lib/query/mapPinQuery';
 import { useInteractiveMapStore } from '@/providers/interactive-map-provider';
@@ -43,7 +43,11 @@ export default function InteractiveMapPins({
                 console.log('Pin Clicked');
               },
             }}
-          ></Marker>
+          >
+            <Tooltip direction="right" offset={[-70, 18]} opacity={1} className="mapToolTip">
+              {pin.pinLabel}
+            </Tooltip>
+          </Marker>
         );
       })}
     </>
