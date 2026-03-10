@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
-import { documentDrawerBaseClass } from '@payloadcms/ui';
+import { useInteractiveMapStore } from '@/providers/interactive-map-provider';
 
 const toggleActiveClass = (e: Event) => {
   const btn = e.currentTarget as HTMLButtonElement;
@@ -11,6 +11,7 @@ const toggleActiveClass = (e: Event) => {
 
 export default function InteractiveMapControls() {
   const map = useMap();
+  const { setAddPinActive, toggleAddPinActive } = useInteractiveMapStore((state) => state);
 
   useEffect(() => {
     const controlGroup = L.Control.extend({
@@ -49,6 +50,7 @@ export default function InteractiveMapControls() {
                   if (newRegionBtn) {
                     newRegionBtn.classList.remove('active');
                   }
+                  toggleAddPinActive();
                 },
               },
               {
@@ -61,6 +63,7 @@ export default function InteractiveMapControls() {
                   if (newPinBtn) {
                     newPinBtn.classList.remove('active');
                   }
+                  setAddPinActive(false);
                 },
               },
             ],

@@ -16,8 +16,9 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
   const map = useMap();
   const { primary, secondary } = CTA_TYPES;
   const [latLng, setLatLng] = useState({ lat: 0, lng: 0 });
-  const [isCreatingPin, setIsCreatingPin] = useState(false);
-  const { handleAddNewPin } = useInteractiveMapStore((state) => state);
+  const { handleAddNewPin, isCreatingPin, setIsCreatingPin } = useInteractiveMapStore(
+    (state) => state,
+  );
   const { formRow, formLabel, inputBase } = FORM_STYLES;
 
   useMapEvent('click', (e) => {
@@ -28,16 +29,6 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
       setIsCreatingPin(true);
     }
   });
-
-  useEffect(() => {
-    if (isCreatingPin) {
-      map.doubleClickZoom.disable();
-      map.scrollWheelZoom.disable();
-    } else {
-      map.doubleClickZoom.enable();
-      map.scrollWheelZoom.enable();
-    }
-  }, [isCreatingPin]);
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -59,7 +50,7 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
         {isCreatingPin && (
           <>
             <motion.div
-              className="absolute top-0 left-0 bg-[rgba(0,0,0,0.90)] w-full h-full z-1"
+              className="absolute top-0 left-0 bg-[rgba(0,0,0,0.90)] w-full h-full z-1 cursor-auto"
               aria-hidden="true"
               tabIndex={-1}
               initial={{ opacity: 0 }}
@@ -75,7 +66,8 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
               role="dialog"
               aria-modal="true"
               aria-labelledby="new-pin-title"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-4 z-2"
+              aria-hidden={isCreatingPin ? 'false' : 'true'}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-4 z-2 cursor-auto"
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}

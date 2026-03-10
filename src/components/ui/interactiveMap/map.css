@@ -73,3 +73,11 @@ footer {
     position: relative;
     margin-top: 4.5rem;
 }
+
+.interactiveCursor--mapPin {
+    cursor: url(/icons/icon-map-marker.svg) 16 32, auto;
+}
+
+.leaflet-control-zoom {
+    display: none !important;
+}
