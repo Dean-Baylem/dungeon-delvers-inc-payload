@@ -7,6 +7,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { CTA_TYPES } from '@/constants/ctaTypes';
 import { useInteractiveMapStore } from '@/providers/interactive-map-provider';
 import { InteractiveMapPinType } from '@/types/interactiveMap/interactiveMapPinType';
+import MDEditor from '@uiw/react-md-editor';
 
 type Props = {
   mapId: string;
@@ -16,6 +17,7 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
   const map = useMap();
   const { primary, secondary } = CTA_TYPES;
   const [latLng, setLatLng] = useState({ lat: 0, lng: 0 });
+  const [summary, setSummary] = useState('');
   const { handleAddNewPin, isCreatingPin, setIsCreatingPin } = useInteractiveMapStore(
     (state) => state,
   );
@@ -39,9 +41,10 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
       relatedMap: Number(mapId),
       xPoint: latLng.lng,
       yPoint: latLng.lat,
-      summary: formData.get('summary') as string,
+      summary: summary,
     };
     handleAddNewPin(newPinData);
+    setSummary('');
   };
 
   return (
@@ -110,7 +113,11 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
                   <label className={formLabel} htmlFor="summary">
                     Summary
                   </label>
-                  <textarea className={`${inputBase}`} id="summary" name="summary"></textarea>
+                  <div className="container">
+                    <MDEditor value={summary} onChange={(value) => setSummary(value ?? '')} />
+                    <MDEditor.Markdown source={summary} style={{ whiteSpace: 'pre-wrap' }} />
+                  </div>
+                  {/* <textarea className={`${inputBase}`} id="summary" name="summary"></textarea> */}
                 </div>
                 <div className="grid grid-cols-2 gap-4 mt-2">
                   <button type="submit" className={`${primary} cursor-pointer`}>

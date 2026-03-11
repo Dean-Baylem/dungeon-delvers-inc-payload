@@ -24,6 +24,7 @@
     "@payloadcms/storage-vercel-blob": "^3.74.0",
     "@payloadcms/ui": "3.74.0",
     "@tailwindcss/postcss": "^4.1.18",
+    "@uiw/react-md-editor": "^4.0.11",
     "cross-env": "^7.0.3",
     "dotenv": "16.4.7",
     "graphql": "^16.8.1",
@@ -36,6 +37,7 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-leaflet": "^5.0.0",
+    "react-markdown": "^10.1.0",
     "sharp": "0.34.2",
     "tailwindcss": "^4.1.18",
     "zustand": "^5.0.9"

@@ -18,7 +18,7 @@ export default async function WorldMapPage() {
 
   console.log(mapUrl);
 
-  if (!mapUrl || !mapId) {
+  if (!mapUrl || !mapId || !mapName) {
     notFound();
   }
 

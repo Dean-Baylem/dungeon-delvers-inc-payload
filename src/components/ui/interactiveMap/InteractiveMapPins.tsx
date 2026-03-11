@@ -12,7 +12,9 @@ export default function InteractiveMapPins({
   mapId: number;
   imageSize: { width: number; height: number };
 }) {
-  const { mapPinList, setMapPinList } = useInteractiveMapStore((state) => state);
+  const { mapPinList, setMapPinList, setSideBarHighlight } = useInteractiveMapStore(
+    (state) => state,
+  );
 
   useEffect(() => {
     const fetchMapPins = async () => {
@@ -40,7 +42,7 @@ export default function InteractiveMapPins({
             icon={mapIcon}
             eventHandlers={{
               click: (e) => {
-                console.log('Pin Clicked');
+                setSideBarHighlight(pin);
               },
             }}
           >
