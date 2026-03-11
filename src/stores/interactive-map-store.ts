@@ -1,3 +1,4 @@
+import { InteractiveHighlightType } from '@/types/interactiveMap/interactiveHighlightType';
 import { InteractiveMapPinType } from '@/types/interactiveMap/interactiveMapPinType';
 import { createStore } from 'zustand';
 
@@ -7,7 +8,7 @@ export type MapState = {
 
   // Sidebar States
   sideBarExpanded: boolean;
-  sideBarHighlight?: InteractiveMapPinType | undefined;
+  sideBarHighlight?: InteractiveHighlightType;
 
   // Map Pin States
   addPinActive: boolean;
@@ -18,7 +19,7 @@ export type MapState = {
 export type MapActions = {
   // Sidebar state
   setSideBarExpanded: (value: boolean) => void;
-  setSideBarHighlight: (value: InteractiveMapPinType | undefined) => void;
+  setSideBarHighlight: (value: InteractiveHighlightType | undefined) => void;
 
   // Add Pin State
   setAddPinActive: (value: boolean) => void;
@@ -50,7 +51,7 @@ export const createInteractiveMapStore = (initState: MapState = defaultInitState
       set((state) => ({ ...state, sideBarExpanded: value }));
     },
 
-    setSideBarHighlight: (value: InteractiveMapPinType | undefined) => {
+    setSideBarHighlight: (value: InteractiveHighlightType | undefined) => {
       set((state) => ({ ...state, sideBarHighlight: value }));
     },
 

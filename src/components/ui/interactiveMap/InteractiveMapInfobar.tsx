@@ -3,9 +3,10 @@ import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical';
 import { useInteractiveMapStore } from '@/providers/interactive-map-provider';
 import Image from 'next/image';
 import PageTitle from '../typography/PageTitle';
-import { RichText } from '../RichText';
 import { CTA_TYPES } from '@/constants/ctaTypes';
 import { AnimatePresence, motion } from 'motion/react';
+import InteractiveMapInfobarContents from './InteractiveMapInfobarContents';
+import InteractiveMapInfobarPinList from './InteractiveMapInfobarList';
 
 type Props = {
   mapContent?: SerializedEditorState;
@@ -59,52 +60,37 @@ export default function InteractiveMapInfobar({ mapContent, mapName }: Props) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             >
-              <div>CONTENT HERE</div>
-              <div>
-                <button
-                  onClick={() => {
-                    setSideBarHighlight(undefined);
-                  }}
-                >
-                  Go Back
-                </button>
-              </div>
+              <InteractiveMapInfobarContents
+                mainTitle={sideBarHighlight.mainTitle}
+                content={sideBarHighlight.content}
+              >
+                <div className="flex flex-col gap-2">
+                  <button
+                    className={`${primary} text-lg`}
+                    onClick={() => setSideBarHighlight(undefined)}
+                  >
+                    RETURN
+                  </button>
+                  <h3 className="font-heading font-bold text-2xl text-heading text-center">
+                    Other Map Pins
+                  </h3>
+                  <InteractiveMapInfobarPinList
+                    id="highlight-pin-list"
+                    type="pinList"
+                    current={sideBarHighlight.mainTitle}
+                  />
+                </div>
+              </InteractiveMapInfobarContents>
             </motion.div>
           ) : (
-            <motion.div
-              key="infobar-map-content"
-              id="infobar-map-content"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
-              <div
-                className="px-4 py-2 flex flex-col gap-3 overflow-y-auto pb-4 h-full"
-                id="map-infobar-content"
-              >
-                <PageTitle as="h1" size="lg" customClasses="md:!text-3xl">
-                  {mapName}
-                </PageTitle>
-                {mapContent && <RichText data={mapContent} />}
-                <hr className="border-heading" />
-                <div className="flex flex-col gap-2">
-                  <h3 className="font-heading font-bold text-2xl text-heading text-center">
-                    Map Pins
-                  </h3>
-                  {mapPinList.map((pin, index) => (
-                    <button
-                      key={`pin-${index}`}
-                      className={`${secondary}`}
-                      onClick={() => {
-                        setSideBarHighlight(pin);
-                      }}
-                    >
-                      {pin.pinLabel}
-                    </button>
-                  ))}
-                </div>
+            <InteractiveMapInfobarContents mainTitle={mapName} content={mapContent}>
+              <div className="flex flex-col gap-2">
+                <h3 className="font-heading font-bold text-2xl text-heading text-center">
+                  Map Pins
+                </h3>
+                <InteractiveMapInfobarPinList id="pin-list" type="pinList" />
               </div>
-            </motion.div>
+            </InteractiveMapInfobarContents>
           )}
         </AnimatePresence>
       </div>

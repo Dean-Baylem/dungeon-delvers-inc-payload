@@ -42,7 +42,7 @@ export default function InteractiveMapPins({
             icon={mapIcon}
             eventHandlers={{
               click: (e) => {
-                setSideBarHighlight(pin);
+                setSideBarHighlight({ mainTitle: pin.pinLabel, content: pin.summary });
               },
             }}
           >

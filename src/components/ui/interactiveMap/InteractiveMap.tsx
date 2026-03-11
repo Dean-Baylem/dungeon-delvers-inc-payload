@@ -38,6 +38,7 @@ export default function InteractiveMap({
 
   return (
     <div className="h-full w-full relative">
+      <h1 className="sr-only">{mapName}</h1>
       <InteractiveMapInfobar mapContent={mapContent} mapName={mapName} />
       {bounds && (
         <MapContainer
