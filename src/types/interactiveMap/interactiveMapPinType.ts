@@ -9,4 +9,6 @@ export type InteractiveMapPinType = {
     relationTo: string;
     value: number;
   }>;
+  id?: string;
+  author?: string;
 };

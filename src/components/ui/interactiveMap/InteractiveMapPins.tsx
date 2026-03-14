@@ -4,7 +4,6 @@ import L from 'leaflet';
 import { mapPinQuery } from '@/lib/query/mapPinQuery';
 import { useInteractiveMapStore } from '@/providers/interactive-map-provider';
 import { useEffect } from 'react';
-import { useMap } from 'react-leaflet';
 
 export default function InteractiveMapPins({
   mapId,
@@ -44,7 +43,12 @@ export default function InteractiveMapPins({
             eventHandlers={{
               click: (e) => {
                 console.log('CLICKED');
-                setSideBarHighlight({ mainTitle: pin.pinLabel, content: pin.summary });
+                setSideBarHighlight({
+                  mainTitle: pin.pinLabel,
+                  content: pin.summary,
+                  author: pin.author,
+                  id: String(pin.id),
+                });
                 setSideBarExpanded(true);
               },
             }}

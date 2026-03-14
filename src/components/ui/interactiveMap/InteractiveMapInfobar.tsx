@@ -2,11 +2,12 @@
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical';
 import { useInteractiveMapStore } from '@/providers/interactive-map-provider';
 import Image from 'next/image';
-import PageTitle from '../typography/PageTitle';
 import { CTA_TYPES } from '@/constants/ctaTypes';
 import { AnimatePresence, motion } from 'motion/react';
 import InteractiveMapInfobarContents from './InteractiveMapInfobarContents';
 import InteractiveMapInfobarPinList from './InteractiveMapInfobarList';
+import { useAuthStore } from '@/providers/auth-provider';
+import { Player } from '@/payload-types';
 
 type Props = {
   mapContent?: SerializedEditorState;
@@ -14,7 +15,8 @@ type Props = {
 };
 
 export default function InteractiveMapInfobar({ mapContent, mapName }: Props) {
-  const { primary, secondary } = CTA_TYPES;
+  const { primary, secondary, danger } = CTA_TYPES;
+  const { user } = useAuthStore((state) => state);
   const { sideBarExpanded, setSideBarExpanded, mapPinList, sideBarHighlight, setSideBarHighlight } =
     useInteractiveMapStore((state) => state);
 
@@ -80,6 +82,33 @@ export default function InteractiveMapInfobar({ mapContent, mapName }: Props) {
                     current={sideBarHighlight.mainTitle}
                   />
                 </div>
+                {user &&
+                  typeof sideBarHighlight.author === 'object' &&
+                  (sideBarHighlight.author as Player)?.id === Number(user.id) && (
+                    <>
+                      <hr className="border-heading" />
+                      <div className="grid grid-cols-2 gap-3">
+                        <button
+                          className={primary}
+                          type="button"
+                          onClick={() => {
+                            console.log('editing!');
+                          }}
+                        >
+                          EDIT
+                        </button>
+                        <button
+                          className={danger}
+                          type="button"
+                          onClick={() => {
+                            console.log('deleting!');
+                          }}
+                        >
+                          DELETE
+                        </button>
+                      </div>
+                    </>
+                  )}
               </InteractiveMapInfobarContents>
             </motion.div>
           ) : (

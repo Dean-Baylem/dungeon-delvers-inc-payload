@@ -26,7 +26,12 @@ export default function InteractiveMapInfobarPinList({ id, type, current }: Prop
             <button
               className={`${buttonStyle} w-full`}
               onClick={() => {
-                setSideBarHighlight({ mainTitle: pin.pinLabel, content: pin.summary });
+                setSideBarHighlight({
+                  mainTitle: pin.pinLabel,
+                  content: pin.summary,
+                  author: pin.author,
+                  id: String(pin.id),
+                });
               }}
             >
               {pin.pinLabel}

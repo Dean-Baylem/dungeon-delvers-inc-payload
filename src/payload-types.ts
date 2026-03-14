@@ -1002,6 +1002,7 @@ export interface MapPin {
           }
       )[]
     | null;
+  author?: (number | null) | Player;
   updatedAt: string;
   createdAt: string;
 }
@@ -1486,6 +1487,7 @@ export interface MapPinsSelect<T extends boolean = true> {
   yPoint?: T;
   summary?: T;
   relatedDocuments?: T;
+  author?: T;
   updatedAt?: T;
   createdAt?: T;
 }

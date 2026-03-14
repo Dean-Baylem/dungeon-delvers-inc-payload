@@ -71,5 +71,11 @@ export const MapPins: CollectionConfig = {
       relationTo: ['locations', 'factions', 'lore', 'religions'],
       hasMany: true,
     },
+    {
+      name: 'author',
+      label: 'Author',
+      type: 'relationship',
+      relationTo: 'players',
+    },
   ],
 };

@@ -22,6 +22,8 @@ export async function mapPinQuery({ mapId }: { mapId: number }) {
         yPoint: doc.yPoint,
         summary: doc.summary,
         relatedDocuments: doc.relatedDocuments,
+        id: doc.id,
+        author: doc.author,
       };
     });
 
