@@ -1,10 +1,17 @@
 import InteractiveMapContainer from '@/components/ui/interactiveMap/InteractiveMapContainer';
+import isLoggedIn from '@/lib/auth/isLoggedIn';
 import MapQuery from '@/lib/query/mapQuery';
 import { Map } from '@/payload-types';
 import { InteractiveMapProvider } from '@/providers/interactive-map-provider';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 export default async function WorldMapPage() {
+  const user = await isLoggedIn();
+
+  if (!user) {
+    redirect('/');
+  }
+
   const mapData: Map = await MapQuery({ isWorld: true });
 
   if (!mapData) {
