@@ -62,9 +62,9 @@ export default function Header() {
               src="/common/logo-white.webp"
               alt="Dungeon Delvers Inc. - Where Adventures Begin"
               width="200"
-              height="75"
+              height="55"
               loading="lazy"
-              className="h-8 md:h-10 lg:h-14 w-auto"
+              className="h-8 md:h-10 w-auto"
             />
           </Link>
           <ul className="flex gap-4">

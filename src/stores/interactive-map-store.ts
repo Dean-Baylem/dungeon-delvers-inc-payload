@@ -1,96 +1,121 @@
-// import { createStore } from 'zustand';
-// import { fetcher } from '@/lib/api/fetcher';
-// import { FilteredMapRegion } from '@/types/filteredMapRegion';
-// import { FilteredMapIcons } from '@/types/filteredMapIcons';
+import { InteractiveHighlightType } from '@/types/interactiveMap/interactiveHighlightType';
+import { InteractiveMapPinType } from '@/types/interactiveMap/interactiveMapPinType';
+import { createStore } from 'zustand';
 
-// export type MapState = {
-//   isNewIcon: boolean;
-//   showRegionForm: boolean;
-//   displayMode: string;
-//   disabledInteraction: boolean;
-//   newRegionCoordinates: [number, number][];
-//   newIconPos: { xPoint: number; yPoint: number };
-//   newIconForm: boolean;
-//   storedMapIcons: Array<{
-//     name: string;
-//     xPoint: number;
-//     yPoint: number;
-//     pinType: string;
-//     pinSummary: string;
-//     linkedMap: number;
-//     id: number
-//   }>;
-//   allMapRegions: FilteredMapRegion[];
-//   editRegion: { id: number; coordinates: Array<{ xPoint: number; yPoint: number }> };
-// };
+export type MapState = {
+  // Map States
+  mapLoading: boolean;
 
-// export type MapActions = {
-//   handleSetAllMapRegionData: (newData: FilteredMapRegion[]) => void;
-//   handleRegionDisplayToggle: () => void;
-//   handleMapStateChange: (newState: string) => void;
-//   handleShowRegionForm: (newState: boolean) => void;
-//   handleCancelNewPinForm: () => void;
-//   handleSetNewRegionCoordinates: (newPolygon: [number, number][]) => void;
-//   handleEditRegionState: (newState: {
-//     id: number;
-//     coordinates: Array<{ xPoint: number; yPoint: number }>;
-//   }) => void;
-//   handleNewIconPosState: (newState: { xPoint: number; yPoint: number }) => void;
-//   handleNewIconFormState: (newState: boolean) => void;
-//   handleUpdateStoredMapIcons: (
-//     newState: Array<{
-//       name: string;
-//       xPoint: number;
-//       yPoint: number;
-//       pinType: string;
-//       pinSummary: string;
-//       linkedMap: number;
-//       id: number
-//     }>,
-//   ) => void;
-// };
+  // Sidebar States
+  sideBarExpanded: boolean;
+  sideBarHighlight?: InteractiveHighlightType;
 
-// export type InteractiveMapStore = MapState & MapActions;
+  // Map Pin States
+  showPins: boolean;
+  addPinActive: boolean;
+  isCreatingPin: boolean;
+  isEditingPin: boolean;
+  mapPinList: Array<InteractiveMapPinType>;
+};
 
-// export const defaultInitState: MapState = {
-//   showRegionForm: false,
-//   displayMode: '',
-//   isNewIcon: false,
-//   disabledInteraction: false,
-//   newRegionCoordinates: [],
-//   newIconPos: { xPoint: 0, yPoint: 0 },
-//   newIconForm: false,
-//   allMapRegions: [],
-//   storedMapIcons: [],
-//   editRegion: { id: 0, coordinates: [{ xPoint: 0, yPoint: 0 }] },
-// };
+export type MapActions = {
+  // Map State
+  setMapLoading: (value: boolean) => void;
 
-// export const createInteractiveMapStore = (initState: MapState = defaultInitState) => {
-//   return createStore<InteractiveMapStore>()((set) => ({
-//     ...initState,
-//     handleMapStateChange: (newState) =>
-//       set((state) => ({
-//         displayMode: state.displayMode === newState ? '' : newState,
-//         newRegionCoordinates: [],
-//         editRegion: { id: 0, coordinates: [] },
-//       })),
-//     handleRegionDisplayToggle: () =>
-//       set((state) => ({
-//         displayMode: state.displayMode === 'showRegions' ? '' : 'showRegions',
-//       })),
-//     handleSetNewRegionCoordinates: (newPolygon) =>
-//       set((state) => ({
-//         newRegionCoordinates: newPolygon,
-//       })),
-//     handleCancelNewPinForm: () => set(() => ({ isNewIcon: false, disabledInteraction: false })),
-//     handleSetAllMapRegionData: (newData) =>
-//       set(() => ({
-//         allMapRegions: newData,
-//       })),
-//     handleShowRegionForm: (newState) => set(() => ({ showRegionForm: newState })),
-//     handleEditRegionState: (newState) => set(() => ({ editRegion: newState })),
-//     handleNewIconFormState: (newState) => set(() => ({ newIconForm: newState })),
-//     handleNewIconPosState: (newState) => set(() => ({ newIconPos: newState })),
-//     handleUpdateStoredMapIcons: (newState) => set(() => ({ storedMapIcons: newState })),
-//   }));
-// };
+  // Sidebar state
+  setSideBarExpanded: (value: boolean) => void;
+  setSideBarHighlight: (value: InteractiveHighlightType | undefined) => void;
+
+  // Add Pin State
+  toggleShowPins: () => void;
+  setAddPinActive: (value: boolean) => void;
+  setIsEditingPin: (value: boolean) => void;
+  toggleAddPinActive: () => void;
+
+  // Pin CRUD
+  setMapPinList: (value: Array<InteractiveMapPinType>) => void;
+  setIsCreatingPin: (value: boolean) => void;
+  handleAddNewPin: (pinData: InteractiveMapPinType) => void;
+};
+
+export type InteractiveMapStore = MapState & MapActions;
+
+export const defaultInitState: MapState = {
+  mapLoading: true,
+  sideBarExpanded: false,
+  sideBarHighlight: undefined,
+  showPins: false,
+  addPinActive: false,
+  isCreatingPin: false,
+  isEditingPin: false,
+  mapPinList: [],
+};
+
+export const createInteractiveMapStore = (initState: MapState = defaultInitState) => {
+  return createStore<InteractiveMapStore>()((set) => ({
+    ...initState,
+
+    setMapLoading: (value: boolean) => {
+      set((state) => ({ ...state, mapLoading: value }));
+    },
+
+    // Sidebar State Handling Functions
+    setSideBarExpanded: (value: boolean) => {
+      set((state) => ({ ...state, sideBarExpanded: value }));
+    },
+
+    setSideBarHighlight: (value: InteractiveHighlightType | undefined) => {
+      set((state) => ({ ...state, sideBarHighlight: value }));
+    },
+
+    // Map Pin State Handling Functions
+    toggleShowPins: () => {
+      set((state) => ({ ...state, showPins: !state.showPins }));
+    },
+
+    setAddPinActive: (value: boolean) => {
+      set((state) => ({ ...state, addPinActive: value }));
+    },
+
+    toggleAddPinActive: () => {
+      console.log('Toggle Add Pin Active');
+      set((state) => ({ ...state, addPinActive: !state.addPinActive }));
+    },
+
+    setIsEditingPin: (value: boolean) => {
+      set((state) => ({ ...state, isEditingPin: value }));
+    },
+
+    setMapPinList: (value: Array<InteractiveMapPinType>) => {
+      set((state) => ({ ...state, mapPinList: value }));
+    },
+
+    setIsCreatingPin: (value: boolean) => {
+      set((state) => ({ ...state, isCreatingPin: value }));
+    },
+
+    // Pin Related Functions
+    handleAddNewPin: async (pinData: InteractiveMapPinType) => {
+      console.log('Adding New Pin');
+      console.log(pinData);
+      try {
+        const response = await fetch('/api/maps/pins', {
+          method: 'POST',
+          body: JSON.stringify(pinData),
+        });
+        const newPin = await response.json();
+
+        if (!response.ok) throw new Error('Error Creating Pin');
+
+        set((state) => ({
+          mapPinList: [...state.mapPinList, newPin],
+        }));
+      } catch (error) {
+        console.error('Error Creating Pin');
+        alert('Error Creating Pin. Please try again later.');
+      } finally {
+        set((state) => ({ ...state, isCreatingPin: false }));
+      }
+    },
+  }));
+};
