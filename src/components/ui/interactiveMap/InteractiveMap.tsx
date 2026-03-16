@@ -9,6 +9,7 @@ import InteractiveMapPinCreator from './InteractiveMapPinCreator';
 import InteractiveMapStyleHandler from './InteractiveMapStyleHandler';
 import InteractiveMapPins from './InteractiveMapPins';
 import InteractiveMapInfobar from './InteractiveMapInfobar';
+import InteractiveMapPinEditor from './InteractiveMapPinEditor';
 
 export default function InteractiveMap({
   mapUrl,
@@ -19,7 +20,7 @@ export default function InteractiveMap({
   const [bounds, setBounds] = useState<[[number, number], [number, number]] | null>(null);
   const [center, setCenter] = useState<[number, number] | null>(null);
   const [imageSize, setImageSize] = useState<{ width: number; height: number } | null>(null);
-  const { mapLoading, addPinActive } = useInteractiveMapStore((state) => state);
+  const { mapLoading, addPinActive, isEditingPin } = useInteractiveMapStore((state) => state);
 
   useEffect(() => {
     const img = new Image();
@@ -54,6 +55,7 @@ export default function InteractiveMap({
           className={addPinActive ? 'interactiveCursor--mapPin' : ''}
         >
           {addPinActive && <InteractiveMapPinCreator mapId={mapId} />}
+          {isEditingPin && <InteractiveMapPinEditor />}
           {imageSize && <InteractiveMapPins mapId={Number(mapId)} imageSize={imageSize} />}
           <InteractiveMapControls />
           <ImageOverlay url={mapUrl} bounds={bounds} />

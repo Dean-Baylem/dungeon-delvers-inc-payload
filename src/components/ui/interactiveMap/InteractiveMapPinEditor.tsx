@@ -1,81 +1,86 @@
 'use client';
-import { useState, useEffect } from 'react';
-import { useMapEvent, useMap } from 'react-leaflet';
-import { PIN_TYPES } from '@/constants/pinTypes';
+import MDEditor from '@uiw/react-md-editor';
+import { useState } from 'react';
+import { useInteractiveMapStore } from '@/providers/interactive-map-provider';
 import { FORM_STYLES } from '@/constants/formStyles';
 import { AnimatePresence, motion } from 'motion/react';
+import { PIN_TYPES } from '@/constants/pinTypes';
 import { CTA_TYPES } from '@/constants/ctaTypes';
-import { useInteractiveMapStore } from '@/providers/interactive-map-provider';
-import { InteractiveMapPinType } from '@/types/interactiveMap/interactiveMapPinType';
-import MDEditor from '@uiw/react-md-editor';
 
-type Props = {
-  mapId: string;
-};
+export default function InteractiveMapPinEditor() {
+  const { sideBarHighlight, setSideBarHighlight, isEditingPin, setIsEditingPin } =
+    useInteractiveMapStore((state) => state);
 
-export default function InteractiveMapPinCreator({ mapId }: Props) {
-  const map = useMap();
-  const { primary, secondary } = CTA_TYPES;
-  const [latLng, setLatLng] = useState({ lat: 0, lng: 0 });
-  const [summary, setSummary] = useState('');
-  const { handleAddNewPin, isCreatingPin, setIsCreatingPin } = useInteractiveMapStore(
-    (state) => state,
-  );
+  if (!sideBarHighlight) return null;
+
+  const [summary, setSummary] = useState(sideBarHighlight?.content || '');
+  const [loading, setLoading] = useState(false);
+
   const { formRow, formLabel, inputBase } = FORM_STYLES;
-
-  useMapEvent('click', (e) => {
-    if (!isCreatingPin) {
-      const { lat, lng } = e.latlng;
-      setLatLng({ lat, lng });
-      setIsCreatingPin(true);
-    }
-  });
+  const { primary, secondary } = CTA_TYPES;
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     const formData = new FormData(e.currentTarget);
-    const newPinData: InteractiveMapPinType = {
+    const editedPinData = {
       pinLabel: formData.get('pinLabel') as string,
       pinType: formData.get('pinType') as string,
-      relatedMap: Number(mapId),
-      xPoint: latLng.lng,
-      yPoint: latLng.lat,
       summary: summary,
+      id: sideBarHighlight?.id,
     };
-    handleAddNewPin(newPinData);
-    setSummary('');
+
+    try {
+      const response = await fetch(`/api/maps/pins`, {
+        method: 'PATCH',
+        body: JSON.stringify(editedPinData),
+      });
+
+      if (!response.ok) throw new Error('Error Editing Pin');
+
+      setSideBarHighlight({
+        ...sideBarHighlight,
+        mainTitle: editedPinData.pinLabel,
+        content: editedPinData.summary,
+        pintype: editedPinData.pinType,
+      });
+    } catch (error) {
+      console.error('Error Creating Pin');
+      alert('Error Editing Pin. Please try again later.');
+    } finally {
+      setLoading(false);
+      setIsEditingPin(false);
+    }
   };
 
   return (
     <>
       <AnimatePresence>
-        {isCreatingPin && (
+        {isEditingPin && (
           <>
             <motion.div
-              className="absolute top-0 left-0 bg-[rgba(0,0,0,0.90)] w-full h-full z-1 cursor-auto"
+              className="absolute top-0 left-0 bg-[rgba(0,0,0,0.90)] w-full h-full z-5 cursor-auto"
               aria-hidden="true"
               tabIndex={-1}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => {
-                setIsCreatingPin(false);
-                setLatLng({ lat: 0, lng: 0 });
+                setIsEditingPin(false);
               }}
             ></motion.div>
-
             <motion.div
               role="dialog"
               aria-modal="true"
-              aria-labelledby="new-pin-title"
-              aria-hidden={isCreatingPin ? 'false' : 'true'}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-4 z-2 cursor-auto"
+              aria-labelledby="edit-pin-title"
+              aria-hidden={isEditingPin ? 'false' : 'true'}
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-4 z-5 cursor-auto"
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
               onDoubleClick={(e) => {
-                if (isCreatingPin) {
+                if (isEditingPin) {
                   e.stopPropagation();
                 }
               }}
@@ -84,23 +89,38 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
                 onSubmit={handleFormSubmit}
                 className="p-6 bg-surface border-heading border-4 flex flex-col gap-4 w-[80vw] max-w-115 relative z-2"
               >
+                <span
+                  className={`absolute h-full w-full bg-[rgba(230,209,185,0.8)] top-0 left-0 ${loading ? 'opacity-100 pointer-events-auto animate-pulse' : 'opacity-0 pointer-events-none'}`}
+                ></span>
                 <p
                   className="font-subheading font-bold text-heading text-xl text-center"
-                  id="new-pin-title"
+                  id="edit-pin-title"
                 >
-                  Map Pin Creation
+                  Edit Map Pin
                 </p>
                 <div className={formRow}>
                   <label className={formLabel} htmlFor="pinLabel">
                     Pin Label
                   </label>
-                  <input className={`${inputBase}`} type="text" id="pinLabel" name="pinLabel" />
+                  <input
+                    className={inputBase}
+                    type="text"
+                    name="pinLabel"
+                    id="pinLabel"
+                    defaultValue={sideBarHighlight.mainTitle}
+                    required
+                  />
                 </div>
                 <div className={formRow}>
                   <label className={formLabel} htmlFor="pinType">
                     Pin Type
                   </label>
-                  <select className={`${inputBase}`} id="pinType" name="pinType">
+                  <select
+                    className={`${inputBase}`}
+                    id="pinType"
+                    name="pinType"
+                    defaultValue={sideBarHighlight.pintype}
+                  >
                     {PIN_TYPES.map((pinType) => (
                       <option key={`pinType-${pinType.value}`} value={pinType.value}>
                         {pinType.label}
@@ -113,8 +133,14 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
                     Summary
                   </label>
                   <div className="container">
-                    <MDEditor value={summary} onChange={(value) => setSummary(value ?? '')} />
-                    <MDEditor.Markdown source={summary} style={{ whiteSpace: 'pre-wrap' }} />
+                    <MDEditor
+                      value={String(summary)}
+                      onChange={(value) => setSummary(value ?? '')}
+                    />
+                    <MDEditor.Markdown
+                      source={String(summary)}
+                      style={{ whiteSpace: 'pre-wrap' }}
+                    />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 mt-2">
@@ -125,8 +151,7 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
                     type="button"
                     className={`${secondary} cursor-pointer`}
                     onClick={() => {
-                      setIsCreatingPin(false);
-                      setLatLng({ lat: 0, lng: 0 });
+                      setIsEditingPin(false);
                     }}
                   >
                     Close

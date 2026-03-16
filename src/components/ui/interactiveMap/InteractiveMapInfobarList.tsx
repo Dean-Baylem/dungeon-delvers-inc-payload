@@ -31,6 +31,7 @@ export default function InteractiveMapInfobarPinList({ id, type, current }: Prop
                   content: pin.summary,
                   author: pin.author,
                   id: String(pin.id),
+                  pintype: pin.pinType,
                 });
               }}
             >

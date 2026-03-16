@@ -6,9 +6,11 @@ import { useEffect } from 'react';
 
 export default function InteractiveMapStyleHandler() {
   const map = useMap();
-  const { addPinActive, isCreatingPin, sideBarExpanded } = useInteractiveMapStore((state) => state);
+  const { addPinActive, isCreatingPin, isEditingPin, sideBarExpanded } = useInteractiveMapStore(
+    (state) => state,
+  );
   const sideBarWidth = useEffect(() => {
-    if (isCreatingPin) {
+    if (isCreatingPin || isEditingPin) {
       map.doubleClickZoom.disable();
       map.scrollWheelZoom.disable();
       map.dragging.disable();
@@ -17,21 +19,12 @@ export default function InteractiveMapStyleHandler() {
       map.scrollWheelZoom.enable();
       map.dragging.enable();
     }
-  }, [isCreatingPin]);
+  }, [isCreatingPin, isEditingPin, map]);
 
   useEffect(() => {
     const container = map.getContainer();
     container.classList.toggle('interactiveCursor--mapPin', addPinActive);
   }, [map, addPinActive]);
-
-  useEffect(() => {
-    const sidebar = document.getElementById('map-infobar');
-    const sidebarWidth = sidebar?.offsetWidth ?? 0;
-
-    setTimeout(() => {
-      map.invalidateSize();
-    }, 300);
-  }, [sideBarExpanded]);
 
   return null;
 }

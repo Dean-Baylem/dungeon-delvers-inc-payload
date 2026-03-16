@@ -43,3 +43,44 @@ export async function POST(req: Request) {
     return new Response('Error Creating Map Pin', { status: 500 });
   }
 }
+
+export async function PATCH(red: Request) {
+  const payload = await getPayload({ config });
+
+  const { user } = await payload.auth({ headers: red.headers });
+
+  if (!user) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+
+  const body = await red.json();
+
+  const { pinLabel, pinType, summary, id } = body;
+
+  const existingPin = await payload.findByID({
+    collection: 'map-pins',
+    id: id,
+  });
+
+  if (!existingPin) {
+    return new Response('Pin not found', { status: 404 });
+  }
+
+  try {
+    const updatedPin = await payload.update({
+      collection: 'map-pins',
+      id: id,
+      data: {
+        pinLabel: pinLabel,
+        pinType: pinType,
+        summary: summary,
+      },
+    });
+
+    return Response.json({
+      success: true,
+    });
+  } catch (error) {
+    return new Response('Error Updating Pin', { status: 500 });
+  }
+}

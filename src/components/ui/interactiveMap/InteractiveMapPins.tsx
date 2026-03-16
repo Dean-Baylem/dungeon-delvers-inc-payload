@@ -48,6 +48,7 @@ export default function InteractiveMapPins({
                   content: pin.summary,
                   author: pin.author,
                   id: String(pin.id),
+                  pintype: pin.pinType,
                 });
                 setSideBarExpanded(true);
               },

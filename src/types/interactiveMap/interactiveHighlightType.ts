@@ -6,4 +6,5 @@ export type InteractiveHighlightType = {
   children?: React.ReactNode;
   author?: string;
   id?: string;
+  pintype?: string;
 };

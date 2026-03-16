@@ -2,12 +2,10 @@
 import { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical';
 import { useInteractiveMapStore } from '@/providers/interactive-map-provider';
 import Image from 'next/image';
-import { CTA_TYPES } from '@/constants/ctaTypes';
 import { AnimatePresence, motion } from 'motion/react';
 import InteractiveMapInfobarContents from './InteractiveMapInfobarContents';
-import InteractiveMapInfobarPinList from './InteractiveMapInfobarList';
-import { useAuthStore } from '@/providers/auth-provider';
-import { Player } from '@/payload-types';
+import InteractiveMapInfobarOptions from './InteractiveMapInfobarOptions';
+import InteractiveMapInfobarOtherPins from './interactiveMapInfobarOtherPins';
 
 type Props = {
   mapContent?: SerializedEditorState;
@@ -15,10 +13,9 @@ type Props = {
 };
 
 export default function InteractiveMapInfobar({ mapContent, mapName }: Props) {
-  const { primary, secondary, danger } = CTA_TYPES;
-  const { user } = useAuthStore((state) => state);
-  const { sideBarExpanded, setSideBarExpanded, mapPinList, sideBarHighlight, setSideBarHighlight } =
-    useInteractiveMapStore((state) => state);
+  const { sideBarExpanded, setSideBarExpanded, sideBarHighlight } = useInteractiveMapStore(
+    (state) => state,
+  );
 
   return (
     <div
@@ -66,59 +63,13 @@ export default function InteractiveMapInfobar({ mapContent, mapName }: Props) {
                 mainTitle={sideBarHighlight.mainTitle}
                 content={sideBarHighlight.content}
               >
-                <div className="flex flex-col gap-2">
-                  <button
-                    className={`${primary} text-lg`}
-                    onClick={() => setSideBarHighlight(undefined)}
-                  >
-                    RETURN
-                  </button>
-                  <h3 className="font-heading font-bold text-2xl text-heading text-center">
-                    Other Map Pins
-                  </h3>
-                  <InteractiveMapInfobarPinList
-                    id="highlight-pin-list"
-                    type="pinList"
-                    current={sideBarHighlight.mainTitle}
-                  />
-                </div>
-                {user &&
-                  typeof sideBarHighlight.author === 'object' &&
-                  (sideBarHighlight.author as Player)?.id === Number(user.id) && (
-                    <>
-                      <hr className="border-heading" />
-                      <div className="grid grid-cols-2 gap-3">
-                        <button
-                          className={primary}
-                          type="button"
-                          onClick={() => {
-                            console.log('editing!');
-                          }}
-                        >
-                          EDIT
-                        </button>
-                        <button
-                          className={danger}
-                          type="button"
-                          onClick={() => {
-                            console.log('deleting!');
-                          }}
-                        >
-                          DELETE
-                        </button>
-                      </div>
-                    </>
-                  )}
+                <InteractiveMapInfobarOtherPins isMain={false} />
+                <InteractiveMapInfobarOptions />
               </InteractiveMapInfobarContents>
             </motion.div>
           ) : (
             <InteractiveMapInfobarContents mainTitle={mapName} content={mapContent}>
-              <div className="flex flex-col gap-2">
-                <h3 className="font-heading font-bold text-2xl text-heading text-center">
-                  Map Pins
-                </h3>
-                <InteractiveMapInfobarPinList id="pin-list" type="pinList" />
-              </div>
+              <InteractiveMapInfobarOtherPins isMain={true} />
             </InteractiveMapInfobarContents>
           )}
         </AnimatePresence>

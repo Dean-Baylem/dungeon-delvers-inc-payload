@@ -13,6 +13,7 @@ export type MapState = {
   // Map Pin States
   addPinActive: boolean;
   isCreatingPin: boolean;
+  isEditingPin: boolean;
   mapPinList: Array<InteractiveMapPinType>;
 };
 
@@ -23,6 +24,7 @@ export type MapActions = {
 
   // Add Pin State
   setAddPinActive: (value: boolean) => void;
+  setIsEditingPin: (value: boolean) => void;
   toggleAddPinActive: () => void;
 
   // Pin CRUD
@@ -39,6 +41,7 @@ export const defaultInitState: MapState = {
   sideBarHighlight: undefined,
   addPinActive: false,
   isCreatingPin: false,
+  isEditingPin: false,
   mapPinList: [],
 };
 
@@ -63,6 +66,10 @@ export const createInteractiveMapStore = (initState: MapState = defaultInitState
     toggleAddPinActive: () => {
       console.log('Toggle Add Pin Active');
       set((state) => ({ ...state, addPinActive: !state.addPinActive }));
+    },
+
+    setIsEditingPin: (value: boolean) => {
+      set((state) => ({ ...state, isEditingPin: value }));
     },
 
     setMapPinList: (value: Array<InteractiveMapPinType>) => {
