@@ -11,6 +11,7 @@ export type MapState = {
   sideBarHighlight?: InteractiveHighlightType;
 
   // Map Pin States
+  showPins: boolean;
   addPinActive: boolean;
   isCreatingPin: boolean;
   isEditingPin: boolean;
@@ -26,6 +27,7 @@ export type MapActions = {
   setSideBarHighlight: (value: InteractiveHighlightType | undefined) => void;
 
   // Add Pin State
+  toggleShowPins: () => void;
   setAddPinActive: (value: boolean) => void;
   setIsEditingPin: (value: boolean) => void;
   toggleAddPinActive: () => void;
@@ -42,6 +44,7 @@ export const defaultInitState: MapState = {
   mapLoading: true,
   sideBarExpanded: false,
   sideBarHighlight: undefined,
+  showPins: false,
   addPinActive: false,
   isCreatingPin: false,
   isEditingPin: false,
@@ -65,7 +68,11 @@ export const createInteractiveMapStore = (initState: MapState = defaultInitState
       set((state) => ({ ...state, sideBarHighlight: value }));
     },
 
-    // MAp Pin State Handling Functions
+    // Map Pin State Handling Functions
+    toggleShowPins: () => {
+      set((state) => ({ ...state, showPins: !state.showPins }));
+    },
+
     setAddPinActive: (value: boolean) => {
       set((state) => ({ ...state, addPinActive: value }));
     },

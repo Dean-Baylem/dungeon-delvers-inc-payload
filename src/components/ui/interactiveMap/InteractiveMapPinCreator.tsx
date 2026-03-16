@@ -8,16 +8,19 @@ import { CTA_TYPES } from '@/constants/ctaTypes';
 import { useInteractiveMapStore } from '@/providers/interactive-map-provider';
 import { InteractiveMapPinType } from '@/types/interactiveMap/interactiveMapPinType';
 import MDEditor from '@uiw/react-md-editor';
+import { useAuthStore } from '@/providers/auth-provider';
+import LoadingOverlay from '../loadingScreen/loadingOverlay';
 
 type Props = {
   mapId: string;
 };
 
 export default function InteractiveMapPinCreator({ mapId }: Props) {
-  const map = useMap();
+  const user = useAuthStore((state) => state.user);
   const { primary, secondary } = CTA_TYPES;
   const [latLng, setLatLng] = useState({ lat: 0, lng: 0 });
   const [summary, setSummary] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { handleAddNewPin, isCreatingPin, setIsCreatingPin } = useInteractiveMapStore(
     (state) => state,
   );
@@ -31,6 +34,13 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
     }
   });
 
+  useEffect(() => {
+    if (!isCreatingPin) {
+      setLatLng({ lat: 0, lng: 0 });
+      setSummary('');
+    }
+  }, [isCreatingPin]);
+
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -41,9 +51,9 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
       xPoint: latLng.lng,
       yPoint: latLng.lat,
       summary: summary,
+      author: user?.id || '',
     };
     handleAddNewPin(newPinData);
-    setSummary('');
   };
 
   return (
@@ -84,6 +94,7 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
                 onSubmit={handleFormSubmit}
                 className="p-6 bg-surface border-heading border-4 flex flex-col gap-4 w-[80vw] max-w-115 relative z-2"
               >
+                <LoadingOverlay isLoading={isLoading} />
                 <p
                   className="font-subheading font-bold text-heading text-xl text-center"
                   id="new-pin-title"
@@ -94,7 +105,13 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
                   <label className={formLabel} htmlFor="pinLabel">
                     Pin Label
                   </label>
-                  <input className={`${inputBase}`} type="text" id="pinLabel" name="pinLabel" />
+                  <input
+                    className={`${inputBase}`}
+                    type="text"
+                    id="pinLabel"
+                    name="pinLabel"
+                    required
+                  />
                 </div>
                 <div className={formRow}>
                   <label className={formLabel} htmlFor="pinType">

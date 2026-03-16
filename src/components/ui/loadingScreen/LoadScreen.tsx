@@ -8,18 +8,27 @@ export default function LoadingScreen({ text }: { text: string }) {
   return (
     <>
       <AnimatePresence>
-        <motion.div className="absolute w-full h-full bg-mainText flex flex-col items-center justify-center z-12 gap-4">
-          <div className="flex gap-3">
-            {[0, 1, 2, 3, 4].map((i) => (
-              <div
-                key={`loading-dot-${i}`}
-                className="pingDot"
-                style={{ animationDelay: `${i * 0.2}s` }}
-              />
-            ))}
-          </div>
-          <p className="text-4xl text-white font-heading font-bold">{text}</p>
-        </motion.div>
+        {mapLoading && (
+          <motion.div
+            className="absolute w-full h-full bg-mainText flex flex-col items-center justify-center z-12 gap-4"
+            aria-hidden={!mapLoading}
+            tabIndex={-1}
+            initial={{ opacity: 1 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div className="flex gap-3">
+              {[0, 1, 2, 3, 4].map((i) => (
+                <div
+                  key={`loading-dot-${i}`}
+                  className="pingDot"
+                  style={{ animationDelay: `${i * 0.2}s` }}
+                />
+              ))}
+            </div>
+            <p className="text-4xl text-white font-heading font-bold">{text}</p>
+          </motion.div>
+        )}
       </AnimatePresence>
     </>
   );

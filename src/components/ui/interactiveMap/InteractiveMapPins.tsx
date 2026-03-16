@@ -42,7 +42,6 @@ export default function InteractiveMapPins({
             autoPanOnFocus={false}
             eventHandlers={{
               click: (e) => {
-                console.log('CLICKED');
                 setSideBarHighlight({
                   mainTitle: pin.pinLabel,
                   content: pin.summary,

@@ -11,7 +11,7 @@ const toggleActiveClass = (e: Event) => {
 
 export default function InteractiveMapControls() {
   const map = useMap();
-  const { setAddPinActive, toggleAddPinActive } = useInteractiveMapStore((state) => state);
+  const { showPins, toggleShowPins, toggleAddPinActive } = useInteractiveMapStore((state) => state);
 
   useEffect(() => {
     const controlGroup = L.Control.extend({
@@ -20,24 +20,17 @@ export default function InteractiveMapControls() {
 
         const menuOptions = [
           {
-            legend: 'Display Actions',
+            legend: 'Display Options',
             groupClass: 'mapControls--displayOptions',
             mainOptions: [
-              {
-                label: 'Show Regions',
-                id: 'show-regions',
-                title: 'Toggle Regions Display',
-                onClick: (e: Event) => {
-                  toggleActiveClass(e);
-                },
-              },
               {
                 label: 'Show Pins',
                 id: 'show-pins',
                 title: 'Toggle Pins Display',
                 onClick: (e: Event) => {
                   toggleActiveClass(e);
-                  console.log('Toggle Pins Display');
+                  console.log(`Show Pins: ${showPins}`);
+                  toggleShowPins();
                 },
               },
               {
@@ -46,24 +39,7 @@ export default function InteractiveMapControls() {
                 title: 'Add New Pin',
                 onClick: (e: Event) => {
                   toggleActiveClass(e);
-                  const newRegionBtn = document.getElementById('add-new-region');
-                  if (newRegionBtn) {
-                    newRegionBtn.classList.remove('active');
-                  }
                   toggleAddPinActive();
-                },
-              },
-              {
-                label: 'Add New Region',
-                id: 'add-new-region',
-                title: 'Add New Region',
-                onClick: (e: Event) => {
-                  toggleActiveClass(e);
-                  const newPinBtn = document.getElementById('add-new-pin');
-                  if (newPinBtn) {
-                    newPinBtn.classList.remove('active');
-                  }
-                  setAddPinActive(false);
                 },
               },
             ],

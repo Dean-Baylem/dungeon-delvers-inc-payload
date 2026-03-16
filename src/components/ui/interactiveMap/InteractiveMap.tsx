@@ -21,7 +21,9 @@ export default function InteractiveMap({
   const [bounds, setBounds] = useState<[[number, number], [number, number]] | null>(null);
   const [center, setCenter] = useState<[number, number] | null>(null);
   const [imageSize, setImageSize] = useState<{ width: number; height: number } | null>(null);
-  const { mapLoading, addPinActive, isEditingPin } = useInteractiveMapStore((state) => state);
+  const { showPins, setMapLoading, addPinActive, isEditingPin } = useInteractiveMapStore(
+    (state) => state,
+  );
 
   useEffect(() => {
     const img = new Image();
@@ -35,6 +37,7 @@ export default function InteractiveMap({
         [height, width],
       ]);
       setCenter([height / 2, width / 2]);
+      setMapLoading(false);
     };
   }, [mapUrl]);
 
@@ -58,7 +61,9 @@ export default function InteractiveMap({
         >
           {addPinActive && <InteractiveMapPinCreator mapId={mapId} />}
           {isEditingPin && <InteractiveMapPinEditor />}
-          {imageSize && <InteractiveMapPins mapId={Number(mapId)} imageSize={imageSize} />}
+          {imageSize && showPins && (
+            <InteractiveMapPins mapId={Number(mapId)} imageSize={imageSize} />
+          )}
           <InteractiveMapControls />
           <ImageOverlay url={mapUrl} bounds={bounds} />
           <InteractiveMapStyleHandler />
