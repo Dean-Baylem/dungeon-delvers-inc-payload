@@ -10,6 +10,7 @@ import InteractiveMapStyleHandler from './InteractiveMapStyleHandler';
 import InteractiveMapPins from './InteractiveMapPins';
 import InteractiveMapInfobar from './InteractiveMapInfobar';
 import InteractiveMapPinEditor from './InteractiveMapPinEditor';
+import LoadingScreen from '../loadingScreen/LoadScreen';
 
 export default function InteractiveMap({
   mapUrl,
@@ -40,6 +41,7 @@ export default function InteractiveMap({
   return (
     <div className="h-full w-full relative">
       <h1 className="sr-only">{mapName}</h1>
+      <LoadingScreen text="Map Loading" />
       <InteractiveMapInfobar mapContent={mapContent} mapName={mapName} />
       {bounds && (
         <MapContainer

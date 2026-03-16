@@ -18,6 +18,9 @@ export type MapState = {
 };
 
 export type MapActions = {
+  // Map State
+  setMapLoading: (value: boolean) => void;
+
   // Sidebar state
   setSideBarExpanded: (value: boolean) => void;
   setSideBarHighlight: (value: InteractiveHighlightType | undefined) => void;
@@ -48,6 +51,10 @@ export const defaultInitState: MapState = {
 export const createInteractiveMapStore = (initState: MapState = defaultInitState) => {
   return createStore<InteractiveMapStore>()((set) => ({
     ...initState,
+
+    setMapLoading: (value: boolean) => {
+      set((state) => ({ ...state, mapLoading: value }));
+    },
 
     // Sidebar State Handling Functions
     setSideBarExpanded: (value: boolean) => {

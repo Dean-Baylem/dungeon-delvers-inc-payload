@@ -6,10 +6,19 @@ import { CTA_TYPES } from '@/constants/ctaTypes';
 
 export default function InteractiveMapInfobarOptions() {
   const { user } = useAuthStore((state) => state);
-  const { sideBarHighlight, setIsEditingPin } = useInteractiveMapStore((state) => state);
+  const { sideBarHighlight, setIsEditingPin, mapPinList, setMapPinList } = useInteractiveMapStore(
+    (state) => state,
+  );
   const { primary, secondary, danger } = CTA_TYPES;
 
   if (!sideBarHighlight) return null;
+
+  const handlePinDelete = async () => {
+    const filteredPins = mapPinList.filter((pin) => Number(pin.id) !== Number(sideBarHighlight.id));
+    setMapPinList(filteredPins);
+    console.log(filteredPins);
+    console.log(sideBarHighlight);
+  };
 
   return (
     <>
@@ -32,7 +41,7 @@ export default function InteractiveMapInfobarOptions() {
                 className={danger}
                 type="button"
                 onClick={() => {
-                  console.log('deleting!');
+                  handlePinDelete();
                 }}
               >
                 DELETE

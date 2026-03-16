@@ -44,16 +44,16 @@ export async function POST(req: Request) {
   }
 }
 
-export async function PATCH(red: Request) {
+export async function PATCH(req: Request) {
   const payload = await getPayload({ config });
 
-  const { user } = await payload.auth({ headers: red.headers });
+  const { user } = await payload.auth({ headers: req.headers });
 
   if (!user) {
     return new Response('Unauthorized', { status: 401 });
   }
 
-  const body = await red.json();
+  const body = await req.json();
 
   const { pinLabel, pinType, summary, id } = body;
 
@@ -82,5 +82,48 @@ export async function PATCH(red: Request) {
     });
   } catch (error) {
     return new Response('Error Updating Pin', { status: 500 });
+  }
+}
+
+export async function DELETE(req: Request) {
+  const payload = await getPayload({ config });
+
+  const { user } = await payload.auth({ headers: req.headers });
+
+  if (!user) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+
+  const body = await req.json();
+
+  const { id } = body;
+
+  const existingPin = await payload.findByID({
+    collection: 'map-pins',
+    id: id,
+  });
+
+  if (!existingPin) {
+    return new Response('Pin not found', { status: 404 });
+  }
+
+  const authorId =
+    typeof existingPin.author === 'object' ? existingPin?.author?.id : existingPin.author;
+
+  if (authorId !== user.id) {
+    return new Response('Forbidden', { status: 403 });
+  }
+
+  try {
+    const deletedPin = await payload.delete({
+      collection: 'map-pins',
+      id: id,
+    });
+
+    return Response.json({
+      success: true,
+    });
+  } catch (error) {
+    return new Response('Error Deleting Pin', { status: 500 });
   }
 }

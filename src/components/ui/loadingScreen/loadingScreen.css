@@ -1,0 +1,15 @@
+
+.pingDot {
+  height: 0.5rem;
+  width: 0.5rem;
+  opacity: 0.25;
+  background: white;
+  border-radius: 50%;
+  animation: pulse-dot 1.8s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 0.25; }
+  40%       { transform: scale(1.5);   opacity: 1; }
+  60%       { transform: scale(1.5);   opacity: 1; }
+}
