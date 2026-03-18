@@ -16,8 +16,6 @@ export default async function SingleCharacterPage({
     slug,
   });
 
-  console.log('HELLO HELLO');
-
   if (!data) notFound();
 
   const user = await isLoggedIn();
@@ -30,8 +28,6 @@ export default async function SingleCharacterPage({
     user.id &&
     characterPlayer &&
     characterPlayer.id === user.id;
-
-  console.log(`Is Player: ${isPlayer ? 'yes' : 'no'}`);
 
   return (
     <SinglePage

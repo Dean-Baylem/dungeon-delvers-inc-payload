@@ -55,6 +55,63 @@
   padding-left: 1rem;
 }
 
+#infobar-map-content {
+  .richTextContent {
+    gap: 0.5rem;
+  }
+  .richTextContent p {
+    font-size: 1rem;
+  }
+}
+
+#map-infobar-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+#map-infobar-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#map-infobar-content::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+#map-infobar-content::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
+
+#highlighted-content {
+  p,
+  li,
+  dt,
+  dd {
+    font-family: var(--font-body-serif);
+    font-weight: 500;
+    line-height: 1.8;
+    font-size: 1rem;
+    color: var(--colorMainText);
+  }
+
+  h1,
+  h2 {
+    font-weight: 700;
+    font-size: 1.625rem;
+    color: var(--color-heading);
+    font-family: var(--font-heading);
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color-heading);
+    font-family: var(--font-body-serif);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+}
+
+
+
 @media screen and (max-width: 640px) {
   .hasInfobox {
     display: flex;

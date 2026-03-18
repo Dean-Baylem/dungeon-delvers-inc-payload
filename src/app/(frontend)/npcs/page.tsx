@@ -5,7 +5,6 @@ import Hero from '@/components/ui/hero/Hero';
 import HeroQuote from '@/components/ui/hero/HeroQuote';
 import HeroQuoteText from '@/components/ui/hero/HeroQuoteText';
 import NPCDisplay from '@/components/ui/npcs/NPCDisplay';
-import NPCList from '@/components/ui/npcs/NPCList';
 import { mapNPCDocToCard } from '@/lib/mappers/NPCCardMapper';
 import { gridOptions } from '@/lib/options/gridOptions';
 import archiveQuery from '@/lib/query/archiveQuery';

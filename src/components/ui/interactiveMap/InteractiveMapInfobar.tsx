@@ -58,6 +58,7 @@ export default function InteractiveMapInfobar({ mapContent, mapName }: Props) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              className="h-full overflow-hidden"
             >
               <InteractiveMapInfobarContents
                 mainTitle={sideBarHighlight.mainTitle}

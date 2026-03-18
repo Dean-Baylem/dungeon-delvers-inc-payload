@@ -92,7 +92,7 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
             >
               <form
                 onSubmit={handleFormSubmit}
-                className="p-6 bg-surface border-heading border-4 flex flex-col gap-4 w-[80vw] max-w-115 relative z-2"
+                className="p-6 bg-surface border-heading border-4 flex flex-col gap-4 w-[80vw] max-w-115 relative z-2 max-h-[75dvh] overflow-y-auto"
               >
                 <LoadingOverlay isLoading={isLoading} />
                 <p
@@ -131,7 +131,6 @@ export default function InteractiveMapPinCreator({ mapId }: Props) {
                   </label>
                   <div className="container">
                     <MDEditor value={summary} onChange={(value) => setSummary(value ?? '')} />
-                    <MDEditor.Markdown source={summary} style={{ whiteSpace: 'pre-wrap' }} />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4 mt-2">

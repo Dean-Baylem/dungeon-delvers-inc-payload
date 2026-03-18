@@ -4,9 +4,6 @@ export async function logoutUser(collection: string) {
     credentials: 'include',
   });
 
-  console.log('Collection: ' + collection);
-  console.log('Logout response:', res);
-
   if (!res.ok) {
     throw new Error('Logout failed');
   }

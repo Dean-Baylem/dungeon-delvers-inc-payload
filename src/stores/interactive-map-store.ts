@@ -78,7 +78,6 @@ export const createInteractiveMapStore = (initState: MapState = defaultInitState
     },
 
     toggleAddPinActive: () => {
-      console.log('Toggle Add Pin Active');
       set((state) => ({ ...state, addPinActive: !state.addPinActive }));
     },
 
@@ -96,8 +95,6 @@ export const createInteractiveMapStore = (initState: MapState = defaultInitState
 
     // Pin Related Functions
     handleAddNewPin: async (pinData: InteractiveMapPinType) => {
-      console.log('Adding New Pin');
-      console.log(pinData);
       try {
         const response = await fetch('/api/maps/pins', {
           method: 'POST',
