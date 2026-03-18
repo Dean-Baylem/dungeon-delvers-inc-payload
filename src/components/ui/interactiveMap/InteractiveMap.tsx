@@ -50,14 +50,18 @@ export default function InteractiveMap({
         <MapContainer
           crs={L.CRS.Simple}
           zoom={-1}
-          minZoom={-2}
-          maxBounds={bounds}
-          maxBoundsViscosity={1.0}
+          minZoom={-3}
           style={{ position: 'absolute', inset: 0 }}
           scrollWheelZoom={true}
           bounds={bounds}
           center={center!}
           className={addPinActive ? 'interactiveCursor--mapPin' : ''}
+          zoomAnimation={true}
+          zoomAnimationThreshold={8}
+          fadeAnimation={true}
+          markerZoomAnimation={true}
+          zoomSnap={0.1}
+          zoomDelta={0.1}
         >
           {addPinActive && <InteractiveMapPinCreator mapId={mapId} />}
           {isEditingPin && <InteractiveMapPinEditor />}
@@ -65,7 +69,7 @@ export default function InteractiveMap({
             <InteractiveMapPins mapId={Number(mapId)} imageSize={imageSize} />
           )}
           <InteractiveMapControls />
-          <ImageOverlay url={mapUrl} bounds={bounds} />
+          <ImageOverlay url={mapUrl} bounds={bounds} className="smooth-image" />
           <InteractiveMapStyleHandler />
         </MapContainer>
       )}

@@ -1,22 +1,32 @@
-import InteractiveMapContainer from '@/components/ui/interactiveMap/InteractiveMapContainer';
-import isLoggedIn from '@/lib/auth/isLoggedIn';
-import MapQuery from '@/lib/query/mapQuery';
-import { Map } from '@/payload-types';
-import { InteractiveMapProvider } from '@/providers/interactive-map-provider';
 import { notFound, redirect } from 'next/navigation';
+import isLoggedIn from '@/lib/auth/isLoggedIn';
+import { Location, Map } from '@/payload-types';
+import MapQuery from '@/lib/query/mapQuery';
+import singleQuery from '@/lib/query/singleQuery';
+import { InteractiveMapProvider } from '@/providers/interactive-map-provider';
+import InteractiveMapContainer from '@/components/ui/interactiveMap/InteractiveMapContainer';
 
-export default async function WorldMapPage() {
+export default async function LocationMapPage({ params }: { params: Promise<{ slug: string }> }) {
   const user = await isLoggedIn();
 
   if (!user) {
     redirect('/');
   }
 
-  const mapData: Map = await MapQuery({ isWorld: true });
+  const { slug } = await params;
 
-  if (!mapData) {
-    notFound();
-  }
+  const locationData: Location = await singleQuery({
+    collection: 'locations',
+    slug,
+  });
+
+  if (!locationData) notFound();
+
+  const locationId = locationData.id;
+
+  const mapData: Map = await MapQuery({ isWorld: false, locationId });
+
+  if (!mapData) notFound();
 
   const mapUrl = typeof mapData.image !== 'number' ? mapData?.image.url : undefined;
   const mapId = String(mapData.id);
