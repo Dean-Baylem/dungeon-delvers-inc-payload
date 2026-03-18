@@ -87,7 +87,7 @@ export default function InteractiveMapPinEditor() {
             >
               <form
                 onSubmit={handleFormSubmit}
-                className="p-6 bg-surface border-heading border-4 flex flex-col gap-4 w-[80vw] max-w-115 relative z-2"
+                className="p-6 bg-surface border-heading border-4 flex flex-col gap-4 w-[80vw] max-w-115 relative z-2 max-h-[75dvh] overflow-y-auto"
               >
                 <span
                   className={`absolute h-full w-full bg-[rgba(230,209,185,0.8)] top-0 left-0 ${loading ? 'opacity-100 pointer-events-auto animate-pulse' : 'opacity-0 pointer-events-none'}`}
@@ -136,10 +136,6 @@ export default function InteractiveMapPinEditor() {
                     <MDEditor
                       value={String(summary)}
                       onChange={(value) => setSummary(value ?? '')}
-                    />
-                    <MDEditor.Markdown
-                      source={String(summary)}
-                      style={{ whiteSpace: 'pre-wrap' }}
                     />
                   </div>
                 </div>

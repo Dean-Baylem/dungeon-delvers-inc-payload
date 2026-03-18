@@ -29,7 +29,6 @@ export default function InteractiveMapControls() {
                 title: 'Toggle Pins Display',
                 onClick: (e: Event) => {
                   toggleActiveClass(e);
-                  console.log(`Show Pins: ${showPins}`);
                   toggleShowPins();
                 },
               },

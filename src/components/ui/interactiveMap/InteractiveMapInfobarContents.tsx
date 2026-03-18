@@ -16,6 +16,7 @@ export default function InteractiveMapInfobarContents({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      className="h-full overflow-hidden"
     >
       <div
         className="px-4 py-2 flex flex-col gap-3 overflow-y-auto pb-4 h-full"

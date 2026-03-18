@@ -320,6 +320,7 @@ export interface Location {
   id: number;
   name: string;
   highlight?: boolean | null;
+  hasMap?: boolean | null;
   pageSlug: string;
   type: 'city' | 'dungeon' | 'fortress' | 'other' | 'ruins' | 'town' | 'village' | 'wilderness';
   terrain?:
@@ -959,6 +960,7 @@ export interface MapPin {
   pinLabel?: string | null;
   pinType?:
     | (
+        | 'library'
         | 'arcane'
         | 'fortress'
         | 'cave'
@@ -968,10 +970,12 @@ export interface MapPin {
         | 'forest'
         | 'geography'
         | 'landmark'
+        | 'market'
         | 'monster'
         | 'route'
         | 'ruins'
         | 'settlement'
+        | 'tavern'
         | 'temple'
       )
     | null;
@@ -1210,6 +1214,7 @@ export interface WorldsSelect<T extends boolean = true> {
 export interface LocationsSelect<T extends boolean = true> {
   name?: T;
   highlight?: T;
+  hasMap?: T;
   pageSlug?: T;
   type?: T;
   terrain?: T;

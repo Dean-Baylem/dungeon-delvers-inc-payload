@@ -27,6 +27,13 @@ export const Locations: CollectionConfig = {
           },
         },
         {
+          name: 'hasMap',
+          type: 'checkbox',
+          admin: {
+            width: '20%',
+          },
+        },
+        {
           name: 'pageSlug',
           type: 'text',
           required: true,
@@ -95,13 +102,6 @@ export const Locations: CollectionConfig = {
       hasMany: true,
       maxDepth: 1,
     },
-    // {
-    //   name: 'map',
-    //   type: 'relationship',
-    //   relationTo: 'maps',
-    //   hasMany: false,
-    //   maxDepth: 1,
-    // },
     {
       name: 'parentLocation',
       type: 'relationship',

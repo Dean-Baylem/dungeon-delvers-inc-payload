@@ -1,4 +1,5 @@
 export const PIN_TYPES = [
+  { label: 'Academy / Library', value: 'library' },
   { label: 'Arcane / Magical', value: 'arcane' },
   { label: 'Castle / Fortress', value: 'fortress' },
   { label: 'Cave / Caverns', value: 'cave' },
@@ -8,9 +9,11 @@ export const PIN_TYPES = [
   { label: 'Forest / Wilderness', value: 'forest' },
   { label: 'Geographical Feature', value: 'geography' },
   { label: 'Historical Landmark', value: 'landmark' },
+  { label: 'Market / Store', value: 'market' },
   { label: 'Monster Lair', value: 'monster' },
   { label: 'Road / Trade Route', value: 'route' },
   { label: 'Ruins', value: 'ruins' },
   { label: 'Small Settlement', value: 'settlement' },
+  { label: 'Tavern / Inn', value: 'tavern' },
   { label: 'Temple / Shrine', value: 'temple' },
 ];

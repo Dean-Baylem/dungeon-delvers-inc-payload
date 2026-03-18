@@ -10,7 +10,7 @@ export default async function LocationMapPage({ params }: { params: Promise<{ sl
   const user = await isLoggedIn();
 
   if (!user) {
-    redirect('/');
+    notFound();
   }
 
   const { slug } = await params;
