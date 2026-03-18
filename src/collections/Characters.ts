@@ -27,6 +27,14 @@ export const Characters: CollectionConfig = {
       type: 'richText',
     },
     {
+      name: 'content',
+      type: 'textarea',
+    },
+    {
+      name: 'privateContent',
+      type: 'textarea',
+    },
+    {
       name: 'player',
       type: 'relationship',
       relationTo: 'players',

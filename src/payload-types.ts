@@ -854,6 +854,8 @@ export interface Character {
     };
     [k: string]: unknown;
   } | null;
+  content?: string | null;
+  privateContent?: string | null;
   player?: (number | null) | Player;
   updatedAt: string;
   createdAt: string;
@@ -1388,6 +1390,8 @@ export interface CharactersSelect<T extends boolean = true> {
   pageSlug?: T;
   icon?: T;
   dmNotes?: T;
+  content?: T;
+  privateContent?: T;
   player?: T;
   updatedAt?: T;
   createdAt?: T;
