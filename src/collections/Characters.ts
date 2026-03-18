@@ -5,6 +5,22 @@ export const Characters: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
   },
+  access: {
+    read: () => true,
+    create: () => false,
+    delete: ({ req: { user } }) => {
+      if (!user) return false;
+      return {
+        player: { equals: user.id },
+      };
+    },
+    update: ({ req: { user } }) => {
+      if (!user) return false;
+      return {
+        player: { equals: user.id },
+      };
+    },
+  },
   fields: [
     {
       name: 'name',
@@ -33,6 +49,13 @@ export const Characters: CollectionConfig = {
     {
       name: 'privateContent',
       type: 'textarea',
+      access: {
+        read: ({ req, doc }) => {
+          if (!req.user) return false;
+          const playerId = typeof doc?.player === 'object' ? doc.player.id : doc?.player;
+          return req.user.id === playerId;
+        },
+      },
     },
     {
       name: 'player',

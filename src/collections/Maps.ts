@@ -5,6 +5,12 @@ export const Maps: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
   },
+  access: {
+    read: () => true,
+    create: () => false,
+    update: () => false,
+    delete: () => false,
+  },
   fields: [
     {
       name: 'name',

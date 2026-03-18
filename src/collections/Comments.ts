@@ -2,6 +2,22 @@ import type { CollectionConfig } from 'payload';
 
 export const Comments: CollectionConfig = {
   slug: 'comments',
+  access: {
+    read: () => true,
+    create: ({ req: { user } }) => Boolean(user),
+    update: ({ req: { user } }) => {
+      if (!user) return false;
+      return {
+        author: { equals: user.id },
+      };
+    },
+    delete: ({ req: { user } }) => {
+      if (!user) return false;
+      return {
+        author: { equals: user.id },
+      };
+    },
+  },
   fields: [
     {
       name: 'content',

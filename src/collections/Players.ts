@@ -12,6 +12,9 @@ export const Players: CollectionConfig = {
   },
   access: {
     read: () => true,
+    create: () => false,
+    update: () => false,
+    delete: () => false,
   },
   fields: [
     {

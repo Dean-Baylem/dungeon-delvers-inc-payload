@@ -21,7 +21,10 @@ export async function POST(req: Request) {
 
   const comment = await payload.create({
     collection: 'comments',
-    data,
+    data: {
+      ...data,
+      author: user.id,
+    },
   });
 
   // Revalidate the current path to update the SSG page with the new comment

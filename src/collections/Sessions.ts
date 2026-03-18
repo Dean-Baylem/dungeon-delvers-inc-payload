@@ -7,6 +7,9 @@ export const Sessions: CollectionConfig = {
   },
   access: {
     read: () => true,
+    create: () => false,
+    update: () => false,
+    delete: () => false,
   },
   fields: [
     {

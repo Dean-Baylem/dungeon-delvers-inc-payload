@@ -7,6 +7,12 @@ export const Worlds: CollectionConfig = {
     useAsTitle: 'name',
     description: 'The root collection for all other collections. One world per instance.',
   },
+  access: {
+    read: () => true,
+    create: () => false,
+    update: () => false,
+    delete: () => false,
+  },
   fields: [
     {
       name: 'name',

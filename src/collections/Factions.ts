@@ -2,6 +2,12 @@ import { slugField, type CollectionConfig } from 'payload';
 
 export const Factions: CollectionConfig = {
   slug: 'factions',
+  access: {
+    read: () => true,
+    create: () => false,
+    update: () => false,
+    delete: () => false,
+  },
   fields: [
     {
       type: 'row',

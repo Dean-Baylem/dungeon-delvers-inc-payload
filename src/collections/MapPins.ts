@@ -6,6 +6,22 @@ export const MapPins: CollectionConfig = {
   admin: {
     useAsTitle: 'pinLabel',
   },
+  access: {
+    read: ({ req: { user } }) => Boolean(user),
+    create: ({ req: { user } }) => Boolean(user),
+    update: ({ req: { user } }) => {
+      if (!user) return false;
+      return {
+        author: { equals: user.id },
+      };
+    },
+    delete: ({ req: { user } }) => {
+      if (!user) return false;
+      return {
+        author: { equals: user.id },
+      };
+    },
+  },
   fields: [
     {
       type: 'row',
