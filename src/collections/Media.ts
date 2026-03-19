@@ -4,9 +4,9 @@ export const Media: CollectionConfig = {
   slug: 'media',
   access: {
     read: () => true,
-    update: () => false,
-    create: () => false,
-    delete: () => false,
+    update: ({ req: { user } }) => user?.collection === 'users',
+    create: ({ req: { user } }) => user?.collection === 'users',
+    delete: ({ req: { user } }) => user?.collection === 'users',
   },
   fields: [
     {

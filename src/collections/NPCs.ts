@@ -7,9 +7,9 @@ export const NPCs: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: () => false,
-    update: () => false,
-    delete: () => false,
+    create: ({ req: { user } }) => user?.collection === 'users',
+    update: ({ req: { user } }) => user?.collection === 'users',
+    delete: ({ req: { user } }) => user?.collection === 'users',
   },
   fields: [
     {
