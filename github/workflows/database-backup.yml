@@ -2,7 +2,8 @@ name: Database backup
 
 on:
   schedule:
-    - cron: '0 2 * * *'  # runs every day at 2am UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
 
 jobs:
   backup:
