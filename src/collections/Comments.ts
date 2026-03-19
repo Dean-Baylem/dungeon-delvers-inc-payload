@@ -7,12 +7,18 @@ export const Comments: CollectionConfig = {
     create: ({ req: { user } }) => Boolean(user),
     update: ({ req: { user } }) => {
       if (!user) return false;
+
+      if (user.collection === 'users') return true;
+
       return {
         author: { equals: user.id },
       };
     },
     delete: ({ req: { user } }) => {
       if (!user) return false;
+
+      if (user.collection === 'users') return true;
+
       return {
         author: { equals: user.id },
       };

@@ -7,15 +7,21 @@ export const Characters: CollectionConfig = {
   },
   access: {
     read: () => true,
-    create: () => false,
+    create: ({ req: { user } }) => user?.collection === 'users',
     delete: ({ req: { user } }) => {
       if (!user) return false;
+
+      if (user.collection === 'users') return true;
+
       return {
         player: { equals: user.id },
       };
     },
     update: ({ req: { user } }) => {
       if (!user) return false;
+
+      if (user.collection === 'users') return true;
+
       return {
         player: { equals: user.id },
       };
