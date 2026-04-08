@@ -29,7 +29,7 @@ jobs:
           /usr/lib/postgresql/17/bin/pg_dump "$DATABASE_URL" > backup_$(date +%Y%m%d).sql
 
       - name: Upload to GitHub artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.0
         with:
           name: db-backup-${{ github.run_id }}
           path: backup_*.sql
