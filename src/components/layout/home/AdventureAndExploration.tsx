@@ -30,8 +30,8 @@ export default function AdventureAndExploration({
     <PageSection title="Adventure & Exploration">
       <BlockGroup
         options={{
-          span: { tab: gridOptions.span.tab[4], pc: gridOptions.span.pc[3] },
-          start: { tab: gridOptions.start.tab[7], pc: gridOptions.start.pc[8] },
+          span: { tab: gridOptions.span.tab[6], pc: gridOptions.span.pc[3] },
+          start: { tab: gridOptions.start.tab[0], pc: gridOptions.start.pc[8] },
           row: { tab: gridOptions.row.tab[1], pc: gridOptions.row.pc[1] },
         }}
       >
@@ -45,6 +45,7 @@ export default function AdventureAndExploration({
                   width="320"
                   height="160"
                   alt="Flanaess World Map"
+                  className="w-full h-auto"
                 />
               ),
             },
@@ -68,8 +69,8 @@ export default function AdventureAndExploration({
       </BlockGroup>
       <BlockGroup
         options={{
-          span: { tab: gridOptions.span.tab[6], pc: gridOptions.span.pc[3] },
-          start: { tab: gridOptions.start.tab[0], pc: gridOptions.start.pc[8] },
+          span: { tab: gridOptions.span.tab[4], pc: gridOptions.span.pc[3] },
+          start: { tab: gridOptions.start.tab[7], pc: gridOptions.start.pc[8] },
           row: { tab: gridOptions.row.tab[1], pc: gridOptions.row.pc[2] },
         }}
       >
