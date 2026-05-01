@@ -35,7 +35,7 @@ type Props = {
 
 export default function BlockGroup({ children, options }: Props) {
   const classes = [
-    'flex flex-col gap-6',
+    'flex flex-col gap-6 w-full md:w-unset',
     options?.span?.tab,
     options?.span?.pc,
     options?.start?.tab,

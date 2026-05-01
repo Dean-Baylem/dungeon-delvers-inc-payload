@@ -11,7 +11,7 @@ type Props = {
 
 export default function AdventureLogs({ sessions, gazetter }: Props) {
   return (
-    <div className="flex flex-col gap-6 border border-heading py-4 px-6 shadow-[0_2px_4px_2px_rgba(0,0,0,0.25)] bg-surface bg-[url(/transparent-bg/natural-paper.png)] bg-size-cover w-full lg:max-w-[20rem] ml-auto">
+    <div className="flex flex-col gap-6 border border-heading py-4 px-6 shadow-[0_2px_4px_2px_rgba(0,0,0,0.25)] bg-surface bg-[url(/transparent-bg/natural-paper.png)] bg-size-cover w-full max-w-[20rem] mx-auto md:ml-auto md:mr-0">
       {sessions && (
         <AdventureLogGroup
           title="Adventure Logs"
