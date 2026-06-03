@@ -37,6 +37,7 @@ export default async function HomeQuery(): Promise<{
     where: {
       relatedWorld: worldData.docs[0].id as WhereField,
       highlight: 'true' as WhereField,
+      hidden: 'false' as WhereField,
     },
   });
 
