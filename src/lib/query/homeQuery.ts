@@ -36,8 +36,12 @@ export default async function HomeQuery(): Promise<{
     depth: 2,
     where: {
       relatedWorld: worldData.docs[0].id as WhereField,
-      highlight: 'true' as WhereField,
-      hidden: 'false' as WhereField,
+      highlight: {
+        equals: true,
+      },
+      hidden: {
+        equals: false,
+      },
     },
   });
 
@@ -138,6 +142,7 @@ export default async function HomeQuery(): Promise<{
     where: {
       relatedWorld: worldData.docs[0].id as WhereField,
     },
+    sort: 'date',
   });
 
   const adventureData: AdventureCardType[] = adventureQuery.docs.map((adventure: Adventure) =>
