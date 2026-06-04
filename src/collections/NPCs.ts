@@ -1,4 +1,5 @@
 import { slugField, type CollectionConfig } from 'payload';
+import { revalidateAfterChange } from '@/lib/utility/revalidateAfterChange';
 
 export const NPCs: CollectionConfig = {
   slug: 'npcs',
@@ -10,6 +11,15 @@ export const NPCs: CollectionConfig = {
     create: ({ req: { user } }) => user?.collection === 'users',
     update: ({ req: { user } }) => user?.collection === 'users',
     delete: ({ req: { user } }) => user?.collection === 'users',
+  },
+  hooks: {
+    afterChange: [
+      async ({ doc, previousDoc }) => {
+        const pageSlug = doc.pageSlug;
+        const prevSlug = previousDoc?.pageSlug;
+        revalidateAfterChange('npcs', pageSlug, prevSlug);
+      },
+    ],
   },
   fields: [
     {
